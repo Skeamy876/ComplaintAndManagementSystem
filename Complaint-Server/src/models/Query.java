@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity(name = "query")
 @Table(name = "query")
-public class Query {
+public class Query implements Serializable {
     @Id
     private long queryId;
     @Column(name="category_ID")
@@ -25,6 +25,7 @@ public class Query {
     @Column(name="query_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date queryDate;
+    @Enumerated(EnumType.STRING)
     @Column(name="status")
     private Complaint.Status status;
 
@@ -35,6 +36,9 @@ public class Query {
         this.student = student;
         this.queryDate = queryDate;
         this.status = status;
+    }
+
+    public Query() {
     }
 
     public long getQueryId() {

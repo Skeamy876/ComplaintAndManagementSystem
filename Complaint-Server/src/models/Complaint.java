@@ -6,14 +6,15 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-@Entity(name = "compaints")
+@Entity(name = "complaints")
 @Table(name = "complaints")
-public class Complaint {
+public class Complaint implements Serializable {
     @Id
     private long complaintId;
     @Column(name = "student_ID")
@@ -25,6 +26,7 @@ public class Complaint {
     @Column(name = "complaint_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date complaintDate;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private Status status;
 

@@ -3,6 +3,7 @@ package models;
 import factories.DbConnectorFactory;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Student extends Person{
+public class Student extends Person implements Serializable {
     private Connection dbConn = null;
     private Statement stmt;
     private ResultSet  result;
@@ -24,9 +25,9 @@ public class Student extends Person{
         super(idNumber, firstName, lastName, phoneNumber, email);
     }
 
-    public void createStudent(long idNumber, String firstName, String lastName, long phoneNumber, String email){
+    public void createStudent(Student student){
         String insertSQL = "INSERT INTO utechcomplaintdb.students (student_ID,first_name,last_name,email_address,phone_number)"
-                +"VALUES('"+idNumber+"','"+firstName+"','"+lastName+"','"+email+"','"+phoneNumber+"');";
+                +"VALUES('"+student.getIdNumber()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getEmail()+"','"+student.getPhoneNumber()+"');";
         try{
             stmt = dbConn.createStatement();
             int inserted = stmt.executeUpdate(insertSQL);

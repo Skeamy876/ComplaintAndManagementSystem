@@ -4,16 +4,14 @@ import factories.SessionBuilderFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity(name = "categories")
 @Table(name = "categories")
 public class Category {
     @Id
     private long Id;
+    @Enumerated(EnumType.STRING)
     @Column(name = "category_name")
     private CategoryEnum categoryName;
 

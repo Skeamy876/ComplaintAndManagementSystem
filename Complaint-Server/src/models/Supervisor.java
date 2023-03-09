@@ -7,10 +7,11 @@ import org.hibernate.Transaction;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.io.Serializable;
 
 @Entity(name="supervisor")
 @Table(name = "supervisor")
-public class Supervisor extends Person{
+public class Supervisor extends Person implements Serializable {
     public Supervisor(long idNumber, String firstName, String lastName, long phoneNumber, String email) {
         super(idNumber, firstName, lastName, phoneNumber, email);
     }
