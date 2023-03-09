@@ -1,13 +1,31 @@
 package models;
 
-import java.util.Date;
+import factories.SessionBuilderFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+@Entity(name = "query")
+@Table(name = "query")
 public class Query {
+    @Id
     private long queryId;
+    @Column(name="category_ID")
     private Category category;
+    @Column(name="query_detail")
     private String queryDetail;
+    @Column(name="student_ID")
     private Student student;
+    @Column(name="query_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date queryDate;
+    @Column(name="status")
     private Complaint.Status status;
 
     public Query(long queryId, Category category, String queryDetail, Student student, Date queryDate, Complaint.Status status) {
@@ -77,5 +95,83 @@ public class Query {
                 ", queryDate=" + queryDate +
                 ", status=" + status +
                 '}';
+    }
+
+
+    public void createQuery(){
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        session.save(this);
+        transaction.commit();
+        session.close();
+    }
+
+    public Query findQuery(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Query query = (Query) session.get(Query.class,  this.queryId);
+        transaction.commit();
+        session.close();
+
+        return query;
+    }
+
+    public List<Query> findAllQueries(){
+        List<Query> queries = new ArrayList<>();
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        queries = (List<Query>) session.createNativeQuery("SELECT * FROM query")
+                .list();
+        transaction.commit();
+        session.close();
+
+
+        return queries;
+    }
+
+    public void UpdateQueryCategory(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Query query = (Query) session.get(Query.class,this.queryId);
+        query.setCategory(this.category);
+        session.update(query);
+        transaction.commit();
+        session.close();
+    }
+    public void UpdateQueryDetails(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Query query = (Query) session.get(Query.class,this.queryId);
+        query.setQueryDetail(this.queryDetail);
+        session.update(query);
+        transaction.commit();
+        session.close();
+    }
+
+    public void deleteQuery(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Query query = (Query) session.get(Query.class,this.queryId);
+        session.delete(query);
+        transaction.commit();
+        session.close();
     }
 }

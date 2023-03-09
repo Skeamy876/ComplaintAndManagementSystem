@@ -1,16 +1,31 @@
 package models;
 
 
+import factories.SessionBuilderFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+
+@Entity(name = "compaints")
+@Table(name = "complaints")
 public class Complaint {
+    @Id
     private long complaintId;
+    @Column(name = "student_ID")
     private Student student;
+    @Column(name = "complaint_ID")
     private Category category;
+    @Column(name = "complaint_detail")
     private String complaintDetail;
-
+    @Column(name = "complaint_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date complaintDate;
-
+    @Column(name = "status")
     private Status status;
 
     public Complaint(long complaintId, Student student, Category category, String complaintDetail, Date complaintDate, Status status) {
@@ -89,4 +104,81 @@ public class Complaint {
                 '}';
     }
 
+
+    public void createComplaint(){
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        session.save(this);
+        transaction.commit();
+        session.close();
+    }
+
+    public Complaint findComplaint(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Complaint complaint = (Complaint) session.get(Complaint.class,  this.complaintId);
+        transaction.commit();
+        session.close();
+
+        return complaint;
+    }
+
+    public List<Complaint> findAllQueries(){
+        List<Complaint> complaints = new ArrayList<>();
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        complaints = (List<Complaint>) session.createNativeQuery("SELECT * FROM complaints")
+                .list();
+        transaction.commit();
+        session.close();
+
+
+        return complaints;
+    }
+
+    public void UpdateComplaintCategory(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Complaint Complaint = (Complaint) session.get(Complaint.class,this.complaintId);
+        Complaint.setCategory(this.category);
+        session.update(Complaint);
+        transaction.commit();
+        session.close();
+    }
+    public void UpdateComplaintDetails(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Complaint Complaint = (Complaint) session.get(Complaint.class,this.complaintId);
+        Complaint.setComplaintDetail(this.complaintDetail);
+        session.update(Complaint);
+        transaction.commit();
+        session.close();
+    }
+
+    public void deleteComplaint(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Complaint Complaint = (Complaint) session.get(Complaint.class,this.complaintId);
+        session.delete(Complaint);
+        transaction.commit();
+        session.close();
+    }
 }
