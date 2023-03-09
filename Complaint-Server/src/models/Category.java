@@ -1,7 +1,20 @@
 package models;
 
+import factories.SessionBuilderFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity(name = "categories")
+@Table(name = "categories")
 public class Category {
+    @Id
     private long Id;
+    @Column(name = "category_name")
     private CategoryEnum categoryName;
 
     public Category(long id, CategoryEnum categoryName) {
@@ -32,5 +45,27 @@ public class Category {
 
     public void setCategoryName(CategoryEnum categoryName) {
         this.categoryName = categoryName;
+    }
+    public void CreateCategory(){
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        session.save(this);
+        transaction.commit();
+        session.close();
+    }
+
+    public void deleteComplaint(){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Complaint Complaint = (Complaint) session.get(Complaint.class,this.Id);
+        session.delete(Complaint);
+        transaction.commit();
+        session.close();
     }
 }
