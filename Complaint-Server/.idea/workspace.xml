@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Advisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Advisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Complaint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Query.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Supervisor.java" afterDir="false" />
-    </list>
+    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="changes to SessionBuilderFactory class" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

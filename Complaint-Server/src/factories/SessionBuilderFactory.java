@@ -1,8 +1,6 @@
 package factories;
 
-import models.Advisor;
-import models.Student;
-import models.Supervisor;
+import models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -18,6 +16,9 @@ public class SessionBuilderFactory {
                     .addAnnotatedClass(Student.class)
                     .addAnnotatedClass(Supervisor.class)
                     .addAnnotatedClass(Advisor.class)
+                    .addAnnotatedClass(Query.class)
+                    .addAnnotatedClass(Complaint.class)
+                    .addAnnotatedClass(Category.class)
                     .buildSessionFactory();
         }
         return sessionFactory;
