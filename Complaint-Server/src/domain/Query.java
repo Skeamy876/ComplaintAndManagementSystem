@@ -1,4 +1,4 @@
-package models;
+package domain;
 
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;
@@ -15,12 +15,14 @@ import java.util.List;
 @Table(name = "query")
 public class Query implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long queryId;
-    @Column(name="category_ID")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_ID")
     private Category category;
     @Column(name="query_detail")
     private String queryDetail;
-    @Column(name="student_ID")
+    @ManyToOne(cascade = CascadeType.ALL)
     private Student student;
     @Column(name="query_date")
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,8 +31,8 @@ public class Query implements Serializable {
     @Column(name="status")
     private Complaint.Status status;
 
-    public Query(long queryId, Category category, String queryDetail, Student student, Date queryDate, Complaint.Status status) {
-        this.queryId = queryId;
+    public Query( Category category, String queryDetail, Student student, Date queryDate, Complaint.Status status) {
+        this.queryId = 0;
         this.category = category;
         this.queryDetail = queryDetail;
         this.student = student;

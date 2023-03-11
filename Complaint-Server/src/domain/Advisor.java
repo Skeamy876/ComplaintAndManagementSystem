@@ -1,5 +1,4 @@
-package models;
-
+package domain;
 
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;
@@ -9,13 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity(name="supervisor")
-@Table(name = "supervisor")
-public class Supervisor extends Person implements Serializable {
-    public Supervisor(long idNumber, String firstName, String lastName, long phoneNumber, String email) {
-        super(idNumber, firstName, lastName, phoneNumber, email);
+@Entity(name = "advisor")
+@Table(name = "advisor")
+public class Advisor extends Person implements Serializable {
+    public Advisor(String firstName, String lastName, long phoneNumber, String email) {
+        super(firstName, lastName, phoneNumber, email);
     }
 
+    public Advisor() {
+    }
 
     public void createAdvisor(){
         Session session = SessionBuilderFactory
@@ -45,7 +46,7 @@ public class Supervisor extends Person implements Serializable {
 
     }
 
-    public void delete(){
+    public void deleteAdvisor(){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
@@ -56,6 +57,4 @@ public class Supervisor extends Person implements Serializable {
         transaction.commit();
         session.close();
     }
-
-
 }

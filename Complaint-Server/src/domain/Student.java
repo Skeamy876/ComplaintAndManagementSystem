@@ -1,7 +1,8 @@
-package models;
+package domain;
 
 import factories.DbConnectorFactory;
 
+import javax.persistence.*;
 import javax.swing.*;
 import java.io.Serializable;
 import java.sql.Connection;
@@ -11,18 +12,28 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Entity(name="students")
+@Table(name = "students")
 public class Student extends Person implements Serializable {
+    @Transient
     private Connection dbConn = null;
+    @Transient
     private Statement stmt;
+    @Transient
     private ResultSet  result;
-    private ArrayList<Query> queries;
-    private ArrayList<Complaint> complaints;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Query> queries = new ArrayList<Query>();
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Complaint> complaints = new ArrayList<Complaint>();
 
     public Student(){
         dbConn = DbConnectorFactory.getDatabaseConnection();
     }
-    public Student(long idNumber, String firstName, String lastName, long phoneNumber, String email) {
-        super(idNumber, firstName, lastName, phoneNumber, email);
+    public Student( String firstName, String lastName, long phoneNumber, String email) {
+        super(firstName, lastName, phoneNumber, email);
     }
 
     public void createStudent(Student student){
@@ -82,7 +93,8 @@ public class Student extends Person implements Serializable {
                 String lastname = result.getString("last_name");
                 String email = result.getString("email_address");
                 long phone = result.getLong("phone_number");
-                Student student = new Student(id,firstname,lastname,phone,email);
+                Student student = new Student(firstname,lastname,phone,email);
+                student.setIdNumber(id);
                 students.add(student);
             }
         } catch (SQLException e) {

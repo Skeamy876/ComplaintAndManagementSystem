@@ -1,4 +1,4 @@
-package models;
+package domain;
 
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;
@@ -6,18 +6,20 @@ import org.hibernate.Transaction;
 
 import javax.persistence.*;
 
-@Entity(name = "categories")
-@Table(name = "categories")
+@Entity
+@Table
 public class Category {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;
     @Enumerated(EnumType.STRING)
-    @Column(name = "category_name")
     private CategoryEnum categoryName;
 
-    public Category(long id, CategoryEnum categoryName) {
-        Id = id;
+    public Category(CategoryEnum categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public Category() {
     }
 
     public enum CategoryEnum{

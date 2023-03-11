@@ -1,6 +1,6 @@
 package factories;
 
-import models.*;
+import domain.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 

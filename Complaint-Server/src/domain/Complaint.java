@@ -1,4 +1,4 @@
-package models;
+package domain;
 
 
 import factories.SessionBuilderFactory;
@@ -16,10 +16,13 @@ import java.util.List;
 @Table(name = "complaints")
 public class Complaint implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long complaintId;
-    @Column(name = "student_ID")
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private Student student;
-    @Column(name = "complaint_ID")
+    @OneToOne
+    @JoinColumn(name = "category_ID")
     private Category category;
     @Column(name = "complaint_detail")
     private String complaintDetail;
@@ -38,6 +41,10 @@ public class Complaint implements Serializable {
         this.complaintDate = complaintDate;
         this.status = status;
     }
+
+    public Complaint() {
+    }
+
     public enum Status{
         OPEN,
         CLOSE

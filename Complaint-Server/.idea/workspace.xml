@@ -4,29 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="changes to SessionBuilderFactory class">
+    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="test commit">
+      <change afterPath="$PROJECT_DIR$/src/domain/Supervisor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/server/DriverTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Complaint-Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Complaint-Server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/controller/DriverTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/controller/DriverTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/controller/DriverTest.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/SessionBuilderFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/factories/SessionBuilderFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category$CategoryEnum.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category$CategoryEnum.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint$Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint$Status.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Query.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Query.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Student.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/DriverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/DriverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/factories/hibernate.cfg.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category$CategoryEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint$Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Query.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Student.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/DriverTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/factories/SessionBuilderFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/factories/SessionBuilderFactory.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/factories/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/factories/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Advisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Advisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Complaint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Query.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Supervisor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Advisor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Complaint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Advisor.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,29 +59,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/awins/Documents/Projects/AdvancedProgramming/ComplaintAndMangementSystem/Complaint-Server&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/awins/Documents/Projects/AdvancedProgramming/apache-log4j-2.20.0-bin/log4j-api-2.20.0.jar",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\awins\Documents\Projects\AdvancedProgramming\ComplaintAndMangementSystem\Complaint-Server\src\resources" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\awins\Documents\Projects\AdvancedProgramming\ComplaintAndMangementSystem\Complaint-Server\src\factories" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="DriverTest" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="controller.DriverTest" />
+      <option name="MAIN_CLASS_NAME" value="server.DriverTest" />
       <module name="Complaint-Server" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="controller.*" />
+          <option name="PATTERN" value="server.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -123,12 +130,41 @@
       <option name="project" value="LOCAL" />
       <updated>1678397966073</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test commit">
+      <created>1678548490851</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1678548490851</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="server created" />
     <MESSAGE value="changes to SessionBuilderFactory class" />
-    <option name="LAST_COMMIT_MESSAGE" value="changes to SessionBuilderFactory class" />
+    <MESSAGE value="test commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="test commit" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.hibernate.MappingException" package="org.hibernate" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

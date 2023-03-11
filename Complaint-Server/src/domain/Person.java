@@ -1,13 +1,12 @@
-package models;
+package domain;
 
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class  Person {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idNumber;
     @Column(name = "first_name")
     private String firstName;
@@ -17,8 +16,8 @@ public abstract class  Person {
     private long phoneNumber;
     @Column(name = "email_address")
     private String email;
-    public Person(long idNumber, String firstName, String lastName, long phoneNumber, String email) {
-        this.idNumber = idNumber;
+    public Person( String firstName, String lastName, long phoneNumber, String email) {
+        this.idNumber = 0;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
