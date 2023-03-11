@@ -102,6 +102,7 @@ public class Query implements Serializable {
     }
 
 
+    // Needs fixing
     public void createQuery(){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
