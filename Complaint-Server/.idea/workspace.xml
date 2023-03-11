@@ -4,34 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="test commit">
-      <change afterPath="$PROJECT_DIR$/src/domain/Supervisor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/DriverTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Complaint-Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Complaint-Server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/controller/DriverTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/SessionBuilderFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/factories/SessionBuilderFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/factories/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category$CategoryEnum.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint$Status.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Query.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Student.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/DriverTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/SessionBuilderFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/factories/SessionBuilderFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/factories/hibernate.cfg.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/factories/hibernate.cfg.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Advisor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Complaint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Query.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Advisor.java" afterDir="false" />
-    </list>
+    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="ORM configurations working and log file configure. Server configuration stated" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -137,7 +110,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678548490851</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="ORM configurations working and log file configure. Server configuration stated">
+      <created>1678563368770</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1678563368770</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -155,7 +135,8 @@
     <MESSAGE value="server created" />
     <MESSAGE value="changes to SessionBuilderFactory class" />
     <MESSAGE value="test commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="test commit" />
+    <MESSAGE value="ORM configurations working and log file configure. Server configuration stated" />
+    <option name="LAST_COMMIT_MESSAGE" value="ORM configurations working and log file configure. Server configuration stated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
