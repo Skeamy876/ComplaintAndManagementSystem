@@ -1,6 +1,9 @@
 package domain;
 
 import factories.DbConnectorFactory;
+import factories.SessionBuilderFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.persistence.*;
 import javax.swing.*;
@@ -13,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity(name="students")
+@Entity
 @Table(name = "students")
 public class Student extends Person implements Serializable {
     @Transient
@@ -30,6 +33,7 @@ public class Student extends Person implements Serializable {
     private List<Complaint> complaints = new ArrayList<Complaint>();
 
     public Student(){
+        super();
         dbConn = DbConnectorFactory.getDatabaseConnection();
     }
     public Student( String firstName, String lastName, long phoneNumber, String email) {
@@ -109,6 +113,9 @@ public class Student extends Person implements Serializable {
 
         return students;
     }
+
+
+
 
     public void deleteStudent(long idNumber){
         String deleteStudent = "DELETE FROM students WHERE student_ID ="+idNumber;

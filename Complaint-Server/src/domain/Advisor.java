@@ -8,14 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-@Entity(name = "advisor")
-@Table(name = "advisor")
+@Entity
+@Table(name = "advisors")
 public class Advisor extends Person implements Serializable {
     public Advisor(String firstName, String lastName, long phoneNumber, String email) {
         super(firstName, lastName, phoneNumber, email);
     }
 
     public Advisor() {
+        super();
     }
 
     public void createAdvisor(){

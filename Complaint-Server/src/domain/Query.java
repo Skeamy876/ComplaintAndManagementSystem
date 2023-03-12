@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 
-@Entity(name = "query")
-@Table(name = "query")
+@Entity
+@Table(name = "queries")
 public class Query implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

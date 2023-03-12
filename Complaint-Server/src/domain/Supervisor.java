@@ -12,8 +12,8 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity(name="supervisor")
-@Table(name = "supervisor")
+@Entity
+@Table(name = "supervisors")
 public class Supervisor extends Person implements Serializable {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Query> queries;
@@ -26,6 +26,7 @@ public class Supervisor extends Person implements Serializable {
     }
 
     public Supervisor() {
+        super();
     }
 
     public List<Query> getQueries() {

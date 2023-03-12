@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 
-@Entity(name = "complaints")
+@Entity
 @Table(name = "complaints")
 public class Complaint implements Serializable {
     @Id

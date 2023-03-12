@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Timestamp;
 
 public class DriverTest {
-    private static final Logger  logger= LogManager.getLogger(DriverTest.class);
+    private static final Logger  logger = LogManager.getLogger(DriverTest.class);
 
     public static void main(String[] args) {
         Student student = new Student();
@@ -18,6 +18,7 @@ public class DriverTest {
         student.setLastName("Daniels");
         student.setPhoneNumber(9875643);
         student.setEmail("jackedaniels@hotmail.com");
+        student.setPassword("iloveschool");
         student.createStudent(student);
 
         Category category = new Category(Category.CategoryEnum.MISSING_GRADES);
@@ -34,7 +35,6 @@ public class DriverTest {
         queryTest.createQuery();
 
 
-        logger.error("Queries Ran");
 
     }
 }
