@@ -1,11 +1,10 @@
 package views;
 
-import models.Complaint;
-import models.Query;
-import models.Student;
+import controller.Client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.ObjectOutputStream;
 
 
 public class Dashboard extends JFrame{
@@ -14,8 +13,10 @@ public class Dashboard extends JFrame{
     private JMenuBar menuBar;
     private JButton createQueryOrComplaintBtn;
     private JButton viewQueryOrComplaintBtn;
+    private Client client;
 
-    public Dashboard(){
+    public Dashboard(Client client){
+        this.client = client;
         this.initializeComponents();
         this.addMenusToMenuBar();
         this.addComponentsToDesktopFrame();
@@ -54,14 +55,9 @@ public class Dashboard extends JFrame{
     }
 
     private void registerActions(){
-        createQueryOrComplaintBtn.addActionListener(e -> {
-            Query query = null;
-            Complaint complaint = null;
-            Student student = null;
-            String action = "";
-            desktop.add(new Request(query, complaint, student, action));
-
-
+            createQueryOrComplaintBtn.addActionListener(e -> {
+            ObjectOutputStream test = client.getObjOs();
+            desktop.add(new QueryComplaintFrame(client));
         });
     }
 
@@ -75,8 +71,5 @@ public class Dashboard extends JFrame{
     }
 
 
-    public static void main(String[] args) {
-        new Dashboard();
-    }
 
 }

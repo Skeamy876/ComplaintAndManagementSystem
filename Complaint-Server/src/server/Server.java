@@ -76,9 +76,7 @@ public class Server {
 
                             break;
                         case "Add Query":
-                             student = (Student) objIs.readObject(); //here for tests only, user instance should be persisted after login
                              query = (Query) objIs.readObject();
-                             query.setStudent(student);
                              query.createQuery();
                              objOs.writeObject("successful"); //should be change to something appropriate
                             break;

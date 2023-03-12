@@ -1,15 +1,19 @@
 package views;
 
-import models.Category;
-import models.Complaint;
-import models.Query;
-import models.Student;
+import controller.Client;
+import models.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.sql.Timestamp;
 
 
-public class Request extends JInternalFrame {
+
+public class QueryComplaintFrame extends JInternalFrame {
     private JLabel title;
     private JLabel typeQueryOrComplaintLabel;
     private JLabel categoryLabel;
@@ -21,13 +25,16 @@ public class Request extends JInternalFrame {
     private String categoryNames [] = {String.valueOf(Category.CategoryEnum.MISSING_GRADES), String.valueOf(Category.CategoryEnum.INCORRECT_ACADEMIC_RECORD), String.valueOf(Category.CategoryEnum.NO_TIMETABLE), String.valueOf(Category.CategoryEnum.BARRED_FROM_EXAMS), String.valueOf(Category.CategoryEnum.NO_FINANCIAL_STATUS_UPDATE),String.valueOf(Category.CategoryEnum.STAFF_MISCONDUCT)};
     private JTextArea queryOrComplaintDetailsTextArea;
     private JButton submitBtn;
+    private Client client;
 
 
-    public Request(Query query, Complaint complaint, Student student, String action) {
+    public QueryComplaintFrame(Client client) {
         super("Create Query Or Complaint", true, true, true, true);
+        this.client = client;
         this.initializeComponents();
         this.addComponentsToPanels();
         this.addComponentsToWindow();
+        this.registerActions();
         this.setWindowProperties();
     }
 
@@ -80,6 +87,56 @@ public class Request extends JInternalFrame {
        this.add(categoryPanel);
        this.add(queryOrComplaintDetailsPanel);
        this.add(submitBtnPanel);
+    }
+
+    private void registerActions() {
+        submitBtn.addActionListener(e -> {
+                String queryOrComplaint = (String) typeQueryOrComplaintComboBox.getSelectedItem();
+                String category = (String) categoryNameComboBox.getSelectedItem();
+                String queryOrComplaintDetails = queryOrComplaintDetailsTextArea.getText();
+
+
+            ObjectInputStream objIs = client.getObjIs();
+            ObjectOutputStream objOs = client.getObjOs();
+            Student  studentObj = client.getStudent();
+
+
+                if(queryOrComplaint.equals("Query")){
+                    Query query = new Query();
+                    query.setCategory(new Category(Category.CategoryEnum.valueOf(category)));
+                    query.setQueryDetail(queryOrComplaintDetails);
+                    query.setStudent(client.getStudent());
+                    query.setQueryDate(new Timestamp(System.currentTimeMillis()));
+                    query.setStatus(Complaint.Status.OPEN);
+
+                    try {
+                        objOs.writeObject("Add Query");
+                        objOs.writeObject(query);
+                        String response = (String) objIs.readObject();
+                        if (response.equals("successful")){
+                            JOptionPane.showMessageDialog(this, "Query Submitted Successfully","Query Submit Status",JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Query Submission Failed","Query Submit Status",JOptionPane.ERROR_MESSAGE);
+                        }
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }else if(queryOrComplaint.equals("Complaint")){
+                    Complaint complaint = new Complaint();
+                    complaint.setCategory(new Category(Category.CategoryEnum.valueOf(category)));
+                    complaint.setComplaintDetail(queryOrComplaintDetails);
+                    complaint.setStudent(client.getStudent());
+                    complaint.setComplaintDate(new Timestamp(System.currentTimeMillis()));
+                    complaint.setStatus(Complaint.Status.OPEN);
+                    try {
+                        objOs.writeObject(complaint);
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                }
+        });
     }
 
     private void setWindowProperties() {

@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/.idea/uiDesigner.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/Dashboard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/Dashboard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/Request.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/QueryComplaintFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/utechcomplaintdb.sql" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/factories/utechcomplaintdb.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/DriverTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/DriverTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/DriverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/DriverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +104,7 @@
       <workItem from="1678504279201" duration="2883000" />
       <workItem from="1678546604997" duration="1213000" />
       <workItem from="1678574233191" duration="7619000" />
-      <workItem from="1678638904102" duration="2237000" />
+      <workItem from="1678638904102" duration="6079000" />
     </task>
     <task id="LOCAL-00001" summary="server created">
       <created>1678323799076</created>
