@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="Updated sql config">
+    <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Advisor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Category.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Complaint.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Person.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Query.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Student.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Supervisor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Complaint-Server.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Complaint-Server.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Advisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Advisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Complaint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Person.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Query.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/domain/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/domain/Supervisor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/DriverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/DriverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/utechcomplaintdb (1).sql" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +99,7 @@
       <workItem from="1678488304629" duration="1173000" />
       <workItem from="1678504279201" duration="2883000" />
       <workItem from="1678546604997" duration="1213000" />
-      <workItem from="1678574233191" duration="5439000" />
+      <workItem from="1678574233191" duration="7619000" />
     </task>
     <task id="LOCAL-00001" summary="server created">
       <created>1678323799076</created>
@@ -144,7 +143,14 @@
       <option name="project" value="LOCAL" />
       <updated>1678563668119</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="user authentication configure. Server configure to connect with client">
+      <created>1678579932970</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1678579932970</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -164,7 +170,8 @@
     <MESSAGE value="test commit" />
     <MESSAGE value="ORM configurations working and log file configure. Server configuration stated" />
     <MESSAGE value="Updated sql config" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated sql config" />
+    <MESSAGE value="user authentication configure. Server configure to connect with client" />
+    <option name="LAST_COMMIT_MESSAGE" value="user authentication configure. Server configure to connect with client" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
