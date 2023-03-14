@@ -79,4 +79,15 @@ public abstract class  Person {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "idNumber=" + idNumber +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

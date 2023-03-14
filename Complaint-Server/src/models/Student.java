@@ -1,12 +1,10 @@
-package domain;
+package models;
 
 import factories.DbConnectorFactory;
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.persistence.*;
 import javax.swing.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+@Entity(name = "Student")
 @Table(name = "students")
 public class Student extends Person implements Serializable {
+    @Serial
+    private static  final long serialVersionUID = 1755490458986052803L;
     @Transient
     private Connection dbConn = null;
     @Transient
@@ -26,11 +26,12 @@ public class Student extends Person implements Serializable {
     @Transient
     private ResultSet  result;
 
+    @OneToMany(cascade = CascadeType.ALL , orphanRemoval = true)
+    private List<Complaint> complaints = new ArrayList<Complaint>();
+
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Query> queries = new ArrayList<Query>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Complaint> complaints = new ArrayList<Complaint>();
 
     public Student(){
         super();
@@ -40,13 +41,16 @@ public class Student extends Person implements Serializable {
         super(firstName, lastName, phoneNumber, email);
     }
 
+
+    // NEEDS TO BE FIXED, NOT PERSISTING USER OBJECT
     public void createStudent(Student student){
-        String insertSQL = "INSERT INTO utechcomplaintdb.students (student_ID,first_name,last_name,email_address,phone_number)"
-                +"VALUES('"+student.getIdNumber()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getEmail()+"','"+student.getPhoneNumber()+"');";
+        String insertSQL = "INSERT INTO utechcomplaintdb.students (idNumber,email_address,first_name,last_name,password,phone_number)"
+                +"VALUES('"+student.getIdNumber()+"','"+student.getEmail()+"','"+student.getFirstName()+"','"+student.getLastName()+"','"+student.getPassword()+"','"+student.getPhoneNumber()+"');";
         try{
             stmt = dbConn.createStatement();
             int inserted = stmt.executeUpdate(insertSQL);
             if(inserted == 1){
+                //replace with logs
                 JOptionPane.showMessageDialog(null,"Student record added","Insertion status",JOptionPane.INFORMATION_MESSAGE);
             }else {
                 JOptionPane.showMessageDialog(null,"Student record Failed","Insertion status",JOptionPane.ERROR_MESSAGE);
@@ -60,7 +64,7 @@ public class Student extends Person implements Serializable {
 
     }
     public Student findStudent(long idNumber){
-        String selectSql = "SELECT * FROM students WHERE student_ID ="+ idNumber;
+        String selectSql = "SELECT * FROM students WHERE idNumber ="+ idNumber;
         Student student = new Student();
 
         try{
@@ -68,10 +72,11 @@ public class Student extends Person implements Serializable {
             result= stmt.executeQuery(selectSql);
 
             if (result.next()){
-                student.setIdNumber(result.getLong("student_ID"));
+                student.setIdNumber(result.getLong("idNumber"));
                 student.setFirstName(result.getString("first_name"));
                 student.setLastName(result.getString("last_name"));
                 student.setEmail(result.getString("email_address"));
+                student.setPassword(result.getString("password"));
                 student.setPhoneNumber(result.getLong("phone_number"));
 
             }
@@ -131,4 +136,27 @@ public class Student extends Person implements Serializable {
         }
     }
 
+    public List<Complaint> getComplaints() {
+        return complaints;
+    }
+
+    public void setComplaints(List<Complaint> complaints) {
+        this.complaints = complaints;
+    }
+
+    public List<Query> getQueries() {
+        return queries;
+    }
+
+    public void setQueries(List<Query> queries) {
+        this.queries = queries;
+    }
+
+    public Connection getDbConn() {
+        return dbConn;
+    }
+
+    public void setDbConn(Connection dbConn) {
+        this.dbConn = dbConn;
+    }
 }

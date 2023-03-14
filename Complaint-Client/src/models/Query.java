@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Query implements Serializable {
+    private static  final long serialVersionUID = 760771714612821918L;
     private long queryId;
     private Category category;
     private String queryDetail;

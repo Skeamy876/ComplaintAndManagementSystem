@@ -13,7 +13,7 @@ public class Dashboard extends JFrame{
     private JMenuBar menuBar;
     private JButton createQueryOrComplaintBtn;
     private JButton viewQueryOrComplaintBtn;
-    private Client client;
+    private final Client client;
 
     public Dashboard(Client client){
         this.client = client;

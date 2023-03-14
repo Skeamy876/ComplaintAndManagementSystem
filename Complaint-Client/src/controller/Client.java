@@ -14,26 +14,25 @@ public class Client {
     private  ObjectOutputStream objOs;
     private Socket connectionSocket;
 
-    private String action = "";
     private Dashboard dashboard;
     private Student student;
 
 
 
     public Client(Student student) {
+        this.student = student;
+        this.dashboard = new Dashboard(this);
         this.createConnection();
         this.configureStreams();
-        this.dashboard = new Dashboard(this);
-        this.student = student;
-
-
     }
 
 
 
     private void createConnection() {
         try {
-            connectionSocket = new Socket("12.0.0.1", 8888);
+            connectionSocket = new Socket("127.0.0.1", 8888);
+            System.out.println("Connected to server");
+
         } catch (UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
@@ -50,6 +49,14 @@ public class Client {
         }
     }
 
+    public void sendRequest(String action){
+        try {
+            objOs.writeObject(action);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void closeConnection(){
         try {
             objOs.close();
@@ -61,21 +68,6 @@ public class Client {
     }
 
 
-    public ObjectInputStream getObjIs() {
-        return objIs;
-    }
-
-    public void setObjIs(ObjectInputStream objIs) {
-        this.objIs = objIs;
-    }
-
-    public ObjectOutputStream getObjOs() {
-        return objOs;
-    }
-
-    public void setObjOs(ObjectOutputStream objOs) {
-        this.objOs = objOs;
-    }
 
     public Socket getConnectionSocket() {
         return connectionSocket;
@@ -91,5 +83,14 @@ public class Client {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+
+    public ObjectInputStream getObjIs() {
+        return objIs;
+    }
+
+    public ObjectOutputStream getObjOs() {
+        return objOs;
     }
 }

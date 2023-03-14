@@ -1,4 +1,4 @@
-package domain;
+package models;
 
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;

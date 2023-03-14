@@ -1,15 +1,16 @@
-package domain;
+package models;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 
 @MappedSuperclass
-public abstract class  Person {
+public abstract class  Person implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long idNumber;
     @Column(name = "first_name")
     private String firstName;
@@ -88,4 +89,15 @@ public abstract class  Person {
     }
 
 
+    @Override
+    public String toString() {
+        return "Person{" +
+                "idNumber=" + idNumber +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber=" + phoneNumber +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

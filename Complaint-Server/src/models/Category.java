@@ -1,14 +1,18 @@
-package domain;
+package models;
 
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "categories")
-public class Category {
+public class Category implements Serializable {
+    @Serial
+    private static  final long serialVersionUID = 594736794832392453L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long Id;

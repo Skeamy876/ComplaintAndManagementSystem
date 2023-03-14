@@ -1,29 +1,30 @@
-package domain;
+package models;
 
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-@Entity
+@Entity(name = "Query")
 @Table(name = "queries")
 public class Query implements Serializable {
+    @Serial
+    private static  final long serialVersionUID = 760771714612821918L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long queryId;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_ID")
     private Category category;
     @Column(name="query_detail")
     private String queryDetail;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Student student;
     @Column(name="query_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date queryDate;
@@ -31,14 +32,14 @@ public class Query implements Serializable {
     @Column(name="status")
     private Complaint.Status status;
 
-    public Query( Category category, String queryDetail, Student student, Date queryDate, Complaint.Status status) {
+    public Query( Category category, String queryDetail, Date queryDate, Complaint.Status status) {
         this.queryId = 0;
         this.category = category;
         this.queryDetail = queryDetail;
-        this.student = student;
         this.queryDate = queryDate;
         this.status = status;
     }
+
 
     public Query() {
     }
@@ -67,14 +68,6 @@ public class Query implements Serializable {
         this.queryDetail = queryDetail;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     public Date getQueryDate() {
         return queryDate;
     }
@@ -97,7 +90,7 @@ public class Query implements Serializable {
                 "queryId=" + queryId +
                 ", category=" + category +
                 ", queryDetail='" + queryDetail + '\'' +
-                ", student=" + student +
+
                 ", queryDate=" + queryDate +
                 ", status=" + status +
                 '}';

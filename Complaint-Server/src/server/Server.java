@@ -1,7 +1,7 @@
 package server;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import domain.*;
+import models.*;
 import factories.DbConnectorFactory;
 import factories.SessionBuilderFactory;
 import org.hibernate.Session;
@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 
 public class Server {
     private ObjectOutputStream objOs;
@@ -48,12 +49,9 @@ public class Server {
     private void waitForRequests() {
         DbConnectorFactory.getDatabaseConnection();
         String action = " ";
-        Student student = null;
         Query query = null;
-        Complaint complaint = null;
-        Advisor advisor = null;
-        Supervisor supervisor = null;
         Person person = null;
+        Student student = null;
         boolean flag = false;
 
         try {
@@ -61,7 +59,7 @@ public class Server {
                 conectionSocket = serverSocket.accept();
                 this.configureStreams();
                 try {
-                    action = (String)  objIs.readObject();
+                    action = (String) objIs.readObject();
 
                     //configure logging messages for all successful and fail actions in switch statement
                     switch (action){
@@ -76,16 +74,29 @@ public class Server {
 
                             break;
                         case "Add Query":
-                             query = (Query) objIs.readObject();
-                             query.createQuery();
-                             objOs.writeObject("successful"); //should be change to something appropriate
+                             student = (Student) objIs.readObject();
+                            student.setFirstName("Jack");
+                            student.setLastName("Daniels");
+                            student.setPhoneNumber(9875643);
+                            student.setEmail("jackedaniels@hotmail.com");
+                            student.setPassword("iloveschool");
+                             Session session = SessionBuilderFactory
+                                    .getSessionFactory()
+                                    .getCurrentSession();
+
+                            Transaction transaction = session.beginTransaction();
+                            session.save(student);
+                            transaction.commit();
+                            session.close();
+                            System.out.println(student);
+                            objOs.writeObject("successful"); //should be change to something appropriate
                             break;
                         case "Add Complaint":
                             break;
                     }
 
                 } catch (ClassNotFoundException e) {
-                    throw new RuntimeException(e);
+                    e.printStackTrace();
                 }
                 this.closeConnection();
             }

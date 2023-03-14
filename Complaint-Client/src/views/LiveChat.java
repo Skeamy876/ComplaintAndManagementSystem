@@ -1,12 +1,14 @@
 package views;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class LiveChat extends JInternalFrame implements ActionListener {
-    @Override
-    public void actionPerformed(ActionEvent e) {
+public class LiveChat {
 
+
+    private JTextField textField1;
+    private JButton sendButton;
+
+    public static void main(String[] args) {
+        new LiveChat();
     }
 }

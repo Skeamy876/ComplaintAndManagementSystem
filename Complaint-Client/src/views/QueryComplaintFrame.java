@@ -94,24 +94,24 @@ public class QueryComplaintFrame extends JInternalFrame {
                 String queryOrComplaint = (String) typeQueryOrComplaintComboBox.getSelectedItem();
                 String category = (String) categoryNameComboBox.getSelectedItem();
                 String queryOrComplaintDetails = queryOrComplaintDetailsTextArea.getText();
-
-
-            ObjectInputStream objIs = client.getObjIs();
-            ObjectOutputStream objOs = client.getObjOs();
-            Student  studentObj = client.getStudent();
-
+                ObjectInputStream objIs = client.getObjIs();
+                ObjectOutputStream objOs = client.getObjOs();
 
                 if(queryOrComplaint.equals("Query")){
                     Query query = new Query();
                     query.setCategory(new Category(Category.CategoryEnum.valueOf(category)));
                     query.setQueryDetail(queryOrComplaintDetails);
-                    query.setStudent(client.getStudent());
                     query.setQueryDate(new Timestamp(System.currentTimeMillis()));
                     query.setStatus(Complaint.Status.OPEN);
 
+                    Student student = client.getStudent();
+
+                    System.out.println(student);
+
                     try {
-                        objOs.writeObject("Add Query");
-                        objOs.writeObject(query);
+                        client.sendRequest("Add Query");
+                        student.getQueries().add(query);
+                        objOs.writeObject(student);
                         String response = (String) objIs.readObject();
                         if (response.equals("successful")){
                             JOptionPane.showMessageDialog(this, "Query Submitted Successfully","Query Submit Status",JOptionPane.INFORMATION_MESSAGE);
@@ -121,7 +121,7 @@ public class QueryComplaintFrame extends JInternalFrame {
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
                     } catch (ClassNotFoundException ex) {
-                        throw new RuntimeException(ex);
+                       throw new RuntimeException(ex);
                     }
                 }else if(queryOrComplaint.equals("Complaint")){
                     Complaint complaint = new Complaint();
