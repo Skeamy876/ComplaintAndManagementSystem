@@ -54,6 +54,8 @@ public class Server {
         Student student = null;
         boolean flag = false;
 
+
+
         try {
             while (true){
                 conectionSocket = serverSocket.accept();
@@ -74,30 +76,48 @@ public class Server {
 
                             break;
                         case "Add Query":
-                             student = (Student) objIs.readObject();
+                            student = (Student) objIs.readObject();
                             student.setFirstName("Jack");
                             student.setLastName("Daniels");
                             student.setPhoneNumber(9875643);
                             student.setEmail("jackedaniels@hotmail.com");
                             student.setPassword("iloveschool");
-                             Session session = SessionBuilderFactory
+                            Session session = SessionBuilderFactory
                                     .getSessionFactory()
                                     .getCurrentSession();
-
                             Transaction transaction = session.beginTransaction();
                             session.save(student);
                             transaction.commit();
-                            session.close();
-                            System.out.println(student);
-                            objOs.writeObject("successful"); //should be change to something appropriate
+                            objOs.writeObject("successful");
                             break;
                         case "Add Complaint":
+                            student = (Student) objIs.readObject();
+                            student.setIdNumber(10);
+                            student.saveComplaint();
+                            objOs.writeObject("successful");
                             break;
+
+                        case "Add View All student Queries":
+                            student = (Student) objIs.readObject();
+                            student.setIdNumber(10);
+                            objOs.writeObject("successful");
+                            break;
+                        case "Add View All student Complaints":
+
+                            break;
+                        case "Add View All student Queries Responses":
+
+                            break;
+                        case "Add View All student Complaints Responses":
+
+                            break;
+
                     }
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
+
                 this.closeConnection();
             }
         }catch (EOFException ex){

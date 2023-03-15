@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,13 +16,15 @@ import java.util.List;
 @Entity
 @Table(name = "complaints")
 public class Complaint implements Serializable {
+    @Serial
+    private static  final long serialVersionUID = 5639873163017606842L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long complaintId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Student student;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_ID")
     private Category category;
     @Column(name = "complaint_detail")

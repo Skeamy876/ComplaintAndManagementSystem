@@ -96,6 +96,7 @@ public class QueryComplaintFrame extends JInternalFrame {
                 String queryOrComplaintDetails = queryOrComplaintDetailsTextArea.getText();
                 ObjectInputStream objIs = client.getObjIs();
                 ObjectOutputStream objOs = client.getObjOs();
+            Student student = client.getStudent();
 
                 if(queryOrComplaint.equals("Query")){
                     Query query = new Query();
@@ -103,10 +104,6 @@ public class QueryComplaintFrame extends JInternalFrame {
                     query.setQueryDetail(queryOrComplaintDetails);
                     query.setQueryDate(new Timestamp(System.currentTimeMillis()));
                     query.setStatus(Complaint.Status.OPEN);
-
-                    Student student = client.getStudent();
-
-                    System.out.println(student);
 
                     try {
                         client.sendRequest("Add Query");
@@ -127,13 +124,23 @@ public class QueryComplaintFrame extends JInternalFrame {
                     Complaint complaint = new Complaint();
                     complaint.setCategory(new Category(Category.CategoryEnum.valueOf(category)));
                     complaint.setComplaintDetail(queryOrComplaintDetails);
-                    complaint.setStudent(client.getStudent());
                     complaint.setComplaintDate(new Timestamp(System.currentTimeMillis()));
                     complaint.setStatus(Complaint.Status.OPEN);
+
                     try {
-                        objOs.writeObject(complaint);
+                        client.sendRequest("Add Complaint");
+                        student.getComplaints().add(complaint);
+                        objOs.writeObject(student);
+                        String response = (String) objIs.readObject();
+                        if (response.equals("successful")){
+                            JOptionPane.showMessageDialog(this, "Complaint Submitted Successfully","Query Submit Status",JOptionPane.INFORMATION_MESSAGE);
+                        }else{
+                            JOptionPane.showMessageDialog(this, "Complaint Submission Failed","Query Submit Status",JOptionPane.ERROR_MESSAGE);
+                        }
                     } catch (IOException ioException) {
                         ioException.printStackTrace();
+                    } catch (ClassNotFoundException ex) {
+                        throw new RuntimeException(ex);
                     }
                 }
         });

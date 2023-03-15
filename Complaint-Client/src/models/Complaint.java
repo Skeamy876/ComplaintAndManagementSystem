@@ -1,10 +1,12 @@
 package models;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
 
 public class Complaint implements Serializable {
+    private static  final long serialVersionUID = 5639873163017606842L;
     private long complaintId;
     private Student student;
 

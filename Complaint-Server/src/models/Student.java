@@ -1,6 +1,9 @@
 package models;
 
 import factories.DbConnectorFactory;
+import factories.SessionBuilderFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import javax.persistence.*;
 import javax.swing.*;
@@ -133,6 +136,19 @@ public class Student extends Person implements Serializable {
             throw new RuntimeException(e);
         }catch (Exception ex) {
             System.err.println("Unexpected error occured"+ ex.getMessage());
+        }
+    }
+    public void saveComplaint(){
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        Student studentDTO = (Student) session.get(Student.class, this.getIdNumber());
+        if (studentDTO.getIdNumber() == this.getIdNumber()){
+            studentDTO.getComplaints().add(this.getComplaints().get(0));
+            session.save(studentDTO);
+            transaction.commit();
         }
     }
 
