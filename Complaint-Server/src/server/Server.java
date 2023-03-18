@@ -1,177 +1,40 @@
 package server;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
-import models.*;
-import factories.DbConnectorFactory;
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
-import java.io.EOFException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.LocalDate;
 
 
 public class Server {
-    private ObjectOutputStream objOs;
-    private ObjectInputStream objIs;
     private ServerSocket serverSocket;
     private Socket conectionSocket;
-
+    private int clientCount;
+    private static final Logger logger = LogManager.getLogger(Server.class);
 
     public Server(){
-        this.createConnection();
-        this.waitForRequests();
-
-    }
-
-
-
-    private void createConnection() {
         try{
             serverSocket = new ServerSocket(8888);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void configureStreams(){
-        try {
-            objOs = new ObjectOutputStream(conectionSocket.getOutputStream());
-            objIs = new ObjectInputStream(conectionSocket.getInputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    private void waitForRequests() {
-        DbConnectorFactory.getDatabaseConnection();
-        String action = " ";
-        Query query = null;
-        Person person = null;
-        Student student = null;
-        boolean flag = false;
-
-
-
-        try {
+            logger.info("Server Started, Time: "+ LocalDate.now());
             while (true){
                 conectionSocket = serverSocket.accept();
-                this.configureStreams();
-                try {
-                    action = (String) objIs.readObject();
-
-                    //configure logging messages for all successful and fail actions in switch statement
-                    switch (action){
-                        case "Authenticate":
-                            person = (Person) objIs.readObject();
-                            String dbPassword = this.getHashedPasswordFromDatabase(person.getIdNumber());
-                            flag = this.authenticateUser(person,dbPassword);
-                            if (flag == true){
-                                objOs.writeObject("login successful");
-                                //Logging message here
-                            }
-
-                            break;
-                        case "Add Query":
-                            student = (Student) objIs.readObject();
-                            student.setFirstName("Jack");
-                            student.setLastName("Daniels");
-                            student.setPhoneNumber(9875643);
-                            student.setEmail("jackedaniels@hotmail.com");
-                            student.setPassword("iloveschool");
-                            Session session = SessionBuilderFactory
-                                    .getSessionFactory()
-                                    .getCurrentSession();
-                            Transaction transaction = session.beginTransaction();
-                            session.save(student);
-                            transaction.commit();
-                            objOs.writeObject("successful");
-                            break;
-                        case "Add Complaint":
-                            student = (Student) objIs.readObject();
-                            student.setIdNumber(10);
-                            student.saveComplaint();
-                            objOs.writeObject("successful");
-                            break;
-
-                        case "Add View All student Queries":
-                            student = (Student) objIs.readObject();
-                            student.setIdNumber(10);
-                            objOs.writeObject("successful");
-                            break;
-                        case "Add View All student Complaints":
-
-                            break;
-                        case "Add View All student Queries Responses":
-
-                            break;
-                        case "Add View All student Complaints Responses":
-
-                            break;
-
-                    }
-
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                this.closeConnection();
+                ClientHandler client = new ClientHandler(conectionSocket);
+                Thread thread = new Thread(client);
+                thread.start();
+                clientCount++;
+                logger.info("Starting a thread for new client, Timme: "+LocalDate.now());
+                logger.info("Client count: "+ clientCount);
             }
-        }catch (EOFException ex){
-            ex.printStackTrace();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-    }
-
-    private boolean authenticateUser(Person person,String hashedPassword){
-        long dbId = this.getIdFromDatabase(person.getPassword());
-        BCrypt.Result result = BCrypt.verifyer().verify(person.getPassword().toCharArray(),hashedPassword);
-
-        if (dbId == person.getIdNumber() && result.verified){
-            return true;
-        }
-        return false;
-    }
-
-    private  String getHashedPasswordFromDatabase(long id){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Student student = (Student) session.createNativeQuery("SELECT * FROM  utechcomplaintdb.students,utechcomplaintdb.supervisors, utechcomplaintdb.advisors WHERE idNumber ="+id);
-        transaction.commit();
-        session.close();
-
-        return student.getPassword();
-    }
-
-    private long getIdFromDatabase(String password){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Person person = (Person) session.createNativeQuery("SELECT * FROM utechcomplaintdb.students,utechcomplaintdb.supervisors, utechcomplaintdb.advisors WHERE password ="+password);
-        transaction.commit();
-        session.close();
-
-        return person.getIdNumber();
-    }
-
-
-    private void closeConnection(){
-        try {
-            objOs.close();
-            objIs.close();
-            conectionSocket.close();
         } catch (IOException e) {
-            throw new RuntimeException(e);
+           e.printStackTrace();
+           logger.warn("IO Exception occurred within this try catch block for server");
         }
+
+
     }
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Supervisor extends Person implements Serializable {
 
+    private static  final long serialVersionUID = 1755490458986052803L;
     private List<Query> queries;
     private List<Complaint> complaints;
 

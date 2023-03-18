@@ -9,12 +9,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @Table(name = "supervisors")
 public class Supervisor extends Person implements Serializable {
+
+    @Serial
+    private static  final long serialVersionUID = 1755490458986052803L;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Query> queries;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

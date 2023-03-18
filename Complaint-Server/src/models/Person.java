@@ -2,7 +2,6 @@ package models;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-
 import javax.persistence.*;
 import java.io.Serializable;
 

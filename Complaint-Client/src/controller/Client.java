@@ -21,41 +21,41 @@ public class Client {
 
     public Client(Student student) {
         this.student = student;
-        this.dashboard = new Dashboard(this);
-        this.createConnection();
-        this.configureStreams();
-    }
-
-
-
-    private void createConnection() {
-        try {
-            connectionSocket = new Socket("127.0.0.1", 8888);
-            System.out.println("Connected to server");
-
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            this.createConnection();
+            this.configureStreams();
         }
-    }
 
-    private void configureStreams() {
-        try {
-            objIs = new ObjectInputStream(connectionSocket.getInputStream());
-            objOs = new ObjectOutputStream(connectionSocket.getOutputStream());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
-    public void sendRequest(String action){
-        try {
-            objOs.writeObject(action);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        private void createConnection() {
+            try {
+                connectionSocket = new Socket("127.0.0.1", 8888);
+                System.out.println("Connected to server");
+
+            } catch (UnknownHostException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
-    }
+
+        private void configureStreams() {
+            try {
+                objIs = new ObjectInputStream(connectionSocket.getInputStream());
+                objOs = new ObjectOutputStream(connectionSocket.getOutputStream());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        public void sendRequest(String action){
+            try {
+                objOs.writeObject(action);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
 
     public void closeConnection(){
         try {

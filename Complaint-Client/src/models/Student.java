@@ -1,12 +1,14 @@
 package models;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends Person implements Serializable {
-    private static final long serialVersionUID = 1755490458986052803L;
+    @Serial
+    private static  final long serialVersionUID = 443756519803593097L;
     private List<Query> queries = new ArrayList<Query>();
 
 

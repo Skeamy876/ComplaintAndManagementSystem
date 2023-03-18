@@ -1,46 +1,48 @@
-package guirun;
+package views;
+
+import controller.Client;
+import models.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
- 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.time.LocalDate;
+
 public class Login extends JFrame implements ActionListener {
  
     Container container = getContentPane();
-    JLabel userLabel = new JLabel("USERNAME");
+    JLabel userLabel = new JLabel("ID NUMBER");
     JLabel passwordLabel = new JLabel("PASSWORD");
     JTextField userTextField = new JTextField();
     JPasswordField passwordField = new JPasswordField();
     JButton signinButton = new JButton("SIGN IN");
     JButton changePasswordButton = new JButton("Change Password");
     JCheckBox showPassword = new JCheckBox("Show Password");
+
     
     
     private static final String USERNAME = "admin";
     private static String PASSWORD = "password123";
 
     
-    public static void main(String[] a) {
-        Login frame = new Login();
-        frame.setTitle("Login Form");
-        frame.setVisible(true);
-        frame.setBounds(10, 10, 370, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setResizable(false);
-        frame.getContentPane().setBackground(Color.LIGHT_GRAY);
- 
-    }
- 
- 
-    Login() {
+    public Login() {
+        this.setTitle("views.Login Form");
+        this.setVisible(true);
+        this.setBounds(10, 10, 370, 600);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.getContentPane().setBackground(Color.LIGHT_GRAY);
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
         addActionEvent();
  
     }
- 
+
     public void setLayoutManager() {
         container.setLayout(null);
     }
@@ -82,23 +84,46 @@ public class Login extends JFrame implements ActionListener {
             String pwdText;
             userText = userTextField.getText();
             pwdText = passwordField.getText();
-            if (userText.equalsIgnoreCase("mehtab") && pwdText.equalsIgnoreCase("12345")) {
-                JOptionPane.showMessageDialog(this, "Login Successful");
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid Username or Password");
-            }
- 
-        }
-        //Coding Part of change password  button
-        else if (e.getSource() == changePasswordButton) {
-            // Show dialog to change password
-            String newPassword = JOptionPane.showInputDialog(this, "Enter new password:");
 
-            // Update password if user entered a new one
-            if (newPassword != null && !newPassword.isEmpty()) {
-                PASSWORD = newPassword;
-                JOptionPane.showMessageDialog(this, "Password changed successfully.");
+            Student student = new Student();
+            student.setIdNumber(Long.parseLong(userText));
+            student.setPassword(pwdText);
+            Client client = new Client(student);
+
+            ObjectOutputStream objOs = client.getObjOs();
+            ObjectInputStream objIs = client.getObjIs();
+
+            boolean flag;
+
+            Category test = new Category();
+            test.setId(222222);
+            test.setCategoryName(Category.CategoryEnum.MISSING_GRADES);
+
+            Supervisor supervisor = new Supervisor();
+            supervisor.setIdNumber(333333);
+            supervisor.setFirstName("Tester");
+
+
+            try {
+                objOs.writeObject("Authenticate");
+                objOs.writeObject(student);
+                flag = (boolean) objIs.readObject();
+                objOs.flush();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
             }
+
+            if (flag) {
+                JOptionPane.showMessageDialog(this, "Login Successful");
+                Dashboard dashboard = new Dashboard(client);
+                dashboard.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
+            }
+
         }
 
 
@@ -113,6 +138,10 @@ public class Login extends JFrame implements ActionListener {
  
         }
     }
+
+
+
+
  
 }
  

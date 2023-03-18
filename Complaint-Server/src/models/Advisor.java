@@ -19,43 +19,5 @@ public class Advisor extends Person implements Serializable {
         super();
     }
 
-    public void createAdvisor(){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
 
-
-        Transaction transaction = session.beginTransaction();
-        session.save(this);
-        transaction.commit();
-        session.close();
-    }
-
-    public void updateAdvisor(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Advisor advisor = (Advisor) session.get(Advisor.class,this.getIdNumber());
-        advisor.setFirstName(this.getFirstName());
-        advisor.setLastName(this.getLastName());
-        advisor.setEmail(this.getEmail());
-        session.update(advisor);
-        transaction.commit();
-        session.close();
-
-    }
-
-    public void deleteAdvisor(){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.beginTransaction();
-        Advisor advisor = (Advisor) session.get(Advisor.class,this.getIdNumber());
-        session.delete(advisor);
-        transaction.commit();
-        session.close();
-    }
 }
