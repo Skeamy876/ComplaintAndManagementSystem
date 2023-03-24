@@ -1,17 +1,10 @@
 package models;
 
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+
 
 import javax.persistence.*;
-import javax.swing.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,12 +25,11 @@ public class Student extends Person implements Serializable {
     public Student(){
         super();
     }
-    public Student( String firstName, String lastName, long phoneNumber, String email) {
-        super(firstName, lastName, phoneNumber, email);
+
+
+    public Student(String firstName, String lastName, long phoneNumber, String email, String password) {
+        super(firstName, lastName, phoneNumber, email, password);
     }
-
-
-
 
     public List<Complaint> getComplaints() {
         return complaints;

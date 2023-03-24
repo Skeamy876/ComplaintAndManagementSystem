@@ -10,9 +10,8 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.time.LocalDate;
 
-public class Login extends JFrame implements ActionListener {
+public class LoginView extends JFrame implements ActionListener {
  
     Container container = getContentPane();
     JLabel userLabel = new JLabel("ID NUMBER");
@@ -29,7 +28,7 @@ public class Login extends JFrame implements ActionListener {
     private static String PASSWORD = "password123";
 
     
-    public Login() {
+    public LoginView() {
         this.setTitle("views.Login Form");
         this.setVisible(true);
         this.setBounds(10, 10, 370, 600);
@@ -117,8 +116,8 @@ public class Login extends JFrame implements ActionListener {
 
             if (flag) {
                 JOptionPane.showMessageDialog(this, "Login Successful");
-                Dashboard dashboard = new Dashboard(client);
-                dashboard.setVisible(true);
+                DashboardView dashboardView = new DashboardView(client);
+                dashboardView.setVisible(true);
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");

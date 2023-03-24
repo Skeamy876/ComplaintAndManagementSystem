@@ -1,8 +1,6 @@
 package models;
 
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
+
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

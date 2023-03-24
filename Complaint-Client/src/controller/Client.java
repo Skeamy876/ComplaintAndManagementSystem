@@ -1,7 +1,7 @@
 package controller;
 
 import models.Student;
-import views.Dashboard;
+import views.DashboardView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -14,7 +14,7 @@ public class Client {
     private  ObjectOutputStream objOs;
     private Socket connectionSocket;
 
-    private Dashboard dashboard;
+    private DashboardView dashboardView;
     private Student student;
 
 

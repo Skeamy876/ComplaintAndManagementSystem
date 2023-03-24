@@ -1,15 +1,9 @@
 package models;
 
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @Entity(name = "Query")
@@ -20,8 +14,8 @@ public class Query implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long queryId;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_ID")
+
+    @Column(name = "category")
     private Category category;
     @Column(name="query_detail")
     private String queryDetail;
@@ -31,6 +25,8 @@ public class Query implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name="status")
     private Complaint.Status status;
+    @ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.PERSIST)
+    private Student student;
 
     public Query( Category category, String queryDetail, Date queryDate, Complaint.Status status) {
         this.queryId = 0;
@@ -83,6 +79,14 @@ public class Query implements Serializable {
     public void setStatus(Complaint.Status status) {
         this.status = status;
     }
+    public Student getStudent() {
+
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
     @Override
     public String toString() {
@@ -97,81 +101,4 @@ public class Query implements Serializable {
     }
 
 
-    // Needs fixing
-    public void createQuery(){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.beginTransaction();
-        session.save(this);
-        transaction.commit();
-        session.close();
-    }
-
-    public Query findQuery(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Query query = (Query) session.get(Query.class,  this.queryId);
-        transaction.commit();
-        session.close();
-
-        return query;
-    }
-
-    public List<Query> findAllQueries(){
-        List<Query> queries = new ArrayList<>();
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        queries = (List<Query>) session.createNativeQuery("SELECT * FROM query")
-                .list();
-        transaction.commit();
-        session.close();
-
-
-        return queries;
-    }
-
-    public void UpdateQueryCategory(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Query query = (Query) session.get(Query.class,this.queryId);
-        query.setCategory(this.category);
-        session.update(query);
-        transaction.commit();
-        session.close();
-    }
-    public void UpdateQueryDetails(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Query query = (Query) session.get(Query.class,this.queryId);
-        query.setQueryDetail(this.queryDetail);
-        session.update(query);
-        transaction.commit();
-        session.close();
-    }
-
-    public void deleteQuery(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Query query = (Query) session.get(Query.class,this.queryId);
-        session.delete(query);
-        transaction.commit();
-        session.close();
-    }
 }

@@ -8,17 +8,17 @@ import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.sql.Timestamp;
 
+import static java.awt.Font.DIALOG;
 
 
-public class QueryComplaintFrame extends JInternalFrame {
+public class QueryComplaintFrameView extends JInternalFrame {
     private JLabel title;
     private JLabel typeQueryOrComplaintLabel;
     private JLabel categoryLabel;
     private JLabel queryOrComplaintDetailsLabel;
-    private JPanel titlePanel, typeQueryOrComplaintPanel, categoryPanel, queryOrComplaintDetailsPanel, submitBtnPanel;
+    private JPanel titlePanel, mainInnerPanel, submitBtnPanel;
     private String QueryOrComplaint []= {"Query", "Complaint"};
     private JComboBox typeQueryOrComplaintComboBox;
     private JComboBox categoryNameComboBox;
@@ -28,7 +28,7 @@ public class QueryComplaintFrame extends JInternalFrame {
     private Client client;
 
 
-    public QueryComplaintFrame(Client client) {
+    public QueryComplaintFrameView(Client client) {
         super("Create Query Or Complaint", true, true, true, true);
         this.client = client;
         this.initializeComponents();
@@ -40,53 +40,61 @@ public class QueryComplaintFrame extends JInternalFrame {
 
 
     private void initializeComponents(){
-        title = new JLabel("Create Complaint Or Query: ");
-        typeQueryOrComplaintLabel = new JLabel("Query Or Complaint: ");
-        categoryLabel = new JLabel("Category: ");
-        queryOrComplaintDetailsLabel = new JLabel("Query Or Complaint Details: ");
+        title = new JLabel("New Query Or Complaint");
+        Font font = new Font( DIALOG, Font.PLAIN, 15);
+        typeQueryOrComplaintLabel = new JLabel("Query Or Complaint ");
+        categoryLabel = new JLabel("Category ");
+        queryOrComplaintDetailsLabel = new JLabel("Query Or Complaint Details ");
+        typeQueryOrComplaintLabel.setFont(font);
+        categoryLabel.setFont(font);
+        queryOrComplaintDetailsLabel.setFont(font);
         typeQueryOrComplaintComboBox = new JComboBox(QueryOrComplaint);
         categoryNameComboBox = new JComboBox(categoryNames);
         queryOrComplaintDetailsTextArea = new JTextArea(10, 10);
         submitBtn = new JButton("Submit");
-        submitBtn.setSize(100, 50);
 
 
 
     }
     private void addComponentsToPanels(){
-        titlePanel = new JPanel( new FlowLayout(FlowLayout.CENTER));
-        titlePanel.setSize(new Dimension(900, 50));
+        this.setLayout(new BorderLayout());
+        titlePanel = new JPanel( new FlowLayout(FlowLayout.LEFT));
+        titlePanel.setSize(200, 100);
+        Font font = new Font("Verdana", Font.BOLD, 25);
+        title.setFont(font);
         titlePanel.add(title);
 
-        typeQueryOrComplaintPanel = new JPanel( new FlowLayout(FlowLayout.CENTER));
-        typeQueryOrComplaintLabel.setSize(new Dimension(200, 50));
-        typeQueryOrComplaintComboBox.setSize(new Dimension(200, 50));
-        typeQueryOrComplaintPanel.add(typeQueryOrComplaintLabel);
-        typeQueryOrComplaintPanel.add(typeQueryOrComplaintComboBox);
+        mainInnerPanel = new JPanel( new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(20, 50, 20, 50);
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridwidth = 1;
+        gbc.weightx = 0.5;
+        gbc.ipadx = 0;
+        gbc.ipady = 0;
 
-        categoryPanel = new JPanel( new FlowLayout(FlowLayout.CENTER));
-        categoryLabel.setSize(new Dimension(200, 50));
-        categoryNameComboBox.setSize(new Dimension(200, 50));
-        categoryPanel.add(categoryLabel);
-        categoryPanel.add(categoryNameComboBox);
+        mainInnerPanel.add(typeQueryOrComplaintLabel, gbc);
+        mainInnerPanel.add(typeQueryOrComplaintComboBox, gbc);
 
-        queryOrComplaintDetailsPanel = new JPanel( new FlowLayout(FlowLayout.CENTER));
-        queryOrComplaintDetailsPanel.setSize(250,250);
-        queryOrComplaintDetailsTextArea.setSize(250,250);
-        queryOrComplaintDetailsPanel.add(queryOrComplaintDetailsLabel);
-        queryOrComplaintDetailsPanel.add(queryOrComplaintDetailsTextArea);
+        gbc.gridy = 1;
+        mainInnerPanel.add(categoryLabel, gbc);
+        mainInnerPanel.add(categoryNameComboBox, gbc);
+
+        gbc.gridy = 2;
+        mainInnerPanel.add(queryOrComplaintDetailsLabel, gbc);
+        mainInnerPanel.add(queryOrComplaintDetailsTextArea, gbc);
 
         submitBtnPanel = new JPanel( new FlowLayout(FlowLayout.CENTER));
-        submitBtnPanel.setSize(new Dimension(900, 50));
+        submitBtnPanel.setPreferredSize(new Dimension(400, 60));
+        submitBtn.setPreferredSize(new Dimension(100, 40));
         submitBtnPanel.add(submitBtn);
 
     }
     private void addComponentsToWindow() {
-       this.add(titlePanel);
-       this.add(typeQueryOrComplaintPanel);
-       this.add(categoryPanel);
-       this.add(queryOrComplaintDetailsPanel);
-       this.add(submitBtnPanel);
+         this.add(titlePanel, BorderLayout.NORTH);
+         this.add(mainInnerPanel, BorderLayout.CENTER);
+         this.add(submitBtnPanel, BorderLayout.SOUTH);
     }
 
     private void registerActions() {
@@ -149,11 +157,11 @@ public class QueryComplaintFrame extends JInternalFrame {
     private void setWindowProperties() {
         this.setTitle("Create Complaint Or Query");
         this.setSize(900, 600);
-        this.setLayout(new FlowLayout(FlowLayout.LEADING));
         this.setResizable(false);
         this.setClosable(true);
         this.setVisible(true);
     }
+
 
 
 

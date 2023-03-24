@@ -1,16 +1,10 @@
 package models;
 
 
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 
 @Entity
@@ -19,13 +13,12 @@ public class Complaint implements Serializable {
     @Serial
     private static  final long serialVersionUID = 5639873163017606842L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long complaintId;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Student student;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_ID")
+    @Column(name = "category")
     private Category category;
     @Column(name = "complaint_detail")
     private String complaintDetail;
@@ -117,80 +110,4 @@ public class Complaint implements Serializable {
     }
 
 
-    public void createComplaint(){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.beginTransaction();
-        session.save(this);
-        transaction.commit();
-        session.close();
-    }
-
-    public Complaint findComplaint(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Complaint complaint = (Complaint) session.get(Complaint.class,  this.complaintId);
-        transaction.commit();
-        session.close();
-
-        return complaint;
-    }
-
-    public List<Complaint> findAllQueries(){
-        List<Complaint> complaints = new ArrayList<>();
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        complaints = (List<Complaint>) session.createNativeQuery("SELECT * FROM complaints")
-                .list();
-        transaction.commit();
-        session.close();
-
-
-        return complaints;
-    }
-
-    public void UpdateComplaintCategory(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class,this.complaintId);
-        Complaint.setCategory(this.category);
-        session.update(Complaint);
-        transaction.commit();
-        session.close();
-    }
-    public void UpdateComplaintDetails(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class,this.complaintId);
-        Complaint.setComplaintDetail(this.complaintDetail);
-        session.update(Complaint);
-        transaction.commit();
-        session.close();
-    }
-
-    public void deleteComplaint(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class,this.complaintId);
-        session.delete(Complaint);
-        transaction.commit();
-        session.close();
-    }
 }

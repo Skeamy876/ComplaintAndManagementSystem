@@ -1,22 +1,12 @@
 package models;
 
-import factories.SessionBuilderFactory;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "categories")
 public class Category implements Serializable {
-    @Serial
     private static  final long serialVersionUID = 594736794832392453L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private long Id;
-    @Enumerated(EnumType.STRING)
+
     private CategoryEnum categoryName;
 
     public Category(CategoryEnum categoryName) {
@@ -50,26 +40,6 @@ public class Category implements Serializable {
     public void setCategoryName(CategoryEnum categoryName) {
         this.categoryName = categoryName;
     }
-    public void CreateCategory(){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
-        session.save(this);
-        transaction.commit();
-        session.close();
-    }
 
-    public void deleteComplaint(){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class,this.Id);
-        session.delete(Complaint);
-        transaction.commit();
-        session.close();
-    }
 }

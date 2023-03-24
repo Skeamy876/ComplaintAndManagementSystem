@@ -1,13 +1,14 @@
 package views;
 
 import controller.Client;
+import models.Student;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.ObjectOutputStream;
 
 
-public class Dashboard extends JFrame{
+public class DashboardView extends JFrame{
     private JDesktopPane desktop;
     private JMenu accountDetails ;
     private JMenuBar menuBar;
@@ -15,7 +16,7 @@ public class Dashboard extends JFrame{
     private JButton viewQueryOrComplaintBtn;
     private final Client client;
 
-    public Dashboard(Client client){
+    public DashboardView(Client client){
         this.client = client;
         this.initializeComponents();
         this.addMenusToMenuBar();
@@ -29,7 +30,7 @@ public class Dashboard extends JFrame{
         this.setTitle("Complaint-Query Management System");
         desktop= new JDesktopPane();
         menuBar = new JMenuBar();
-        accountDetails = new JMenu("Acoount");
+        accountDetails = new JMenu("Acount");
         createQueryOrComplaintBtn = new JButton("Create Query Or Complaint");
         viewQueryOrComplaintBtn = new JButton("View Query or Complaint");
 
@@ -56,8 +57,7 @@ public class Dashboard extends JFrame{
 
     private void registerActions(){
             createQueryOrComplaintBtn.addActionListener(e -> {
-            ObjectOutputStream test = client.getObjOs();
-            desktop.add(new QueryComplaintFrame(client));
+            desktop.add(new QueryComplaintFrameView(client));
         });
     }
 

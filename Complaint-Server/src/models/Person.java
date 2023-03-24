@@ -3,11 +3,15 @@ package models;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 
 
 @MappedSuperclass
 public abstract class  Person implements Serializable {
+    @Serial
+    private static  final long serialVersionUID = 333148454057186020L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long idNumber;
@@ -28,6 +32,14 @@ public abstract class  Person implements Serializable {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public Person(String firstName, String lastName, long phoneNumber, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
     }
 
     public Person() {

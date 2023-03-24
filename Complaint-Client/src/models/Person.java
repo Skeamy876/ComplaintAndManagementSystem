@@ -4,6 +4,7 @@ package models;
 import java.io.Serializable;
 
 public abstract class  Person implements Serializable {
+    private static  final long serialVersionUID = 333148454057186020L;
     private long idNumber;
 
     private String firstName;
