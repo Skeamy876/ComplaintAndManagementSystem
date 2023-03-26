@@ -5,21 +5,36 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="new updates">
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/DimensionInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/GridConstraints.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/GridLayoutManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/HorizontalInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/LayoutState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/Spacer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/Util.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/QueryComplaintFrame.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Category$CategoryEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Category.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Complaint$Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Complaint.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Complaint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Query.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Query.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Student.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/controller/DriverTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/controller/DriverTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/models/Category.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/models/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Complaint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/models/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/DashboardView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/QueryComplaintFrameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/QueryComplaintFrameView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/actions/ResponseActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/ResponseActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/factories/SessionBuilderFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/factories/SessionBuilderFactory.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category$CategoryEnum.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Category.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint$Status.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Complaint.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Query.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Query.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Student.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/factories/SessionBuilderFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/factories/SessionBuilderFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Category.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Complaint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Complaint.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Query.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Query.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -31,6 +46,7 @@
       <list>
         <option value="Tag Library Descriptor" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -117,7 +133,11 @@
       <workItem from="1679529688129" duration="1640000" />
       <workItem from="1679533889562" duration="1754000" />
       <workItem from="1679584916441" duration="11000" />
-      <workItem from="1679616681821" duration="4651000" />
+      <workItem from="1679616681821" duration="4709000" />
+      <workItem from="1679700582357" duration="16210000" />
+      <workItem from="1679748401833" duration="6045000" />
+      <workItem from="1679793469234" duration="3399000" />
+      <workItem from="1679802978361" duration="126000" />
     </task>
     <task id="LOCAL-00001" summary="server created">
       <created>1678323799076</created>
@@ -217,7 +237,17 @@
           <properties class="java.lang.ClassNotFoundException" package="java.lang" />
           <option name="timeStamp" value="9" />
         </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="13" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="server.actions.StudentActions" memberName="result" />
+        <PinnedItemInfo parentTag="models.Student" memberName="lastName" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

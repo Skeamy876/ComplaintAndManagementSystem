@@ -94,15 +94,6 @@ public class LoginView extends JFrame implements ActionListener {
 
             boolean flag;
 
-            Category test = new Category();
-            test.setId(222222);
-            test.setCategoryName(Category.CategoryEnum.MISSING_GRADES);
-
-            Supervisor supervisor = new Supervisor();
-            supervisor.setIdNumber(333333);
-            supervisor.setFirstName("Tester");
-
-
             try {
                 objOs.writeObject("Authenticate");
                 objOs.writeObject(student);

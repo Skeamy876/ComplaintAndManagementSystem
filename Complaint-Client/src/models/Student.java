@@ -37,6 +37,24 @@ public class Student extends Person implements Serializable {
     public void setComplaints(List<Complaint> complaints) {
         this.complaints = complaints;
     }
+    public void addQuery(Query query) {
+        this.queries.add(query);
+        query.setStudent(this);
+    }
 
+    public void removeQuery(Query query) {
+        this.queries.remove( query );
+        query.setStudent( null );
+    }
+
+    public void addComplaint(Complaint complaint) {
+        this.complaints.add( complaint );
+        complaint.setStudent( this );
+    }
+
+    public void removeComplaint(Complaint compplaint) {
+        this.complaints.remove( compplaint );
+        compplaint.setStudent( null );
+    }
 
 }

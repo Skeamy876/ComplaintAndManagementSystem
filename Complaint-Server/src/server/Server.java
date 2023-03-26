@@ -1,13 +1,9 @@
 package server;
 
 
-import models.Category;
-import models.Complaint;
-import models.Query;
 import models.Student;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import server.actions.QueryActions;
 import server.actions.StudentActions;
 
 import java.io.IOException;
@@ -23,25 +19,15 @@ public class Server {
     private static final Logger logger = LogManager.getLogger(Server.class);
 
     public Server(){
+
         Student student = new Student();
-        student.setIdNumber(34567);
         student.setFirstName("John");
-        student.setLastName("Lennon");
-        student.setPassword("iloveschool");
+        student.setLastName("Doe");
+        student.setPassword("3");
+        student.setIdNumber(3);
 
         StudentActions studentActions = new StudentActions();
         studentActions.createStudent(student);
-
-        Category category = new Category();
-        category.setCategoryName(Category.CategoryEnum.MISSING_GRADES);
-        Query query = new Query();
-        query.setQueryDetail("No grades for AOA");
-        query.setStatus(Complaint.Status.OPEN);
-        query.setCategory(category);
-        query.setStudent(student);
-
-        QueryActions queryActions = new QueryActions();
-        queryActions.createQuery(query);
         try{
             serverSocket = new ServerSocket(8888);
             logger.info("Server Started, Time: "+ LocalDate.now());

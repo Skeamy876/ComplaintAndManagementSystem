@@ -4,6 +4,7 @@ package models;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 public class Complaint implements Serializable {
     private static  final long serialVersionUID = 5639873163017606842L;
@@ -30,10 +31,7 @@ public class Complaint implements Serializable {
     public Complaint() {
     }
 
-    public enum Status{
-        OPEN,
-        CLOSE
-    }
+
 
     public long getComplaintId() {
         return complaintId;
@@ -51,12 +49,12 @@ public class Complaint implements Serializable {
         this.student = student;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategory() {
+        return this.category.name();
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(String category) {
+        this.category = Category.valueOf(category);
     }
 
     public String getComplaintDetail() {
@@ -76,12 +74,30 @@ public class Complaint implements Serializable {
         this.complaintDate = complaintDate;
     }
 
-    public Status getStatus() {
-        return status;
+    public String getStatus() {
+        return this.status.name();
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = Status.valueOf(status);
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if ( this == o ) {
+            return true;
+        }
+        if ( o == null || getClass() != o.getClass() ) {
+            return false;
+        }
+        Complaint complaint = (Complaint ) o;
+        return Objects.equals( complaintId, complaint.complaintId );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( complaintId );
     }
 
 

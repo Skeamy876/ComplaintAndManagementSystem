@@ -3,7 +3,10 @@ package models;
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 
 @Entity(name = "Query")
@@ -14,8 +17,8 @@ public class Query implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long queryId;
-
     @Column(name = "category")
+    @Enumerated(EnumType.STRING)
     private Category category;
     @Column(name="query_detail")
     private String queryDetail;
@@ -24,11 +27,13 @@ public class Query implements Serializable {
     private Date queryDate;
     @Enumerated(EnumType.STRING)
     @Column(name="status")
-    private Complaint.Status status;
+    private Status status;
+    @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.PERSIST)
+    private List<Response> responses = new ArrayList<Response>();
     @ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.PERSIST)
     private Student student;
 
-    public Query( Category category, String queryDetail, Date queryDate, Complaint.Status status) {
+    public Query( Category category, String queryDetail, Date queryDate, Status status) {
         this.queryId = 0;
         this.category = category;
         this.queryDetail = queryDetail;
@@ -48,12 +53,12 @@ public class Query implements Serializable {
         this.queryId = queryId;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategory() {
+        return this.category.name();
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(String category) {
+        this.category = Category.valueOf(category);
     }
 
     public String getQueryDetail() {
@@ -72,12 +77,12 @@ public class Query implements Serializable {
         this.queryDate = queryDate;
     }
 
-    public Complaint.Status getStatus() {
-        return status;
+    public String getStatus() {
+        return this.status.name();
     }
 
-    public void setStatus(Complaint.Status status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = Status.valueOf(status);
     }
     public Student getStudent() {
 
@@ -86,6 +91,25 @@ public class Query implements Serializable {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+
+
+    @Override
+    public boolean equals(Object o) {
+        if ( this == o ) {
+            return true;
+        }
+        if ( o == null || getClass() != o.getClass() ) {
+            return false;
+        }
+        Query query = (Query) o;
+        return Objects.equals( queryId, query.queryId );
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash( queryId );
     }
 
     @Override

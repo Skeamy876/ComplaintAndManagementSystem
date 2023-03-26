@@ -15,10 +15,10 @@ public class Student extends Person implements Serializable {
     @Serial
     private static  final long serialVersionUID = 443756519803593097L;
 
-    @OneToMany(cascade = CascadeType.ALL , orphanRemoval = true)
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL , orphanRemoval = true)
     private List<Complaint> complaints = new ArrayList<Complaint>();
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Query> queries = new ArrayList<Query>();
 
 
@@ -47,6 +47,25 @@ public class Student extends Person implements Serializable {
         this.queries = queries;
     }
 
+    public void addQuery(Query query) {
+        this.queries.add( query );
+        query.setStudent( this );
+    }
+
+    public void removeQuery(Query query) {
+        this.queries.remove( query );
+        query.setStudent( null );
+    }
+
+    public void addComplaint(Complaint compplaint) {
+        complaints.add( compplaint );
+        compplaint.setStudent( this );
+    }
+
+    public void removeComplaint(Complaint compplaint) {
+        complaints.remove( compplaint );
+        compplaint.setStudent( null );
+    }
 
 
 }

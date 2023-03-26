@@ -18,6 +18,7 @@ public class SessionBuilderFactory {
                     .addAnnotatedClass(Query.class)
                     .addAnnotatedClass(Complaint.class)
                     .addAnnotatedClass(Category.class)
+                    .addAnnotatedClass(Response.class)
                     .buildSessionFactory();
         }
         return sessionFactory;

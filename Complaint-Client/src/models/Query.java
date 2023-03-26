@@ -11,9 +11,9 @@ public class Query implements Serializable {
     private String queryDetail;
     private Student student;
     private Date queryDate;
-    private Complaint.Status status;
+    private Status status;
 
-    public Query( Category category, String queryDetail, Student student, Date queryDate, Complaint.Status status) {
+    public Query( Category category, String queryDetail, Student student, Date queryDate, Status status) {
         this.queryId = 0;
         this.category = category;
         this.queryDetail = queryDetail;
@@ -33,12 +33,12 @@ public class Query implements Serializable {
         this.queryId = queryId;
     }
 
-    public Category getCategory() {
-        return category;
+    public String getCategory() {
+        return this.category.name();
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(String category) {
+        this.category = Category.valueOf(category);
     }
 
     public String getQueryDetail() {
@@ -65,14 +65,13 @@ public class Query implements Serializable {
         this.queryDate = queryDate;
     }
 
-    public Complaint.Status getStatus() {
-        return status;
+    public String getStatus() {
+        return this.status.name();
     }
 
-    public void setStatus(Complaint.Status status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = Status.valueOf(status);
     }
-
     @Override
     public String toString() {
         return "Query{" +

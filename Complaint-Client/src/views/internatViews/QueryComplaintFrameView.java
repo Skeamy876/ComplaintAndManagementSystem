@@ -1,4 +1,4 @@
-package views;
+package views.internatViews;
 
 import controller.Client;
 import models.*;
@@ -22,10 +22,10 @@ public class QueryComplaintFrameView extends JInternalFrame {
     private String QueryOrComplaint []= {"Query", "Complaint"};
     private JComboBox typeQueryOrComplaintComboBox;
     private JComboBox categoryNameComboBox;
-    private String categoryNames [] = {String.valueOf(Category.CategoryEnum.MISSING_GRADES), String.valueOf(Category.CategoryEnum.INCORRECT_ACADEMIC_RECORD), String.valueOf(Category.CategoryEnum.NO_TIMETABLE), String.valueOf(Category.CategoryEnum.BARRED_FROM_EXAMS), String.valueOf(Category.CategoryEnum.NO_FINANCIAL_STATUS_UPDATE),String.valueOf(Category.CategoryEnum.STAFF_MISCONDUCT)};
+    private final String categoryNames [] = {String.valueOf(Category.MISSING_GRADES), String.valueOf(Category.INCORRECT_ACADEMIC_RECORD), String.valueOf(Category.NO_TIMETABLE), String.valueOf(Category.BARRED_FROM_EXAMS), String.valueOf(Category.NO_FINANCIAL_STATUS_UPDATE),String.valueOf(Category.STAFF_MISCONDUCT)};
     private JTextArea queryOrComplaintDetailsTextArea;
     private JButton submitBtn;
-    private Client client;
+    private final Client client;
 
 
     public QueryComplaintFrameView(Client client) {
@@ -104,18 +104,18 @@ public class QueryComplaintFrameView extends JInternalFrame {
                 String queryOrComplaintDetails = queryOrComplaintDetailsTextArea.getText();
                 ObjectInputStream objIs = client.getObjIs();
                 ObjectOutputStream objOs = client.getObjOs();
-            Student student = client.getStudent();
+                Student student = client.getStudent();
 
                 if(queryOrComplaint.equals("Query")){
                     Query query = new Query();
-                    query.setCategory(new Category(Category.CategoryEnum.valueOf(category)));
+                    query.setCategory(category);
                     query.setQueryDetail(queryOrComplaintDetails);
                     query.setQueryDate(new Timestamp(System.currentTimeMillis()));
-                    query.setStatus(Complaint.Status.OPEN);
+                    query.setStatus(String.valueOf(Status.OPEN));
 
                     try {
                         client.sendRequest("Add Query");
-                        student.getQueries().add(query);
+                        objOs.writeObject(query);
                         objOs.writeObject(student);
                         String response = (String) objIs.readObject();
                         if (response.equals("successful")){
@@ -130,14 +130,14 @@ public class QueryComplaintFrameView extends JInternalFrame {
                     }
                 }else if(queryOrComplaint.equals("Complaint")){
                     Complaint complaint = new Complaint();
-                    complaint.setCategory(new Category(Category.CategoryEnum.valueOf(category)));
+                    complaint.setCategory(category);
                     complaint.setComplaintDetail(queryOrComplaintDetails);
                     complaint.setComplaintDate(new Timestamp(System.currentTimeMillis()));
-                    complaint.setStatus(Complaint.Status.OPEN);
+                    complaint.setStatus(String.valueOf(Status.OPEN));
 
                     try {
                         client.sendRequest("Add Complaint");
-                        student.getComplaints().add(complaint);
+                        objOs.writeObject(complaint);
                         objOs.writeObject(student);
                         String response = (String) objIs.readObject();
                         if (response.equals("successful")){

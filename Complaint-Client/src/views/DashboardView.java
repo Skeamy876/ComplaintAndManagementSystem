@@ -1,11 +1,18 @@
 package views;
 
 import controller.Client;
+import models.Complaint;
+import models.Query;
 import models.Student;
+import views.internatViews.QueryComplaintFrameView;
+import views.internatViews.studentQueriesComplaintsView;
 
 import javax.swing.*;
-import java.awt.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DashboardView extends JFrame{
@@ -30,15 +37,14 @@ public class DashboardView extends JFrame{
         this.setTitle("Complaint-Query Management System");
         desktop= new JDesktopPane();
         menuBar = new JMenuBar();
-        accountDetails = new JMenu("Acount");
+        accountDetails = new JMenu("Account");
         createQueryOrComplaintBtn = new JButton("Create Query Or Complaint");
         viewQueryOrComplaintBtn = new JButton("View Query or Complaint");
 
-        createQueryOrComplaintBtn.setSize(300,80);
-        createQueryOrComplaintBtn.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        viewQueryOrComplaintBtn.setSize(300,80);
-        viewQueryOrComplaintBtn.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        createQueryOrComplaintBtn.setBounds(0,0,300,80);
+
+        viewQueryOrComplaintBtn.setBounds(0,100,300,80);
 
     }
 
@@ -59,6 +65,33 @@ public class DashboardView extends JFrame{
             createQueryOrComplaintBtn.addActionListener(e -> {
             desktop.add(new QueryComplaintFrameView(client));
         });
+
+            viewQueryOrComplaintBtn.addActionListener(e -> {
+                List<Query> queries;
+                List<Complaint> complaints;
+                ObjectInputStream objIs = client.getObjIs();
+                ObjectOutputStream objOs = client.getObjOs();
+                Student student = client.getStudent();
+                String response = " ";
+                try {
+                    objOs.writeObject("AllStudentQueriesAndComplaints");
+                    objOs.writeObject(student.getIdNumber());
+                    queries = (ArrayList<Query>) objIs.readObject();
+                    complaints = (ArrayList<Complaint>) objIs.readObject();
+                    response = (String) objIs.readObject();
+                    if(response.equals("successful")){
+                        System.out.println("Queries received successfully");
+                    }
+                    else{
+                        System.out.println("Queries not received successfully");
+                    }
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                desktop.add(new studentQueriesComplaintsView(queries,complaints));
+            });
     }
 
     private void setWindowProperties(){
