@@ -84,10 +84,10 @@ public class LoginView extends JFrame implements ActionListener {
             userText = userTextField.getText();
             pwdText = passwordField.getText();
 
-            Student student = new Student();
-            student.setIdNumber(Long.parseLong(userText));
-            student.setPassword(pwdText);
-            Client client = new Client(student);
+            Person person = new Person();
+            person.setIdNumber(Long.parseLong(userText));
+            person.setPassword(pwdText);
+            Client client = new Client(person);
 
             ObjectOutputStream objOs = client.getObjOs();
             ObjectInputStream objIs = client.getObjIs();
@@ -96,7 +96,7 @@ public class LoginView extends JFrame implements ActionListener {
 
             try {
                 objOs.writeObject("Authenticate");
-                objOs.writeObject(student);
+                objOs.writeObject(person);
                 flag = (boolean) objIs.readObject();
                 objOs.flush();
             } catch (IOException ex) {
@@ -115,9 +115,6 @@ public class LoginView extends JFrame implements ActionListener {
             }
 
         }
-
-
-       //Coding Part of showPassword JCheckBox
         if (e.getSource() == showPassword) {
             if (showPassword.isSelected()) {
                 passwordField.setEchoChar((char) 0);

@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="new updates">
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/VideoChatFrame.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/models/Person.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/DashboardView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/DashboardView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/internatViews/QueryComplaintFrameView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/internatViews/AddQueryComplaintView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/internatViews/AddQueryComplaintView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/internatViews/AddQueryComplaintView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/eventslogs.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/eventslogs.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Person.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -117,6 +122,9 @@
       <workItem from="1679864155390" duration="2032000" />
       <workItem from="1679935998929" duration="10000" />
       <workItem from="1679956636295" duration="4230000" />
+      <workItem from="1680035918094" duration="225000" />
+      <workItem from="1680123698983" duration="520000" />
+      <workItem from="1680124570139" duration="2587000" />
     </task>
     <task id="LOCAL-00001" summary="server created">
       <created>1678323799076</created>

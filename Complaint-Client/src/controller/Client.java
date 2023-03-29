@@ -1,5 +1,6 @@
 package controller;
 
+import models.Person;
 import models.Student;
 import views.DashboardView;
 
@@ -15,14 +16,14 @@ public class Client {
     private Socket connectionSocket;
 
     private DashboardView dashboardView;
-    private Student student;
+    private Person person;
 
 
 
-    public Client(Student student) {
-        this.student = student;
-            this.createConnection();
-            this.configureStreams();
+        public Client(Person person) {
+                this.person = person;
+                this.createConnection();
+                this.configureStreams();
         }
 
 
@@ -77,12 +78,12 @@ public class Client {
         this.connectionSocket = connectionSocket;
     }
 
-    public Student getStudent() {
-        return student;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setPerson(Person person) {
+        this.person = Client.this.person;
     }
 
 

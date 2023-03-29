@@ -4,8 +4,8 @@ import controller.Client;
 import models.Complaint;
 import models.Query;
 import models.Student;
-import views.internatViews.QueryComplaintFrameView;
-import views.internatViews.studentQueriesComplaintsView;
+import views.internatViews.AddQueryComplaintView;
+import views.internatViews.StudentQueriesComplaintsTableView;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public class DashboardView extends JFrame{
 
     private void registerActions(){
             createQueryOrComplaintBtn.addActionListener(e -> {
-            desktop.add(new QueryComplaintFrameView(client));
+            desktop.add(new AddQueryComplaintView(client));
         });
 
             viewQueryOrComplaintBtn.addActionListener(e -> {
@@ -71,7 +71,7 @@ public class DashboardView extends JFrame{
                 List<Complaint> complaints;
                 ObjectInputStream objIs = client.getObjIs();
                 ObjectOutputStream objOs = client.getObjOs();
-                Student student = client.getStudent();
+                Student student =(Student) client.getPerson();
                 String response = " ";
                 try {
                     objOs.writeObject("AllStudentQueriesAndComplaints");
@@ -90,7 +90,9 @@ public class DashboardView extends JFrame{
                 } catch (ClassNotFoundException ex) {
                     throw new RuntimeException(ex);
                 }
-                desktop.add(new studentQueriesComplaintsView(queries,complaints));
+                StudentQueriesComplaintsTableView studentQueriesComplaintsTableView = new StudentQueriesComplaintsTableView(queries,complaints);
+                studentQueriesComplaintsTableView.setClient(client);
+                desktop.add(studentQueriesComplaintsTableView);
             });
     }
 

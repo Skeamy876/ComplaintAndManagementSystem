@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import static java.awt.Font.DIALOG;
 
 
-public class QueryComplaintFrameView extends JInternalFrame {
+public class AddQueryComplaintView extends JInternalFrame {
     private JLabel title;
     private JLabel typeQueryOrComplaintLabel;
     private JLabel categoryLabel;
@@ -28,7 +28,7 @@ public class QueryComplaintFrameView extends JInternalFrame {
     private final Client client;
 
 
-    public QueryComplaintFrameView(Client client) {
+    public AddQueryComplaintView(Client client) {
         super("Create Query Or Complaint", true, true, true, true);
         this.client = client;
         this.initializeComponents();
@@ -104,7 +104,7 @@ public class QueryComplaintFrameView extends JInternalFrame {
                 String queryOrComplaintDetails = queryOrComplaintDetailsTextArea.getText();
                 ObjectInputStream objIs = client.getObjIs();
                 ObjectOutputStream objOs = client.getObjOs();
-                Student student = client.getStudent();
+                Student student = (Student) client.getPerson();
 
                 if(queryOrComplaint.equals("Query")){
                     Query query = new Query();

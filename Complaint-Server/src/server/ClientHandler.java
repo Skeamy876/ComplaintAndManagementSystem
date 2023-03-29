@@ -49,6 +49,7 @@ public class ClientHandler implements Runnable{
         StudentActions studentActions = new StudentActions();
         String action = " ";
         Student student;
+        Person person;
         boolean flag = false;
         try {
             while (true){
@@ -56,10 +57,9 @@ public class ClientHandler implements Runnable{
                     action = (String) objIs.readObject();
                     switch (action){
                         case "Authenticate":
-                            student= (Student) objIs.readObject();
-                            //Person person = (Person) student;
-                            String dbPassword = this.getHashedPasswordFromDatabase(student.getIdNumber());
-                            flag = this.authenticateUser(student,dbPassword);
+                            person= (Person) objIs.readObject();
+                            String dbPassword = this.getHashedPasswordFromDatabase(person.getIdNumber());
+                            flag = this.authenticateUser(person,dbPassword);
                             if (flag == true){
                                 objOs.writeObject(true);
                                 objOs.flush();
@@ -99,12 +99,13 @@ public class ClientHandler implements Runnable{
                             objOs.writeObject("successful");
                             logger.info("All student queries sent back to client");
                             break;
-                        case "Add View All student Queries Responses":
+                        case "assignAdvisorToStudent":
+
+
+
 
                             break;
-                        case "Add View All student Complaints Responses":
 
-                            break;
 
                     }
 
