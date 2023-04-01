@@ -1,7 +1,9 @@
 package controller;
 
+import models.Advisor;
 import models.Person;
 import models.Student;
+import models.Supervisor;
 import views.DashboardView;
 
 import java.io.IOException;
@@ -14,14 +16,30 @@ public class Client {
     private  ObjectInputStream objIs;
     private  ObjectOutputStream objOs;
     private Socket connectionSocket;
-
     private DashboardView dashboardView;
     private Person person;
-
-
+    private Student student;
+    private Advisor advisor;
+    private Supervisor supervisor;
 
         public Client(Person person) {
                 this.person = person;
+                this.createConnection();
+                this.configureStreams();
+        }
+        public Client(Student student) {
+                this.student = student;
+                this.createConnection();
+                this.configureStreams();
+        }
+
+        public Client(Supervisor supervisor) {
+                this.supervisor = supervisor;
+                this.createConnection();
+                this.configureStreams();
+        }
+        public Client(Advisor advisor) {
+                this.advisor = advisor;
                 this.createConnection();
                 this.configureStreams();
         }
@@ -93,5 +111,29 @@ public class Client {
 
     public ObjectOutputStream getObjOs() {
         return objOs;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Advisor getAdvisor() {
+        return advisor;
+    }
+
+    public void setAdvisor(Advisor advisor) {
+        this.advisor = advisor;
+    }
+
+    public Supervisor getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(Supervisor supervisor) {
+        this.supervisor = supervisor;
     }
 }

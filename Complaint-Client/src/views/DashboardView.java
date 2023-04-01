@@ -71,7 +71,7 @@ public class DashboardView extends JFrame{
                 List<Complaint> complaints;
                 ObjectInputStream objIs = client.getObjIs();
                 ObjectOutputStream objOs = client.getObjOs();
-                Student student =(Student) client.getPerson();
+                Student student = client.getStudent();
                 String response = " ";
                 try {
                     objOs.writeObject("AllStudentQueriesAndComplaints");

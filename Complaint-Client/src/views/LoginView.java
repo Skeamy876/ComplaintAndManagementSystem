@@ -14,6 +14,7 @@ import java.io.ObjectOutputStream;
 public class LoginView extends JFrame implements ActionListener {
  
     Container container = getContentPane();
+    JComboBox userType = new JComboBox<>(new String[]{"Student", "Supervisor", "Advisor"});
     JLabel userLabel = new JLabel("ID NUMBER");
     JLabel passwordLabel = new JLabel("PASSWORD");
     JTextField userTextField = new JTextField();
@@ -47,6 +48,7 @@ public class LoginView extends JFrame implements ActionListener {
     }
  
     public void setLocationAndSize() {
+        userType.setBounds(50, 50, 250, 30);
         userLabel.setBounds(50, 150, 100, 30);
         passwordLabel.setBounds(50, 220, 100, 30);
         userTextField.setBounds(150, 150, 150, 30);
@@ -59,6 +61,7 @@ public class LoginView extends JFrame implements ActionListener {
     }
  
     public void addComponentsToContainer() {
+        container.add(userType);
         container.add(userLabel);
         container.add(passwordLabel);
         container.add(userTextField);
@@ -79,56 +82,113 @@ public class LoginView extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         //Coding Part of LOGIN button
         if (e.getSource() == signinButton) {
+            boolean flag;
             String userText;
             String pwdText;
+            String userTypeText;
             userText = userTextField.getText();
             pwdText = passwordField.getText();
-
-            Person person = new Person();
-            person.setIdNumber(Long.parseLong(userText));
-            person.setPassword(pwdText);
-            Client client = new Client(person);
-
+            userTypeText = (String) userType.getSelectedItem();
+            Student student;
+            Advisor advisor;
+            Supervisor supervisor;
+            Client client = new Client(new Person());
             ObjectOutputStream objOs = client.getObjOs();
             ObjectInputStream objIs = client.getObjIs();
 
-            boolean flag;
 
-            try {
-                objOs.writeObject("Authenticate");
-                objOs.writeObject(person);
-                flag = (boolean) objIs.readObject();
-                objOs.flush();
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            } catch (ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
+            if (userTypeText.equals("Student")) {
+                student = new Student();
+                student.setIdNumber(Long.parseLong(userText));
+                student.setPassword(pwdText);
+                client = new Client(student);
+                try {
+                    objOs.writeObject("Authenticate");
+                    objOs.writeObject(client.getStudent());
+                    student = (Student) objIs.readObject();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                client = new Client(student);
+                if (student != null) {
+                    JOptionPane.showMessageDialog(this, "Login Successful");
+                    DashboardView dashboardView = new DashboardView(client);
+                    dashboardView.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
+                }
+
+            } else if (userTypeText.equals("Supervisor")) {
+                supervisor = new Supervisor();
+                supervisor.setIdNumber(Long.parseLong(userText));
+                supervisor.setPassword(pwdText);
+                client = new Client(supervisor);
+
+                try {
+                    objOs.writeObject("Authenticate");
+                    objOs.writeObject(client.getSupervisor());
+                    supervisor = (Supervisor) objIs.readObject();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                client = new Client(supervisor);
+                if (supervisor != null) {
+                    JOptionPane.showMessageDialog(this, "Login Successful");
+                    DashboardView dashboardView = new DashboardView(client);
+                    dashboardView.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
+                }
+
+            } else {
+                advisor = new Advisor();
+                advisor.setIdNumber(Long.parseLong(userText));
+                advisor.setPassword(pwdText);
+                client = new Client(advisor);
+                try {
+                    objOs.writeObject("Authenticate");
+                    objOs.writeObject(client.getSupervisor());
+                    advisor = (Advisor) objIs.readObject();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                } catch (ClassNotFoundException ex) {
+                    throw new RuntimeException(ex);
+                }
+                client = new Client(advisor);
+                if (advisor != null) {
+                    JOptionPane.showMessageDialog(this, "Login Successful");
+                    DashboardView dashboardView = new DashboardView(client);
+                    dashboardView.setVisible(true);
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
+                }
             }
 
-            if (flag) {
-                JOptionPane.showMessageDialog(this, "Login Successful");
-                DashboardView dashboardView = new DashboardView(client);
-                dashboardView.setVisible(true);
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
+            if (e.getSource() == showPassword) {
+                if (showPassword.isSelected()) {
+                    passwordField.setEchoChar((char) 0);
+                } else {
+                    passwordField.setEchoChar('*');
+                }
+
+
             }
 
         }
-        if (e.getSource() == showPassword) {
-            if (showPassword.isSelected()) {
-                passwordField.setEchoChar((char) 0);
-            } else {
-                passwordField.setEchoChar('*');
-            }
- 
- 
-        }
+
     }
 
 
 
 
- 
+
+
 }
  
