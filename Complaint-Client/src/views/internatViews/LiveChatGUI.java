@@ -1,21 +1,24 @@
 package guirun;
 
+import controller.Client;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LiveChatGUI extends JFrame implements ActionListener {
+public class LiveChatGUI extends JInternalFrame implements ActionListener {
     private JTextField textField;
     private JTextArea chatArea;
     private JLabel statusLabel;
-    private String username = "Me";
     private boolean isOnline = true;
+    private Client client;
 
-    public LiveChatGUI() {
+    public LiveChatGUI(Client client) {
         // Set up the JFrame
-        super("Live Chat");
+        super("Live Chat", true, true, true, true);
+        this.client = client;
         setSize(400, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
@@ -78,11 +81,7 @@ public class LiveChatGUI extends JFrame implements ActionListener {
             chatArea.append("System: You can't send messages while offline.\n");
             return;
         }
-        chatArea.append(username + ": " + message + "\n");
+        chatArea.append(client.getStudent().getFirstName() + ": " + message + "\n");
         textField.setText("");
-    }
-
-    public static void main(String[] args) {
-        LiveChatGUI chat = new LiveChatGUI();
     }
 }

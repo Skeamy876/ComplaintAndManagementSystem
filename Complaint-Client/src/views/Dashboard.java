@@ -12,6 +12,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import controller.Client;
+import guirun.LiveChatGUI;
 import models.Complaint;
 import models.Query;
 import models.Student;
@@ -38,7 +39,7 @@ public class Dashboard extends JFrame {
   private JLabel profilePictureLabel;
   private final Client client;
 
-  public Dashboard(Client client,String name, String id) {
+  public Dashboard(Client client) {
 	  
 	  this.client = client;
   	
@@ -81,19 +82,19 @@ public class Dashboard extends JFrame {
       
 
       // Create the welcome label
-      welcomeLabel = new JLabel("Welcome, " + name + "!");
+      welcomeLabel = new JLabel("Welcome, " + client.getStudent().getFirstName() + "!");
       welcomeLabel.setFont(new Font("Arial", Font.BOLD, 20));
       desktop.add(welcomeLabel);
       welcomeLabel.setBounds(20, 20, 300, 30);
 
       // Create the ID label
-      idLabel = new JLabel("ID: " + id);
+      idLabel = new JLabel("ID: " + client.getStudent().getIdNumber());
       desktop.add(idLabel);
       idLabel.setBounds(600, 60, 200, 20);
       idLabel.setHorizontalAlignment(JLabel.RIGHT);
 
       // Create the name label
-      nameLabel = new JLabel("Name: " + name);
+      nameLabel = new JLabel("Name: " + client.getStudent().getFirstName());
       desktop.add(nameLabel);
       nameLabel.setBounds(600, 80, 200, 20);
       nameLabel.setHorizontalAlignment(JLabel.RIGHT);
@@ -148,6 +149,7 @@ public class Dashboard extends JFrame {
       chatButton.addActionListener(new ActionListener() {
           public void actionPerformed(ActionEvent e) {
               // Code to handle chat button click
+              desktop.add(new LiveChatGUI(client));
           }
       });
       
@@ -174,13 +176,5 @@ public class Dashboard extends JFrame {
       // Display the window
       setVisible(true);
   }
-/*
-  public static void main(String[] args) {
-      // Replace with actual student name and ID
-      String name = "John Smith";
-      String id = "123456789";
-
-      Dashboard dashboard = new Dashboard(name, id);
-  }  */
 }  
 

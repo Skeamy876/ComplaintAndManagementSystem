@@ -114,7 +114,7 @@ public class LoginView extends JFrame implements ActionListener {
                 client = new Client(student);
                 if (student != null) {
                     JOptionPane.showMessageDialog(this, "Login Successful");
-                    DashboardView dashboardView = new DashboardView(client);
+                    Dashboard dashboardView = new Dashboard(client);
                     dashboardView.setVisible(true);
                     this.dispose();
                 } else {
@@ -139,7 +139,7 @@ public class LoginView extends JFrame implements ActionListener {
                 client = new Client(supervisor);
                 if (supervisor != null) {
                     JOptionPane.showMessageDialog(this, "Login Successful");
-                    DashboardView dashboardView = new DashboardView(client);
+                    Dashboard dashboardView = new Dashboard(client);
                     dashboardView.setVisible(true);
                     this.dispose();
                 } else {
@@ -163,7 +163,7 @@ public class LoginView extends JFrame implements ActionListener {
                 client = new Client(advisor);
                 if (advisor != null) {
                     JOptionPane.showMessageDialog(this, "Login Successful");
-                    DashboardView dashboardView = new DashboardView(client);
+                    Dashboard dashboardView = new Dashboard(client);
                     dashboardView.setVisible(true);
                     this.dispose();
                 } else {
