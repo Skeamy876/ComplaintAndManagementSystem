@@ -5,10 +5,7 @@ import factories.SessionBuilderFactory;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;

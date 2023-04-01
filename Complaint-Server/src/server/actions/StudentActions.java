@@ -42,22 +42,13 @@ public class StudentActions {
     }
 
     public void createStudent(Student student) {
-        String insertSQL = "INSERT INTO utechcomplaintdb.students (idNumber,email_address,first_name,last_name,password,phone_number)"
-                + "VALUES('"+ student.getIdNumber()+ "','"  + student.getEmail()  + "','" + student.getFirstName()+ "','" + student.getLastName()+ "','" + student.getPassword() + "','" + student.getPhoneNumber() + "');";
-
-        try {
-            statement = dbConn.createStatement();
-            int inserted = statement.executeUpdate(insertSQL);
-            if (inserted == 1) {
-                logger.info("Student Inserted");
-            } else {
-                logger.error("Student Not Inserted");
-            }
-        } catch (SQLException e) {
-            logger.error("SQL EXCEPTION in student create" + e.getMessage());
-        } catch (Exception e) {
-            logger.error("Unexpected error in student" + e.getMessage());
-        }
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        session.save(student);
+        transaction.commit();
+        session.close();
     }
 
 
@@ -116,7 +107,7 @@ public class StudentActions {
 
 
     public int deleteStudent(long idNumber){
-        String deleteStudent = "DELETE FROM students WHERE student_ID ="+idNumber;
+        String deleteStudent = "DELETE FROM person WHERE student_ID ="+idNumber;
         int numberOfAffectedRecords =0;
         try {
             statement = dbConn.createStatement();

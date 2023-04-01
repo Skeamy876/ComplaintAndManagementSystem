@@ -2,21 +2,23 @@ package server;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import factories.SessionBuilderFactory;
-import models.Complaint;
-import models.Person;
-import models.Query;
-import models.Student;
+import models.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.Query;
+import server.actions.AdvisorActions;
 import server.actions.StudentActions;
+import server.actions.SupervisorActions;
 
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientHandler implements Runnable{
@@ -48,7 +50,10 @@ public class ClientHandler implements Runnable{
     private void waitForRequests() {
         StudentActions studentActions = new StudentActions();
         String action = " ";
+        String dbPassword;
         Student student;
+        Supervisor supervisor;
+        Advisor advisor;
         Person person;
         boolean flag = false;
         try {
@@ -57,21 +62,33 @@ public class ClientHandler implements Runnable{
                     action = (String) objIs.readObject();
                     switch (action){
                         case "Authenticate":
-                            person= (Person) objIs.readObject();
-                            String dbPassword = this.getHashedPasswordFromDatabase(person.getIdNumber());
-                            flag = this.authenticateUser(person,dbPassword);
-                            if (flag == true){
-                                objOs.writeObject(true);
+                            person = (Person) objIs.readObject();
+                            dbPassword = this.getHashedPasswordFromDatabase(person.getIdNumber());
+                            if (person instanceof Student) {
+                                student = this.authenticateUser((Student) person,dbPassword);
+                                objOs.writeObject(student);
                                 objOs.flush();
-                                logger.info("User successfully Authenticated");
-                            }else {
-                                objOs.writeObject(false);
-                                logger.info("Authentication Unsuccessful");
+                                logger.info("Student successfully Authenticated");
+                            } else if (person instanceof Supervisor) {
+                                person = this.authenticateUser((Student) person,dbPassword);
+                                supervisor = (Supervisor) person;
+                                objOs.writeObject(supervisor);
+                                objOs.flush();
+                                logger.info("Supervisor successfully Authenticated");
+                            } else if (person instanceof Advisor) {
+                                advisor = this.authenticateUser((Advisor) person,dbPassword);
+                                objOs.writeObject(advisor);
+                                objOs.flush();
+                                logger.info("Advisor successfully Authenticated");
+                            } else {
+                                objOs.writeObject("failed");
+                                objOs.flush();
+                                logger.info("Authentication failed");
                             }
 
                             break;
                         case "Add Query":
-                            Query query = (Query) objIs.readObject();
+                            models.Query query = (models.Query) objIs.readObject();
                             student = (Student) objIs.readObject();
                             student.addQuery(query);
                             studentActions.saveQuery(student);
@@ -92,7 +109,7 @@ public class ClientHandler implements Runnable{
                         case "AllStudentQueriesAndComplaints":
                             long id2 = (long) objIs.readObject();
                             StudentActions studentActions1 = new StudentActions();
-                            List<Query> queries = studentActions1.getAllStudentQueries(id2);
+                            List<models.Query> queries = studentActions1.getAllStudentQueries(id2);
                             List<Complaint> complaints = studentActions1.getAllStudentComplaints(id2);
                             objOs.writeObject(queries);
                             objOs.writeObject(complaints);
@@ -105,16 +122,14 @@ public class ClientHandler implements Runnable{
 
 
                             break;
+                        case "logout":
 
-
+                            break;
                     }
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                    e.printStackTrace();
                     logger.fatal("Class not found exception, check try/catch block");
-                }finally {
-                    //this.closeConnection();
                 }
             }
         }catch (EOFException ex){
@@ -127,47 +142,77 @@ public class ClientHandler implements Runnable{
 
     }
 
-    private boolean authenticateUser(Person person, String hashedPassword){
-        boolean present = this.verifyIDInDatabase(person.getIdNumber());
-        BCrypt.Result result = BCrypt.verifyer().verify(person.getPassword().toCharArray(),hashedPassword);
-
-        if (present == true && result.verified){
-            return true;
+    private Student authenticateUser(Student student,String hashedPassword){
+        StudentActions studentActions = new StudentActions();
+        Student studentDTO = studentActions.findStudent(student.getIdNumber());
+        BCrypt.Result result = BCrypt.verifyer().verify(student.getPassword().toCharArray(),hashedPassword);
+        if (studentDTO != null && result.verified){
+            return studentDTO;
         }
-        return false;
+        return null;
+    }
+    private Advisor authenticateUser(Advisor advisor,String hashedPassword){
+        AdvisorActions advisorActions = new AdvisorActions();
+        Advisor advisorDTO = advisorActions.findAdvisor(advisor.getIdNumber());
+        BCrypt.Result result = BCrypt.verifyer().verify(advisor.getPassword().toCharArray(),hashedPassword);
+
+        if (advisorDTO != null && result.verified){
+            return advisorDTO;
+        }
+        return null;
+    }
+    private Supervisor authenticateUser(Supervisor supervisor,String hashedPassword){
+        SupervisorActions supervisorActions = new SupervisorActions();
+        Supervisor supervisorDTO = supervisorActions.findSupervisor(supervisor.getIdNumber());
+        BCrypt.Result result = BCrypt.verifyer().verify(supervisor.getPassword().toCharArray(),hashedPassword);
+
+        if (supervisorDTO != null && result.verified){
+            return supervisorDTO;
+        }
+        return null;
     }
 
     private  String getHashedPasswordFromDatabase(long id){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-
         Transaction transaction = session.beginTransaction();
-        Person person = (Person) session.get(Student.class,id);
+        String hql1 = "SELECT s FROM Student s WHERE s.idNumber = :idNumber";
+        Query query1 = session.createQuery(hql1);
+        query1.setParameter("idNumber", id);
+        Student student = (Student) query1.uniqueResult();
+
+        String hql2 = "SELECT a FROM Advisor a WHERE a.idNumber = :idNumber";
+        Query query2 = session.createQuery(hql2);
+        query2.setParameter("idNumber", id);
+        Advisor advisor = (Advisor) query2.uniqueResult();
+
+        String hql3 = "SELECT sup FROM Supervisor sup WHERE sup.idNumber = :idNumber";
+        Query query3 = session.createQuery(hql3);
+        query3.setParameter("idNumber", id);
+        Supervisor supervisor = (Supervisor) query3.uniqueResult();
+
+        List<Object> results = new ArrayList<>();
+        if (student != null) {
+            results.add(student);
+        }
+        if (advisor != null) {
+            results.add(advisor);
+        }
+        if (supervisor != null) {
+            results.add(supervisor);
+        }
+
+        if (results.size() != 1) {
+            throw new NonUniqueResultException(results.size());
+        }
+        Object result = results.get(0);
+        Person person = (Person) result;
         transaction.commit();
         session.close();
-
         return person.getPassword();
     }
 
-    private boolean verifyIDInDatabase(long id){
-        Session session = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.beginTransaction();
-        Student student = (Student) session.createQuery("FROM Student WHERE idNumber = :id",Student.class)
-                .setParameter("id", id)
-                .uniqueResult();
-        transaction.commit();
-        session.close();
-
-        if(student!= null){
-            return true;
-        }else{
-            return false;
-        }
-    }
 
 
     private void closeConnection(){

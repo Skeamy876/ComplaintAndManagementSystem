@@ -2,22 +2,34 @@ package server.actions;
 
 import factories.SessionBuilderFactory;
 import models.Advisor;
+import models.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
 
 public class AdvisorActions {
-    public void createAdvisor(){
+    public void createAdvisor(Advisor advisor){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-
-
         Transaction transaction = session.beginTransaction();
-        session.save(this);
+        session.save(advisor);
         transaction.commit();
         session.close();
+    }
+
+    public Advisor findAdvisor(long id){
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.getTransaction();
+        Advisor advisor = (Advisor) session.get(Advisor.class, id);
+        transaction.commit();
+        session.close();
+
+        return advisor;
     }
 
     public void updateAdvisor(Advisor advisor){
