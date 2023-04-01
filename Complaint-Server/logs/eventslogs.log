@@ -495,3 +495,45 @@
 [WARN ] 2023-03-31 22:43:12 {Thread-2} c%{1} -IO Exception occurred within this try catch block
 [WARN ] 2023-03-31 22:43:12 {Thread-7} c%{1} -IO Exception occurred within this try catch block
 [WARN ] 2023-03-31 22:43:12 {Thread-5} c%{1} -IO Exception occurred within this try catch block
+[ERROR] 2023-03-31 23:11:58 {main} c%{1} -Native Database Connection Established
+[INFO ] 2023-03-31 23:11:58 {main} c%{1} -Server Started, Time: 2023-03-31
+[INFO ] 2023-03-31 23:12:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:12:06 {main} c%{1} -Client count: 1
+[INFO ] 2023-03-31 23:12:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:12:06 {main} c%{1} -Client count: 2
+[INFO ] 2023-03-31 23:12:10 {Thread-1} c%{1} -Student successfully Authenticated
+[INFO ] 2023-03-31 23:12:10 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:12:10 {main} c%{1} -Client count: 3
+[WARN ] 2023-03-31 23:12:12 {Thread-2} c%{1} -EOF Exception occurred within this try catch block
+[WARN ] 2023-03-31 23:12:58 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-03-31 23:12:58 {Thread-1} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-03-31 23:14:51 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:14:51 {main} c%{1} -Client count: 4
+[INFO ] 2023-03-31 23:14:51 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:14:51 {main} c%{1} -Client count: 5
+[INFO ] 2023-03-31 23:14:54 {Thread-4} c%{1} -Student successfully Authenticated
+[INFO ] 2023-03-31 23:14:54 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:14:54 {main} c%{1} -Client count: 6
+[WARN ] 2023-03-31 23:14:56 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[WARN ] 2023-03-31 23:15:12 {Thread-6} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-03-31 23:15:12 {Thread-4} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-03-31 23:16:14 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:16:14 {main} c%{1} -Client count: 7
+[INFO ] 2023-03-31 23:16:14 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:16:14 {main} c%{1} -Client count: 8
+[INFO ] 2023-03-31 23:16:18 {Thread-7} c%{1} -Student successfully Authenticated
+[INFO ] 2023-03-31 23:16:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
+[INFO ] 2023-03-31 23:16:18 {main} c%{1} -Client count: 9
+[WARN ] 2023-03-31 23:16:19 {Thread-8} c%{1} -EOF Exception occurred within this try catch block
+[WARN ] 2023-03-31 23:20:05 {Thread-9} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-03-31 23:20:05 {Thread-7} c%{1} -IO Exception occurred within this try catch block
+[ERROR] 2023-03-31 23:29:47 {main} c%{1} -Native Database Connection Established
+[INFO ] 2023-03-31 23:29:47 {main} c%{1} -Server Started, Time: 2023-03-31
+[ERROR] 2023-03-31 23:31:16 {main} c%{1} -Native Database Connection Established
+[INFO ] 2023-03-31 23:31:16 {main} c%{1} -Server Started, Time: 2023-03-31
+[ERROR] 2023-03-31 23:31:57 {main} c%{1} -Native Database Connection Established
+[INFO ] 2023-03-31 23:31:57 {main} c%{1} -Server Started, Time: 2023-03-31
+[ERROR] 2023-03-31 23:33:29 {main} c%{1} -Native Database Connection Established
+[INFO ] 2023-03-31 23:33:29 {main} c%{1} -Server Started, Time: 2023-03-31
+[INFO ] 2023-03-31 23:36:14 {main} c%{1} -Server Started, Time: 2023-03-31
+[INFO ] 2023-03-31 23:37:25 {main} c%{1} -Server Started, Time: 2023-03-31

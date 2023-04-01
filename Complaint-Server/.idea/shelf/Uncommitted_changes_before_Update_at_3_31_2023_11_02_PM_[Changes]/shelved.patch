@@ -1,0 +1,591 @@
+Index: ../LiveChatGUI.java
+===================================================================
+diff --git a/../LiveChatGUI.java b/../LiveChatGUI.java
+deleted file mode 100644
+--- a/../LiveChatGUI.java	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
++++ /dev/null	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
+@@ -1,88 +0,0 @@
+-package guirun;
+-
+-import javax.swing.*;
+-import java.awt.*;
+-import java.awt.event.*;
+-import java.time.LocalDateTime;
+-import java.time.format.DateTimeFormatter;
+-
+-public class LiveChatGUI extends JFrame implements ActionListener {
+-    private JTextField textField;
+-    private JTextArea chatArea;
+-    private JLabel statusLabel;
+-    private String username = "Me";
+-    private boolean isOnline = true;
+-
+-    public LiveChatGUI() {
+-        // Set up the JFrame
+-        super("Live Chat");
+-        setSize(400, 500);
+-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-        setLayout(new BorderLayout());
+-
+-        // Create the chat area
+-        chatArea = new JTextArea();
+-        chatArea.setEditable(false);
+-        JScrollPane scrollPane = new JScrollPane(chatArea);
+-        add(scrollPane, BorderLayout.CENTER);
+-
+-        // Create the input field and button
+-        JPanel inputPanel = new JPanel();
+-        inputPanel.setLayout(new BorderLayout());
+-        textField = new JTextField();
+-        inputPanel.add(textField, BorderLayout.CENTER);
+-        JButton sendButton = new JButton("Send");
+-        sendButton.addActionListener(this);
+-        inputPanel.add(sendButton, BorderLayout.EAST);
+-        add(inputPanel, BorderLayout.SOUTH);
+-
+-        // Create the status label
+-        statusLabel = new JLabel("Online");
+-        statusLabel.setForeground(Color.GREEN);
+-        add(statusLabel, BorderLayout.NORTH);
+-        
+-     /*// Get the current time and format it
+-        LocalDateTime now = LocalDateTime.now();
+-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+-        String timestamp = now.format(formatter);
+-
+-        // Create the message components
+-        JPanel messagePanel = new JPanel(new BorderLayout());
+-        JLabel nameLabel = new JLabel(username + ":");
+-        ImageIcon icon = new ImageIcon("person.png");
+-        JLabel iconLabel = new JLabel(icon);
+-        String message = null;
+-		JLabel messageLabel = new JLabel(message);
+-        JLabel timestampLabel = new JLabel(timestamp);
+-
+-        // Add the components to the message panel
+-        messagePanel.add(iconLabel, BorderLayout.WEST);
+-        messagePanel.add(nameLabel, BorderLayout.CENTER);
+-        messagePanel.add(messageLabel, BorderLayout.SOUTH);
+-        messagePanel.add(timestampLabel, BorderLayout.NORTH);
+-
+-        // Add the message panel to the chat area
+-        chatArea.add(messagePanel);*/
+-
+-        // Show the JFrame
+-        setVisible(true);
+-    }
+-
+-    // Event listener for the send button
+-    public void actionPerformed(ActionEvent e) {
+-        String message = textField.getText();
+-        if (message.trim().equals("")) {
+-            return;
+-        }
+-        if (!isOnline) {
+-            chatArea.append("System: You can't send messages while offline.\n");
+-            return;
+-        }
+-        chatArea.append(username + ": " + message + "\n");
+-        textField.setText("");
+-    }
+-
+-    public static void main(String[] args) {
+-        LiveChatGUI chat = new LiveChatGUI();
+-    }
+-}
+Index: ../Complaint-Client/src/views/DashboardView.java
+===================================================================
+diff --git a/../Complaint-Client/src/views/DashboardView.java b/../Complaint-Client/src/views/DashboardView.java
+deleted file mode 100644
+--- a/../Complaint-Client/src/views/DashboardView.java	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
++++ /dev/null	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
+@@ -1,110 +0,0 @@
+-package views;
+-
+-import controller.Client;
+-import models.Complaint;
+-import models.Query;
+-import models.Student;
+-import views.internatViews.AddQueryComplaintView;
+-import views.internatViews.StudentQueriesComplaintsTableView;
+-
+-import javax.swing.*;
+-import java.io.IOException;
+-import java.io.ObjectInputStream;
+-import java.io.ObjectOutputStream;
+-import java.util.ArrayList;
+-import java.util.List;
+-
+-
+-public class DashboardView extends JFrame{
+-    private JDesktopPane desktop;
+-    private JMenu accountDetails ;
+-    private JMenuBar menuBar;
+-    private JButton createQueryOrComplaintBtn;
+-    private JButton viewQueryOrComplaintBtn;
+-    private final Client client;
+-
+-    public DashboardView(Client client){
+-        this.client = client;
+-        this.initializeComponents();
+-        this.addMenusToMenuBar();
+-        this.addComponentsToDesktopFrame();
+-        this.addComponentsToWindow();
+-        this.setWindowProperties();
+-        this.registerActions();
+-    }
+-
+-    private void initializeComponents(){
+-        this.setTitle("Complaint-Query Management System");
+-        desktop= new JDesktopPane();
+-        menuBar = new JMenuBar();
+-        accountDetails = new JMenu("Account");
+-        createQueryOrComplaintBtn = new JButton("Create Query Or Complaint");
+-        viewQueryOrComplaintBtn = new JButton("View Query or Complaint");
+-
+-
+-        createQueryOrComplaintBtn.setBounds(0,0,300,80);
+-
+-        viewQueryOrComplaintBtn.setBounds(0,100,300,80);
+-
+-    }
+-
+-    private void addMenusToMenuBar(){
+-        menuBar.add(accountDetails);
+-    }
+-    private void addComponentsToDesktopFrame(){
+-        desktop.add(menuBar);
+-        desktop.add(createQueryOrComplaintBtn);
+-        desktop.add(viewQueryOrComplaintBtn);
+-    }
+-
+-    private void addComponentsToWindow(){
+-        this.add(desktop);
+-    }
+-
+-    private void registerActions(){
+-            createQueryOrComplaintBtn.addActionListener(e -> {
+-            desktop.add(new AddQueryComplaintView(client));
+-        });
+-
+-            viewQueryOrComplaintBtn.addActionListener(e -> {
+-                List<Query> queries;
+-                List<Complaint> complaints;
+-                ObjectInputStream objIs = client.getObjIs();
+-                ObjectOutputStream objOs = client.getObjOs();
+-                Student student = client.getStudent();
+-                String response = " ";
+-                try {
+-                    objOs.writeObject("AllStudentQueriesAndComplaints");
+-                    objOs.writeObject(student.getIdNumber());
+-                    queries = (ArrayList<Query>) objIs.readObject();
+-                    complaints = (ArrayList<Complaint>) objIs.readObject();
+-                    response = (String) objIs.readObject();
+-                    if(response.equals("successful")){
+-                        System.out.println("Queries received successfully");
+-                    }
+-                    else{
+-                        System.out.println("Queries not received successfully");
+-                    }
+-                } catch (IOException ex) {
+-                    throw new RuntimeException(ex);
+-                } catch (ClassNotFoundException ex) {
+-                    throw new RuntimeException(ex);
+-                }
+-                StudentQueriesComplaintsTableView studentQueriesComplaintsTableView = new StudentQueriesComplaintsTableView(queries,complaints);
+-                studentQueriesComplaintsTableView.setClient(client);
+-                desktop.add(studentQueriesComplaintsTableView);
+-            });
+-    }
+-
+-    private void setWindowProperties(){
+-        this.setJMenuBar(menuBar);
+-        this.setSize(1020,700);
+-        this.setResizable(true);
+-        this.setVisible(true);
+-        this.setLocationRelativeTo(null);
+-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+-    }
+-
+-
+-
+-}
+Index: logs/eventslogs.log
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>[ERROR] 2023-03-27 18:24:50 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:24:50 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:24:50 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:29:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:29:44 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:29:44 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:30:18 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:30:18 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:30:18 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:30:42 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:30:42 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:31:11 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:32:27 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:32:27 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:32:27 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:32:34 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:32:34 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:33:29 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:38:03 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:38:03 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:38:03 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:38:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:38:16 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:38:16 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:39:12 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:39:13 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:39:13 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:39:23 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:39:23 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:39:24 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:39:52 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:39:52 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:39:52 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:39:59 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:39:59 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:40:00 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:41:03 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:41:03 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:41:03 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:41:11 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:41:11 {main} c%{1} -Client count: 1\r\n[FATAL] 2023-03-27 18:41:11 {Thread-0} c%{1} -Class not found exception, check try/catch block\r\n[ERROR] 2023-03-27 18:41:47 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:41:47 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:41:47 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:41:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:41:53 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-27 18:41:56 {Thread-0} c%{1} -User successfully Authenticated\r\n[INFO ] 2023-03-27 18:41:58 {Thread-0} c%{1} -Queries found\r\n[INFO ] 2023-03-27 18:41:58 {Thread-0} c%{1} -All student queries sent back to client\r\n[WARN ] 2023-03-27 18:42:04 {Thread-0} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-27 18:47:24 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-27 18:47:24 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-27 18:47:24 {main} c%{1} -Server Started, Time: 2023-03-27\r\n[INFO ] 2023-03-27 18:47:30 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-27\r\n[INFO ] 2023-03-27 18:47:30 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-27 18:47:32 {Thread-0} c%{1} -User successfully Authenticated\r\n[INFO ] 2023-03-27 18:47:37 {Thread-0} c%{1} -Queries found\r\n[INFO ] 2023-03-27 18:47:37 {Thread-0} c%{1} -All student queries sent back to client\r\n[WARN ] 2023-03-27 18:47:40 {Thread-0} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-29 16:45:11 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 16:45:11 {main} c%{1} -SQL EXCEPTION in student createTable 'utechcomplaintdb.students' doesn't exist\r\n[INFO ] 2023-03-29 16:45:11 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[ERROR] 2023-03-29 17:30:12 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 17:30:13 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 17:30:13 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[ERROR] 2023-03-29 20:18:28 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 20:18:28 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 20:18:28 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[ERROR] 2023-03-29 20:18:35 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 20:18:35 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 20:18:35 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[INFO ] 2023-03-29 20:18:45 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-29\r\n[INFO ] 2023-03-29 20:18:45 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-29 20:18:47 {Thread-0} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-29 20:19:19 {Thread-0} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-29 20:24:33 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-29 20:24:33 {main} c%{1} -Student Inserted\r\n[INFO ] 2023-03-29 20:24:35 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[ERROR] 2023-03-29 20:25:56 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 20:25:56 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '33' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 20:25:59 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[ERROR] 2023-03-29 20:50:11 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 20:50:11 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '33' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 20:50:14 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[INFO ] 2023-03-29 20:51:19 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-29\r\n[INFO ] 2023-03-29 20:51:19 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-29 20:58:30 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 20:58:30 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '33' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 20:58:33 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[INFO ] 2023-03-29 20:58:38 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-29\r\n[INFO ] 2023-03-29 20:58:38 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-29 21:42:39 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 21:42:39 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '33' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 21:42:44 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[INFO ] 2023-03-29 21:42:48 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-29\r\n[INFO ] 2023-03-29 21:42:48 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-29 21:59:28 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 21:59:28 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 21:59:32 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[INFO ] 2023-03-29 21:59:41 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-29\r\n[INFO ] 2023-03-29 21:59:41 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-29 22:04:33 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 22:04:33 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[ERROR] 2023-03-29 22:04:59 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-29 22:04:59 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-29 22:05:04 {main} c%{1} -Server Started, Time: 2023-03-29\r\n[INFO ] 2023-03-29 22:05:13 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-29\r\n[INFO ] 2023-03-29 22:05:13 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 11:58:29 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 11:58:29 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[ERROR] 2023-03-30 12:34:43 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 12:34:43 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 12:34:48 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 12:40:30 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 12:40:30 {main} c%{1} -Student Inserted\r\n[INFO ] 2023-03-30 12:40:32 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 12:40:41 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 12:40:41 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 12:44:54 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 12:44:54 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[ERROR] 2023-03-30 12:54:01 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 12:54:01 {main} c%{1} -SQL EXCEPTION in student createTable 'utechcomplaintdb.students' doesn't exist\r\n[INFO ] 2023-03-30 12:54:04 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 12:55:55 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 12:55:55 {main} c%{1} -SQL EXCEPTION in student createUnknown column 'email_address' in 'field list'\r\n[INFO ] 2023-03-30 12:55:58 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 12:56:59 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 12:56:59 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 12:59:37 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 12:59:37 {main} c%{1} -SQL EXCEPTION in student createUnknown column 'email_address' in 'field list'\r\n[ERROR] 2023-03-30 13:00:38 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:00:38 {main} c%{1} -SQL EXCEPTION in student createUnknown column 'email_address' in 'field list'\r\n[ERROR] 2023-03-30 13:01:27 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:01:27 {main} c%{1} -Student Inserted\r\n[ERROR] 2023-03-30 13:02:23 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:02:23 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:02:26 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:06:51 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:06:51 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:06:54 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:08:12 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:08:12 {main} c%{1} -SQL EXCEPTION in student createTable 'utechcomplaintdb.students' doesn't exist\r\n[INFO ] 2023-03-30 13:08:15 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:14:47 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:14:47 {main} c%{1} -SQL EXCEPTION in student createUnknown column 'email_address' in 'field list'\r\n[INFO ] 2023-03-30 13:14:50 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:15:55 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:15:55 {main} c%{1} -SQL EXCEPTION in student createTable 'utechcomplaintdb.students' doesn't exist\r\n[INFO ] 2023-03-30 13:15:58 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:16:36 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:16:36 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 13:17:17 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:17:17 {main} c%{1} -Student Inserted\r\n[INFO ] 2023-03-30 13:17:17 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:23:13 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:23:13 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:23:13 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:24:08 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:24:08 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 13:28:50 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:28:50 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:28:50 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:29:09 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:29:09 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 13:30:11 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:30:11 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:30:11 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:30:24 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:30:24 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 13:30:54 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:30:54 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:30:54 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:30:58 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:30:58 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 13:30:59 {Thread-1} c%{1} -User successfully Authenticated\r\n[INFO ] 2023-03-30 13:31:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:31:16 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-30 13:31:16 {Thread-2} c%{1} -User successfully Authenticated\r\n[ERROR] 2023-03-30 13:32:01 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:32:01 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:32:01 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:32:59 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:32:59 {main} c%{1} -SQL EXCEPTION in student createUnknown column 'email_address' in 'field list'\r\n[INFO ] 2023-03-30 13:32:59 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:35:17 {main} c%{1} -Native Database Connection Established\r\n[ERROR] 2023-03-30 13:35:17 {main} c%{1} -SQL EXCEPTION in student createDuplicate entry '3' for key 'PRIMARY'\r\n[INFO ] 2023-03-30 13:35:17 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:36:26 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:36:26 {main} c%{1} -Student Inserted\r\n[INFO ] 2023-03-30 13:36:26 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[ERROR] 2023-03-30 13:38:19 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:38:19 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:38:49 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:38:49 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 13:38:50 {Thread-1} c%{1} -Authentication Unsuccessful\r\n[ERROR] 2023-03-30 13:41:10 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:41:10 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:41:20 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:41:20 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 13:43:31 {Thread-1} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 13:44:11 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-30 13:44:19 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:44:19 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:44:28 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:44:28 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 13:44:29 {Thread-1} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 13:45:45 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-30 13:46:16 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:46:16 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:46:34 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:46:34 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 13:47:23 {Thread-1} c%{1} -User successfully Authenticated\r\n[ERROR] 2023-03-30 13:48:07 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 13:48:07 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 13:48:22 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:48:22 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 13:48:23 {Thread-1} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 13:48:34 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[INFO ] 2023-03-30 13:48:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:48:44 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-30 13:48:44 {Thread-2} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 13:48:53 {Thread-2} c%{1} -IO Exception occurred within this try catch block\r\n[INFO ] 2023-03-30 13:49:09 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:49:09 {main} c%{1} -Client count: 3\r\n[INFO ] 2023-03-30 13:49:10 {Thread-3} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 13:49:13 {Thread-3} c%{1} -IO Exception occurred within this try catch block\r\n[INFO ] 2023-03-30 13:49:35 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 13:49:35 {main} c%{1} -Client count: 4\r\n[INFO ] 2023-03-30 13:49:36 {Thread-4} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 13:49:41 {Thread-4} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-30 14:56:17 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 14:56:17 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 14:56:38 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 14:56:38 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 15:11:32 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 15:11:32 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 15:11:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 15:11:53 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 15:17:21 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 15:17:21 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 15:17:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 15:17:53 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 15:18:34 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 15:18:34 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 15:18:47 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 15:18:47 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 16:03:10 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 16:03:10 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 16:03:27 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 16:03:27 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 16:57:42 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 16:57:42 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 16:57:48 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 16:57:48 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 16:58:32 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 16:58:32 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 16:58:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 16:58:44 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 16:59:24 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 16:59:24 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 16:59:34 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 16:59:34 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 17:01:01 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 17:01:01 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 17:01:10 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 17:01:10 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 17:03:26 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 17:03:26 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 17:03:38 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 17:03:38 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 17:06:27 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 17:06:27 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 17:07:30 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 17:07:30 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 17:07:47 {Thread-1} c%{1} -Authentication Unsuccessful\r\n[ERROR] 2023-03-30 17:08:12 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 17:08:12 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 17:08:28 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 17:08:28 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 17:08:54 {Thread-1} c%{1} -Authentication Unsuccessful\r\n[ERROR] 2023-03-30 17:09:23 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 17:09:23 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 17:09:39 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 17:09:39 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 17:13:41 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 17:13:41 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 17:13:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 17:13:52 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 21:08:10 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:08:10 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:08:21 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:08:21 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 21:11:26 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:11:26 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:11:29 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:11:29 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 21:12:52 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:12:52 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:12:58 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:12:58 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 21:17:27 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:17:27 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:17:34 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:17:34 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 21:21:23 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:21:23 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:21:30 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:21:30 {main} c%{1} -Client count: 1\r\n[ERROR] 2023-03-30 21:27:08 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:27:08 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:27:20 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:27:20 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 21:27:21 {Thread-1} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 21:27:25 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[INFO ] 2023-03-30 21:28:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:28:06 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-30 21:28:06 {Thread-2} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 21:28:11 {Thread-2} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-30 21:28:47 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 21:28:47 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 21:29:07 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 21:29:07 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 21:29:08 {Thread-1} c%{1} -User successfully Authenticated\r\n[WARN ] 2023-03-30 21:31:02 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-30 22:37:28 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 22:37:28 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 22:38:30 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:38:30 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 22:38:30 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:38:30 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-30 22:38:32 {Thread-2} c%{1} -Authentication failed\r\n[ERROR] 2023-03-30 22:39:36 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 22:39:36 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 22:39:58 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:39:58 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 22:39:58 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:39:58 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 22:42:16 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 22:42:16 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 22:42:25 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:42:25 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 22:42:25 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:42:25 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 22:43:13 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 22:43:13 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 22:43:23 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:43:23 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 22:43:23 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:43:23 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 22:46:37 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 22:46:37 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 22:46:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:46:44 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 22:46:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 22:46:44 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-30 22:46:45 {Thread-2} c%{1} -Advisor successfully Authenticated\r\n[ERROR] 2023-03-30 23:20:09 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:20:09 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:20:37 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:20:37 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:20:37 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:20:37 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:21:21 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:21:21 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:21:28 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:21:28 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:21:28 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:21:28 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:24:45 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:24:45 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:25:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:25:18 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:25:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:25:18 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:30:12 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:30:12 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:30:24 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:30:24 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:30:24 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:30:24 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:32:53 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:32:53 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:33:00 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:33:00 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:33:00 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:33:00 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:34:16 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:34:16 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:34:25 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:34:25 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:34:25 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:34:25 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:36:10 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:36:10 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:36:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:36:18 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:36:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:36:18 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-30 23:36:52 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-30 23:36:52 {main} c%{1} -Server Started, Time: 2023-03-30\r\n[INFO ] 2023-03-30 23:37:11 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:37:11 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-30 23:37:11 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-30\r\n[INFO ] 2023-03-30 23:37:11 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:07:47 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:07:47 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:08:04 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:08:04 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:08:04 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:08:04 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:09:45 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:09:45 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:09:59 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:09:59 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:09:59 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:09:59 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:12:51 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:12:51 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:13:00 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:13:00 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:13:00 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:13:00 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:18:49 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:18:49 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:19:17 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:19:17 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:19:17 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:19:17 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:26:11 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:26:11 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:26:32 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:26:32 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:26:32 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:26:32 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:29:20 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:29:20 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:29:33 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:29:33 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:29:33 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:29:33 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-31 22:31:05 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:31:05 {main} c%{1} -Client count: 3\r\n[INFO ] 2023-03-31 22:31:32 {Thread-1} c%{1} -Student successfully Authenticated\r\n[WARN ] 2023-03-31 22:31:32 {Thread-2} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:31:32 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:31:32 {Thread-3} c%{1} -IO Exception occurred within this try catch block\r\n[ERROR] 2023-03-31 22:31:37 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:31:37 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:31:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:31:52 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:31:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:31:52 {main} c%{1} -Client count: 2\r\n[ERROR] 2023-03-31 22:32:08 {Thread-1} c%{1} -No Product found\r\n[ERROR] 2023-03-31 22:40:20 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:40:20 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:40:36 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:40:36 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:40:36 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:40:36 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-31 22:40:40 {Thread-1} c%{1} -Student successfully Authenticated\r\n[INFO ] 2023-03-31 22:40:40 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:40:40 {main} c%{1} -Client count: 3\r\n[ERROR] 2023-03-31 22:42:22 {main} c%{1} -Native Database Connection Established\r\n[INFO ] 2023-03-31 22:42:22 {main} c%{1} -Server Started, Time: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:36 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:36 {main} c%{1} -Client count: 1\r\n[INFO ] 2023-03-31 22:42:36 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:36 {main} c%{1} -Client count: 2\r\n[INFO ] 2023-03-31 22:42:40 {Thread-1} c%{1} -Student successfully Authenticated\r\n[INFO ] 2023-03-31 22:42:40 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:40 {main} c%{1} -Client count: 3\r\n[INFO ] 2023-03-31 22:42:55 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:55 {main} c%{1} -Client count: 4\r\n[INFO ] 2023-03-31 22:42:55 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:55 {main} c%{1} -Client count: 5\r\n[INFO ] 2023-03-31 22:42:58 {Thread-4} c%{1} -Student successfully Authenticated\r\n[INFO ] 2023-03-31 22:42:58 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:42:58 {main} c%{1} -Client count: 6\r\n[INFO ] 2023-03-31 22:43:02 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:43:02 {main} c%{1} -Client count: 7\r\n[INFO ] 2023-03-31 22:43:02 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:43:02 {main} c%{1} -Client count: 8\r\n[INFO ] 2023-03-31 22:43:04 {Thread-7} c%{1} -Student successfully Authenticated\r\n[INFO ] 2023-03-31 22:43:04 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31\r\n[INFO ] 2023-03-31 22:43:04 {main} c%{1} -Client count: 9\r\n[ERROR] 2023-03-31 22:43:06 {Thread-9} c%{1} -No queries found\r\n[INFO ] 2023-03-31 22:43:06 {Thread-9} c%{1} -All student queries sent back to client\r\n[WARN ] 2023-03-31 22:43:12 {Thread-4} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-9} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-1} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-6} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-8} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-3} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-2} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-7} c%{1} -IO Exception occurred within this try catch block\r\n[WARN ] 2023-03-31 22:43:12 {Thread-5} c%{1} -IO Exception occurred within this try catch block\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/logs/eventslogs.log b/logs/eventslogs.log
+--- a/logs/eventslogs.log	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
++++ b/logs/eventslogs.log	(date 1680321372866)
+@@ -495,3 +495,27 @@
+ [WARN ] 2023-03-31 22:43:12 {Thread-2} c%{1} -IO Exception occurred within this try catch block
+ [WARN ] 2023-03-31 22:43:12 {Thread-7} c%{1} -IO Exception occurred within this try catch block
+ [WARN ] 2023-03-31 22:43:12 {Thread-5} c%{1} -IO Exception occurred within this try catch block
++[ERROR] 2023-03-31 22:52:57 {main} c%{1} -Native Database Connection Established
++[INFO ] 2023-03-31 22:52:57 {main} c%{1} -Server Started, Time: 2023-03-31
++[INFO ] 2023-03-31 22:53:10 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
++[INFO ] 2023-03-31 22:53:10 {main} c%{1} -Client count: 1
++[INFO ] 2023-03-31 22:53:10 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
++[INFO ] 2023-03-31 22:53:10 {main} c%{1} -Client count: 2
++[INFO ] 2023-03-31 22:53:14 {Thread-1} c%{1} -Student successfully Authenticated
++[INFO ] 2023-03-31 22:53:14 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
++[INFO ] 2023-03-31 22:53:14 {main} c%{1} -Client count: 3
++[WARN ] 2023-03-31 22:53:20 {Thread-3} c%{1} -IO Exception occurred within this try catch block
++[WARN ] 2023-03-31 22:53:20 {Thread-2} c%{1} -IO Exception occurred within this try catch block
++[WARN ] 2023-03-31 22:53:20 {Thread-1} c%{1} -IO Exception occurred within this try catch block
++[INFO ] 2023-03-31 22:55:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
++[INFO ] 2023-03-31 22:55:16 {main} c%{1} -Client count: 4
++[INFO ] 2023-03-31 22:55:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
++[INFO ] 2023-03-31 22:55:16 {main} c%{1} -Client count: 5
++[INFO ] 2023-03-31 22:55:18 {Thread-4} c%{1} -Student successfully Authenticated
++[INFO ] 2023-03-31 22:55:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-03-31
++[INFO ] 2023-03-31 22:55:18 {main} c%{1} -Client count: 6
++[WARN ] 2023-03-31 22:55:20 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
++[ERROR] 2023-03-31 22:55:26 {Thread-6} c%{1} -No queries found
++[INFO ] 2023-03-31 22:55:26 {Thread-6} c%{1} -All student queries sent back to client
++[WARN ] 2023-03-31 22:56:12 {Thread-6} c%{1} -IO Exception occurred within this try catch block
++[WARN ] 2023-03-31 22:56:12 {Thread-4} c%{1} -IO Exception occurred within this try catch block
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"602c6f96-a62e-4dee-a7ba-daf80f9d9361\" name=\"Changes\" comment=\"new updates\">\r\n      <change beforePath=\"$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Person.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Person.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/LoginView.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/LoginView.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/logs/eventslogs.log\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/logs/eventslogs.log\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/ClientHandler.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/ClientHandler.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/actions/AdvisorActions.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/actions/AdvisorActions.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/actions/StudentActions.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/actions/StudentActions.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/actions/SupervisorActions.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/out/production/Complaint-Server/server/actions/SupervisorActions.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/models/Advisor.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/models/Advisor.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/models/Person.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/models/Person.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/models/Supervisor.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/models/Supervisor.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/ClientHandler.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/ClientHandler.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/Server.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/Server.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/actions/AdvisorActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/actions/AdvisorActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/actions/StudentActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/actions/StudentActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/server/actions/SupervisorActions.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/server/actions/SupervisorActions.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/../LiveChatGUI.java\" beforeDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Tag Library Descriptor\" />\r\n        <option value=\"Class\" />\r\n        <option value=\"Enum\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"HighlightingSettingsPerFile\">\r\n    <setting file=\"jar://$PROJECT_DIR$/../../hibernate-release-5.4.18.Final/hibernate-release-5.4.18.Final/lib/required/javax.persistence-api-2.2.jar!/javax/persistence/criteria/Subquery.class\" root0=\"SKIP_INSPECTION\" />\r\n  </component>\r\n  <component name=\"MarkdownSettingsMigration\">\r\n    <option name=\"stateVersion\" value=\"1\" />\r\n  </component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"2MktvyLbP6TRMcbVS0KFaDJpdpe\" />\r\n  <component name=\"ProjectLevelVcsManager\">\r\n    <ConfirmationsSetting value=\"1\" id=\"Add\" />\r\n  </component>\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">{\r\n  &quot;keyToString&quot;: {\r\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\r\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\r\n    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,\r\n    &quot;last_opened_file_path&quot;: &quot;C:/Users/awins/Documents/Projects/AdvancedProgramming/ComplaintAndMangementSystem/Complaint-Server&quot;,\r\n    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,\r\n    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,\r\n    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;\r\n  }\r\n}</component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CopyFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\awins\\Documents\\Projects\\AdvancedProgramming\\ComplaintAndMangementSystem\\Complaint-Server\\src\\factories\" />\r\n      <recent name=\"C:\\Users\\awins\\Documents\\Projects\\AdvancedProgramming\\ComplaintAndMangementSystem\\Complaint-Server\\src\\resources\" />\r\n    </key>\r\n    <key name=\"MoveFile.RECENT_KEYS\">\r\n      <recent name=\"C:\\Users\\awins\\Documents\\Projects\\AdvancedProgramming\\ComplaintAndMangementSystem\\Complaint-Server\\src\\factories\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"DriverTest\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"server.DriverTest\" />\r\n      <module name=\"Complaint-Server\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"server.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.DriverTest\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"602c6f96-a62e-4dee-a7ba-daf80f9d9361\" name=\"Changes\" comment=\"\" />\r\n      <created>1678323642810</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1678323642810</updated>\r\n      <workItem from=\"1678323643798\" duration=\"9000\" />\r\n      <workItem from=\"1678323715678\" duration=\"7019000\" />\r\n      <workItem from=\"1678389350079\" duration=\"7338000\" />\r\n      <workItem from=\"1678397892124\" duration=\"120000\" />\r\n      <workItem from=\"1678416582603\" duration=\"1382000\" />\r\n      <workItem from=\"1678471659614\" duration=\"5000\" />\r\n      <workItem from=\"1678488304629\" duration=\"1173000\" />\r\n      <workItem from=\"1678504279201\" duration=\"2883000\" />\r\n      <workItem from=\"1678546604997\" duration=\"1213000\" />\r\n      <workItem from=\"1678574233191\" duration=\"7619000\" />\r\n      <workItem from=\"1678638904102\" duration=\"6081000\" />\r\n      <workItem from=\"1678799514078\" duration=\"17390000\" />\r\n      <workItem from=\"1678835231106\" duration=\"5844000\" />\r\n      <workItem from=\"1679071044490\" duration=\"4270000\" />\r\n      <workItem from=\"1679077151898\" duration=\"32000\" />\r\n      <workItem from=\"1679098950760\" duration=\"15649000\" />\r\n      <workItem from=\"1679440844015\" duration=\"11994000\" />\r\n      <workItem from=\"1679526245587\" duration=\"4000\" />\r\n      <workItem from=\"1679529688129\" duration=\"1640000\" />\r\n      <workItem from=\"1679533889562\" duration=\"1754000\" />\r\n      <workItem from=\"1679584916441\" duration=\"11000\" />\r\n      <workItem from=\"1679616681821\" duration=\"4709000\" />\r\n      <workItem from=\"1679700582357\" duration=\"16210000\" />\r\n      <workItem from=\"1679748401833\" duration=\"6045000\" />\r\n      <workItem from=\"1679793469234\" duration=\"3399000\" />\r\n      <workItem from=\"1679802978361\" duration=\"126000\" />\r\n      <workItem from=\"1679864155390\" duration=\"2032000\" />\r\n      <workItem from=\"1679935998929\" duration=\"10000\" />\r\n      <workItem from=\"1679956636295\" duration=\"4230000\" />\r\n      <workItem from=\"1680035918094\" duration=\"225000\" />\r\n      <workItem from=\"1680123698983\" duration=\"520000\" />\r\n      <workItem from=\"1680124570139\" duration=\"9818000\" />\r\n      <workItem from=\"1680195428101\" duration=\"17066000\" />\r\n      <workItem from=\"1680228460870\" duration=\"7133000\" />\r\n      <workItem from=\"1680298169486\" duration=\"30000\" />\r\n      <workItem from=\"1680316546531\" duration=\"3654000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"server created\">\r\n      <created>1678323799076</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678323799076</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"changes to SessionBuilderFactory class\">\r\n      <created>1678397966073</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678397966073</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"test commit\">\r\n      <created>1678548490851</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678548490851</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"ORM configurations working and log file configure. Server configuration stated\">\r\n      <created>1678563368770</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678563368770</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Updated sql config\">\r\n      <created>1678563569538</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678563569538</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Updated sql config\">\r\n      <created>1678563668119</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678563668119</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"user authentication configure. Server configure to connect with client\">\r\n      <created>1678579932970</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678579932970</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"new updates\">\r\n      <created>1678840362986</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678840362986</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"new updates\">\r\n      <created>1678840413652</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1678840413652</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"new updates\">\r\n      <created>1680127430149</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1680127430149</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"11\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"server created\" />\r\n    <MESSAGE value=\"changes to SessionBuilderFactory class\" />\r\n    <MESSAGE value=\"test commit\" />\r\n    <MESSAGE value=\"ORM configurations working and log file configure. Server configuration stated\" />\r\n    <MESSAGE value=\"Updated sql config\" />\r\n    <MESSAGE value=\"user authentication configure. Server configure to connect with client\" />\r\n    <MESSAGE value=\"new updates\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"new updates\" />\r\n  </component>\r\n  <component name=\"XDebuggerManager\">\r\n    <breakpoint-manager>\r\n      <breakpoints>\r\n        <breakpoint type=\"java-exception\">\r\n          <properties class=\"org.hibernate.MappingException\" package=\"org.hibernate\" />\r\n          <option name=\"timeStamp\" value=\"1\" />\r\n        </breakpoint>\r\n        <breakpoint type=\"java-exception\">\r\n          <properties class=\"java.lang.ClassNotFoundException\" package=\"java.lang\" />\r\n          <option name=\"timeStamp\" value=\"9\" />\r\n        </breakpoint>\r\n        <breakpoint enabled=\"true\" type=\"java-exception\">\r\n          <properties class=\"java.lang.IllegalStateException\" package=\"java.lang\" />\r\n          <option name=\"timeStamp\" value=\"13\" />\r\n        </breakpoint>\r\n        <line-breakpoint enabled=\"true\" type=\"java-line\">\r\n          <url>file://$PROJECT_DIR$/src/server/ClientHandler.java</url>\r\n          <line>147</line>\r\n          <option name=\"timeStamp\" value=\"17\" />\r\n        </line-breakpoint>\r\n      </breakpoints>\r\n    </breakpoint-manager>\r\n    <pin-to-top-manager>\r\n      <pinned-members>\r\n        <PinnedItemInfo parentTag=\"java.lang.ClassNotFoundException\" memberName=\"detailMessage\" />\r\n        <PinnedItemInfo parentTag=\"server.actions.StudentActions\" memberName=\"result\" />\r\n        <PinnedItemInfo parentTag=\"models.Student\" memberName=\"lastName\" />\r\n      </pinned-members>\r\n    </pin-to-top-manager>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
++++ b/.idea/workspace.xml	(date 1680321736384)
+@@ -5,29 +5,33 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="new updates">
++      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/Dashboard.java" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/background.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/bell-ring.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/chat.png" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/user.png" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Person.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Advisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Advisor.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Category.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Category.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Complaint.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Complaint.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/ComplaintTableModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/ComplaintTableModel.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Query.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Query.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/QueryTableModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/QueryTableModel.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Response.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Response.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Status.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Student.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Student.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Supervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/models/Supervisor.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/DashboardView.class" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/LoginView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/AddQueryComplaintView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/AddQueryComplaintView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/QueryComplaintView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/QueryComplaintView.class" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/StudentQueriesComplaintsTableView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/StudentQueriesComplaintsTableView.class" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/controller/Client.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/DashboardView.java" beforeDir="false" />
+       <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/logs/eventslogs.log" beforeDir="false" afterPath="$PROJECT_DIR$/logs/eventslogs.log" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Advisor.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Person.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Supervisor.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/ClientHandler.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/AdvisorActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/AdvisorActions.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/StudentActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/StudentActions.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/SupervisorActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/SupervisorActions.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/models/Advisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Advisor.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/models/Person.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Person.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/models/Supervisor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Supervisor.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/server/actions/AdvisorActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/AdvisorActions.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/server/actions/StudentActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/StudentActions.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/server/actions/SupervisorActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/SupervisorActions.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/../LiveChatGUI.java" beforeDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+@@ -144,7 +148,7 @@
+       <workItem from="1680195428101" duration="17066000" />
+       <workItem from="1680228460870" duration="7133000" />
+       <workItem from="1680298169486" duration="30000" />
+-      <workItem from="1680316546531" duration="3654000" />
++      <workItem from="1680316546531" duration="4962000" />
+     </task>
+     <task id="LOCAL-00001" summary="server created">
+       <created>1678323799076</created>
+@@ -255,11 +259,6 @@
+           <properties class="java.lang.IllegalStateException" package="java.lang" />
+           <option name="timeStamp" value="13" />
+         </breakpoint>
+-        <line-breakpoint enabled="true" type="java-line">
+-          <url>file://$PROJECT_DIR$/src/server/ClientHandler.java</url>
+-          <line>147</line>
+-          <option name="timeStamp" value="17" />
+-        </line-breakpoint>
+       </breakpoints>
+     </breakpoint-manager>
+     <pin-to-top-manager>
+Index: ../Complaint-Client/src/views/Dashboard.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../Complaint-Client/src/views/Dashboard.java b/../Complaint-Client/src/views/Dashboard.java
+new file mode 100644
+--- /dev/null	(date 1680321246175)
++++ b/../Complaint-Client/src/views/Dashboard.java	(date 1680321246175)
+@@ -0,0 +1,176 @@
++package views;
++	
++
++import java.awt.*; 
++import java.awt.event.*;
++import java.io.IOException;
++import java.io.ObjectInputStream;
++import java.io.ObjectOutputStream;
++import java.util.ArrayList;
++import java.util.List;
++import java.awt.Image;
++import javax.swing.ImageIcon;
++
++import controller.Client;
++import models.Complaint;
++import models.Query;
++import models.Student;
++import views.internatViews.AddQueryComplaintView;
++import views.internatViews.StudentQueriesComplaintsTableView;
++
++import javax.swing.*;
++
++
++//student dashboard
++
++public class Dashboard extends JFrame {
++  private JMenuBar menuBar;
++  private JMenu fileMenu;
++  private JMenuItem exitMenuItem;
++  private JDesktopPane desktop;
++  private JLabel welcomeLabel;
++  private JLabel idLabel;
++  private JLabel nameLabel;
++  private JButton createButton;
++  private JButton viewButton;
++  private JButton chatButton;
++  private JButton notificationButton;
++  private JLabel profilePictureLabel;
++  private final Client client;
++
++  public Dashboard(Client client) {
++	  
++	  this.client = client;
++      // Set up the window
++      setTitle("Student Dashboard");
++      setResizable(true);
++      setVisible(true);
++      setSize(900, 600);
++      setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
++      setLocationRelativeTo(null);
++      
++
++      // Create the menu bar
++      menuBar = new JMenuBar();
++      fileMenu = new JMenu("Exit Dashboard");
++      exitMenuItem = new JMenuItem("Exit");
++
++      exitMenuItem.addActionListener(new ActionListener() {
++          public void actionPerformed(ActionEvent e) {
++              System.exit(0);
++          }
++      });
++
++      fileMenu.add(exitMenuItem);
++      menuBar.add(fileMenu);
++      setJMenuBar(menuBar);
++
++      // Create the desktop pane
++      desktop = new JDesktopPane();
++      setContentPane(desktop);
++      
++      //profile picture
++      ImageIcon profilePictureIcon = new ImageIcon("src/views/user.png");
++      Image profilePictureImage = profilePictureIcon.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH);
++      ImageIcon profilePicture = new ImageIcon(profilePictureImage);
++      profilePictureLabel = new JLabel();
++      profilePictureLabel.setIcon(profilePicture);
++      desktop.add(profilePictureLabel);
++      profilePictureLabel.setBounds(750, 20, 50, 40);
++      
++
++      // Create the welcome label
++      welcomeLabel = new JLabel("Welcome, " + client.getStudent().getFirstName() + "!");
++      welcomeLabel.setFont(new Font("Arial", Font.BOLD, 20));
++      desktop.add(welcomeLabel);
++      welcomeLabel.setBounds(20, 20, 300, 30);
++
++      // Create the ID label
++      idLabel = new JLabel("ID: " + client.getStudent().getIdNumber());
++      desktop.add(idLabel);
++      idLabel.setBounds(600, 60, 200, 20);
++      idLabel.setHorizontalAlignment(JLabel.RIGHT);
++
++      // Create the name label
++      nameLabel = new JLabel("Name: " + client.getStudent().getFirstName());
++      desktop.add(nameLabel);
++      nameLabel.setBounds(600, 80, 200, 20);
++      nameLabel.setHorizontalAlignment(JLabel.RIGHT);
++
++      // Create the buttons
++      createButton = new JButton("Create Query/Complaint");
++      desktop.add(createButton);
++      createButton.setBounds(20, 120, 200, 30);
++      createButton.addActionListener(e -> {
++          desktop.add(new AddQueryComplaintView(client));
++      });
++
++      viewButton = new JButton("View Query/Complaint");
++      desktop.add(viewButton);
++      viewButton.setBounds(20, 160, 200, 30);
++      viewButton.addActionListener(e -> {
++          List<Query> queries;
++          List<Complaint> complaints;
++          ObjectInputStream objIs = client.getObjIs();
++          ObjectOutputStream objOs = client.getObjOs();
++          Student student = client.getStudent();
++          String response = " ";
++          try {
++              objOs.writeObject("AllStudentQueriesAndComplaints");
++              objOs.writeObject(student.getIdNumber());
++              queries = (ArrayList<Query>) objIs.readObject();
++              complaints = (ArrayList<Complaint>) objIs.readObject();
++              response = (String) objIs.readObject();
++              if(response.equals("successful")){
++                  System.out.println("Queries received successfully");
++              }
++              else{
++                  System.out.println("Queries not received successfully");
++              }
++          } catch (IOException ex) {
++              throw new RuntimeException(ex);
++          } catch (ClassNotFoundException ex) {
++              throw new RuntimeException(ex);
++          }
++          StudentQueriesComplaintsTableView studentQueriesComplaintsTableView = new StudentQueriesComplaintsTableView(queries,complaints);
++          studentQueriesComplaintsTableView.setClient(client);
++          desktop.add(studentQueriesComplaintsTableView);
++      });
++      
++      //chat button
++      chatButton = new JButton();
++      ImageIcon chatIcon = new ImageIcon("src/views/chat.png");
++      Image chatImage = chatIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
++      chatButton.setIcon(new ImageIcon(chatImage));
++      desktop.add(chatButton);
++      chatButton.setBounds(640, 20, 50, 40);
++      chatButton.addActionListener(new ActionListener() {
++          public void actionPerformed(ActionEvent e) {
++              // Code to handle chat button click
++          }
++      });
++      
++      //notifications button
++      notificationButton = new JButton();
++      ImageIcon notifIcon = new ImageIcon("src/views/bell-ring.png");
++      Image notifImage = notifIcon.getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
++      notificationButton.setIcon(new ImageIcon(notifImage));
++      desktop.add(notificationButton);
++      notificationButton.setBounds(570, 20, 50, 40);
++      notificationButton.addActionListener(new ActionListener() {
++          public void actionPerformed(ActionEvent e) {
++              // Code to handle chat button click
++          }
++      });
++     
++      // Set desktop background color and add image
++     desktop.setBackground(new Color(245, 245, 245));
++      ImageIcon backgroundImage = new ImageIcon("src/views/background.png");
++      JLabel backgroundLabel = new JLabel(backgroundImage);
++      backgroundLabel.setBounds(0, 0, 900, 600);
++      desktop.add(backgroundLabel); 
++      setVisible(true);
++  }
++
++}  
++
+Index: ../Complaint-Client/src/controller/Client.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package controller;\r\n\r\nimport models.Advisor;\r\nimport models.Person;\r\nimport models.Student;\r\nimport models.Supervisor;\r\nimport views.DashboardView;\r\n\r\nimport java.io.IOException;\r\nimport java.io.ObjectInputStream;\r\nimport java.io.ObjectOutputStream;\r\nimport java.net.Socket;\r\nimport java.net.UnknownHostException;\r\n\r\npublic class Client {\r\n    private  ObjectInputStream objIs;\r\n    private  ObjectOutputStream objOs;\r\n    private Socket connectionSocket;\r\n    private DashboardView dashboardView;\r\n    private Person person;\r\n    private Student student;\r\n    private Advisor advisor;\r\n    private Supervisor supervisor;\r\n\r\n        public Client(Person person) {\r\n                this.person = person;\r\n                this.createConnection();\r\n                this.configureStreams();\r\n        }\r\n        public Client(Student student) {\r\n                this.student = student;\r\n                this.createConnection();\r\n                this.configureStreams();\r\n        }\r\n\r\n        public Client(Supervisor supervisor) {\r\n                this.supervisor = supervisor;\r\n                this.createConnection();\r\n                this.configureStreams();\r\n        }\r\n        public Client(Advisor advisor) {\r\n                this.advisor = advisor;\r\n                this.createConnection();\r\n                this.configureStreams();\r\n        }\r\n\r\n\r\n\r\n        private void createConnection() {\r\n            try {\r\n                connectionSocket = new Socket(\"127.0.0.1\", 8888);\r\n                System.out.println(\"Connected to server\");\r\n\r\n            } catch (UnknownHostException e) {\r\n                throw new RuntimeException(e);\r\n            } catch (IOException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n        }\r\n\r\n        private void configureStreams() {\r\n            try {\r\n                objIs = new ObjectInputStream(connectionSocket.getInputStream());\r\n                objOs = new ObjectOutputStream(connectionSocket.getOutputStream());\r\n            } catch (IOException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n        }\r\n\r\n        public void sendRequest(String action){\r\n            try {\r\n                objOs.writeObject(action);\r\n            } catch (IOException e) {\r\n                throw new RuntimeException(e);\r\n            }\r\n        }\r\n\r\n\r\n    public void closeConnection(){\r\n        try {\r\n            objOs.close();\r\n            objIs.close();\r\n            connectionSocket.close();\r\n        } catch (IOException e) {\r\n            throw new RuntimeException(e);\r\n        }\r\n    }\r\n\r\n\r\n\r\n    public Socket getConnectionSocket() {\r\n        return connectionSocket;\r\n    }\r\n\r\n    public void setConnectionSocket(Socket connectionSocket) {\r\n        this.connectionSocket = connectionSocket;\r\n    }\r\n\r\n    public Person getPerson() {\r\n        return person;\r\n    }\r\n\r\n    public void setPerson(Person person) {\r\n        this.person = Client.this.person;\r\n    }\r\n\r\n\r\n    public ObjectInputStream getObjIs() {\r\n        return objIs;\r\n    }\r\n\r\n    public ObjectOutputStream getObjOs() {\r\n        return objOs;\r\n    }\r\n\r\n    public Student getStudent() {\r\n        return student;\r\n    }\r\n\r\n    public void setStudent(Student student) {\r\n        this.student = student;\r\n    }\r\n\r\n    public Advisor getAdvisor() {\r\n        return advisor;\r\n    }\r\n\r\n    public void setAdvisor(Advisor advisor) {\r\n        this.advisor = advisor;\r\n    }\r\n\r\n    public Supervisor getSupervisor() {\r\n        return supervisor;\r\n    }\r\n\r\n    public void setSupervisor(Supervisor supervisor) {\r\n        this.supervisor = supervisor;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../Complaint-Client/src/controller/Client.java b/../Complaint-Client/src/controller/Client.java
+--- a/../Complaint-Client/src/controller/Client.java	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
++++ b/../Complaint-Client/src/controller/Client.java	(date 1680321306347)
+@@ -4,7 +4,7 @@
+ import models.Person;
+ import models.Student;
+ import models.Supervisor;
+-import views.DashboardView;
++import views.Dashboard;
+ 
+ import java.io.IOException;
+ import java.io.ObjectInputStream;
+@@ -16,7 +16,7 @@
+     private  ObjectInputStream objIs;
+     private  ObjectOutputStream objOs;
+     private Socket connectionSocket;
+-    private DashboardView dashboardView;
++    private Dashboard dashboardView;
+     private Person person;
+     private Student student;
+     private Advisor advisor;
+Index: ../Complaint-Client/src/views/LoginView.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package views;\r\n\r\nimport controller.Client;\r\nimport models.*;\r\n\r\nimport javax.swing.*;\r\nimport java.awt.*;\r\nimport java.awt.event.ActionEvent;\r\nimport java.awt.event.ActionListener;\r\nimport java.io.IOException;\r\nimport java.io.ObjectInputStream;\r\nimport java.io.ObjectOutputStream;\r\n\r\npublic class LoginView extends JFrame implements ActionListener {\r\n \r\n    Container container = getContentPane();\r\n    JComboBox userType = new JComboBox<>(new String[]{\"Student\", \"Supervisor\", \"Advisor\"});\r\n    JLabel userLabel = new JLabel(\"ID NUMBER\");\r\n    JLabel passwordLabel = new JLabel(\"PASSWORD\");\r\n    JTextField userTextField = new JTextField();\r\n    JPasswordField passwordField = new JPasswordField();\r\n    JButton signinButton = new JButton(\"SIGN IN\");\r\n    JButton changePasswordButton = new JButton(\"Change Password\");\r\n    JCheckBox showPassword = new JCheckBox(\"Show Password\");\r\n\r\n    \r\n    \r\n    private static final String USERNAME = \"admin\";\r\n    private static String PASSWORD = \"password123\";\r\n\r\n    \r\n    public LoginView() {\r\n        this.setTitle(\"views.Login Form\");\r\n        this.setVisible(true);\r\n        this.setBounds(10, 10, 370, 600);\r\n        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);\r\n        this.setResizable(false);\r\n        this.getContentPane().setBackground(Color.LIGHT_GRAY);\r\n        setLayoutManager();\r\n        setLocationAndSize();\r\n        addComponentsToContainer();\r\n        addActionEvent();\r\n \r\n    }\r\n\r\n    public void setLayoutManager() {\r\n        container.setLayout(null);\r\n    }\r\n \r\n    public void setLocationAndSize() {\r\n        userType.setBounds(50, 50, 250, 30);\r\n        userLabel.setBounds(50, 150, 100, 30);\r\n        passwordLabel.setBounds(50, 220, 100, 30);\r\n        userTextField.setBounds(150, 150, 150, 30);\r\n        passwordField.setBounds(150, 220, 150, 30);\r\n        showPassword.setBounds(150, 250, 150, 30);\r\n\t\tsigninButton.setBounds(50, 300, 100, 30);\r\n        changePasswordButton.setBounds(200, 300, 100, 30);\r\n \r\n \r\n    }\r\n \r\n    public void addComponentsToContainer() {\r\n        container.add(userType);\r\n        container.add(userLabel);\r\n        container.add(passwordLabel);\r\n        container.add(userTextField);\r\n        container.add(passwordField);\r\n        container.add(showPassword);\r\n        container.add(signinButton);\r\n        container.add(changePasswordButton);\r\n    }\r\n \r\n    public void addActionEvent() {\r\n        signinButton.addActionListener(this);\r\n        changePasswordButton.addActionListener(this);\r\n        showPassword.addActionListener(this);\r\n    }\r\n \r\n \r\n    @Override\r\n    public void actionPerformed(ActionEvent e) {\r\n        //Coding Part of LOGIN button\r\n        if (e.getSource() == signinButton) {\r\n            boolean flag;\r\n            String userText;\r\n            String pwdText;\r\n            String userTypeText;\r\n            userText = userTextField.getText();\r\n            pwdText = passwordField.getText();\r\n            userTypeText = (String) userType.getSelectedItem();\r\n            Student student;\r\n            Advisor advisor;\r\n            Supervisor supervisor;\r\n            Client client = new Client(new Person());\r\n            ObjectOutputStream objOs = client.getObjOs();\r\n            ObjectInputStream objIs = client.getObjIs();\r\n\r\n\r\n            if (userTypeText.equals(\"Student\")) {\r\n                student = new Student();\r\n                student.setIdNumber(Long.parseLong(userText));\r\n                student.setPassword(pwdText);\r\n                client = new Client(student);\r\n                try {\r\n                    objOs.writeObject(\"Authenticate\");\r\n                    objOs.writeObject(client.getStudent());\r\n                    student = (Student) objIs.readObject();\r\n                } catch (IOException ex) {\r\n                    throw new RuntimeException(ex);\r\n                } catch (ClassNotFoundException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n                client = new Client(student);\r\n                if (student != null) {\r\n                    JOptionPane.showMessageDialog(this, \"Login Successful\");\r\n                    DashboardView dashboardView = new DashboardView(client);\r\n                    dashboardView.setVisible(true);\r\n                    this.dispose();\r\n                } else {\r\n                    JOptionPane.showMessageDialog(this, \"Invalid ID Number or Password\");\r\n                }\r\n\r\n            } else if (userTypeText.equals(\"Supervisor\")) {\r\n                supervisor = new Supervisor();\r\n                supervisor.setIdNumber(Long.parseLong(userText));\r\n                supervisor.setPassword(pwdText);\r\n                client = new Client(supervisor);\r\n\r\n                try {\r\n                    objOs.writeObject(\"Authenticate\");\r\n                    objOs.writeObject(client.getSupervisor());\r\n                    supervisor = (Supervisor) objIs.readObject();\r\n                } catch (IOException ex) {\r\n                    throw new RuntimeException(ex);\r\n                } catch (ClassNotFoundException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n                client = new Client(supervisor);\r\n                if (supervisor != null) {\r\n                    JOptionPane.showMessageDialog(this, \"Login Successful\");\r\n                    DashboardView dashboardView = new DashboardView(client);\r\n                    dashboardView.setVisible(true);\r\n                    this.dispose();\r\n                } else {\r\n                    JOptionPane.showMessageDialog(this, \"Invalid ID Number or Password\");\r\n                }\r\n\r\n            } else {\r\n                advisor = new Advisor();\r\n                advisor.setIdNumber(Long.parseLong(userText));\r\n                advisor.setPassword(pwdText);\r\n                client = new Client(advisor);\r\n                try {\r\n                    objOs.writeObject(\"Authenticate\");\r\n                    objOs.writeObject(client.getSupervisor());\r\n                    advisor = (Advisor) objIs.readObject();\r\n                } catch (IOException ex) {\r\n                    throw new RuntimeException(ex);\r\n                } catch (ClassNotFoundException ex) {\r\n                    throw new RuntimeException(ex);\r\n                }\r\n                client = new Client(advisor);\r\n                if (advisor != null) {\r\n                    JOptionPane.showMessageDialog(this, \"Login Successful\");\r\n                    DashboardView dashboardView = new DashboardView(client);\r\n                    dashboardView.setVisible(true);\r\n                    this.dispose();\r\n                } else {\r\n                    JOptionPane.showMessageDialog(this, \"Invalid ID Number or Password\");\r\n                }\r\n            }\r\n\r\n            if (e.getSource() == showPassword) {\r\n                if (showPassword.isSelected()) {\r\n                    passwordField.setEchoChar((char) 0);\r\n                } else {\r\n                    passwordField.setEchoChar('*');\r\n                }\r\n\r\n\r\n            }\r\n\r\n        }\r\n\r\n    }\r\n\r\n\r\n\r\n\r\n\r\n\r\n}\r\n \r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../Complaint-Client/src/views/LoginView.java b/../Complaint-Client/src/views/LoginView.java
+--- a/../Complaint-Client/src/views/LoginView.java	(revision 1de28bb1470ecf9691b7cedd404a1c2b0eab5c4b)
++++ b/../Complaint-Client/src/views/LoginView.java	(date 1680321718617)
+@@ -80,7 +80,6 @@
+  
+     @Override
+     public void actionPerformed(ActionEvent e) {
+-        //Coding Part of LOGIN button
+         if (e.getSource() == signinButton) {
+             boolean flag;
+             String userText;
+@@ -114,7 +113,7 @@
+                 client = new Client(student);
+                 if (student != null) {
+                     JOptionPane.showMessageDialog(this, "Login Successful");
+-                    DashboardView dashboardView = new DashboardView(client);
++                    Dashboard dashboardView = new Dashboard(client);
+                     dashboardView.setVisible(true);
+                     this.dispose();
+                 } else {
+@@ -139,7 +138,7 @@
+                 client = new Client(supervisor);
+                 if (supervisor != null) {
+                     JOptionPane.showMessageDialog(this, "Login Successful");
+-                    DashboardView dashboardView = new DashboardView(client);
++                    Dashboard dashboardView = new Dashboard(client);
+                     dashboardView.setVisible(true);
+                     this.dispose();
+                 } else {
+@@ -163,7 +162,7 @@
+                 client = new Client(advisor);
+                 if (advisor != null) {
+                     JOptionPane.showMessageDialog(this, "Login Successful");
+-                    DashboardView dashboardView = new DashboardView(client);
++                    Dashboard dashboardView = new Dashboard(client);
+                     dashboardView.setVisible(true);
+                     this.dispose();
+                 } else {

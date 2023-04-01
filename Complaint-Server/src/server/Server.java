@@ -24,29 +24,29 @@ public class Server {
 
     public Server(){
 
-        Advisor advisor = new Advisor();
-        advisor.setFirstName("Sam");
-        advisor.setLastName("Denver");
-        advisor.setPassword("3");
-        advisor.setIdNumber(4);
-        AdvisorActions advisorActions = new AdvisorActions();
-        advisorActions.createAdvisor(advisor);
-
-        Supervisor supervisor = new Supervisor();
-        supervisor.setFirstName("Max");
-        supervisor.setLastName("Reacher");
-        supervisor.setPassword("3");
-        supervisor.setIdNumber(5);
-        SupervisorActions supervisorActions = new SupervisorActions();
-        supervisorActions.createSupervisor(supervisor);
-
-        Student student = new Student();
-        student.setFirstName("John");
-        student.setLastName("Doe");
-        student.setPassword("3");
-        student.setIdNumber(3);
-        StudentActions studentActions = new StudentActions();
-        studentActions.createStudent(student);
+//        Advisor advisor = new Advisor();
+//        advisor.setFirstName("Sam");
+//        advisor.setLastName("Denver");
+//        advisor.setPassword("3");
+//        advisor.setIdNumber(4);
+//        AdvisorActions advisorActions = new AdvisorActions();
+//        advisorActions.createAdvisor(advisor);
+//
+//        Supervisor supervisor = new Supervisor();
+//        supervisor.setFirstName("Max");
+//        supervisor.setLastName("Reacher");
+//        supervisor.setPassword("3");
+//        supervisor.setIdNumber(5);
+//        SupervisorActions supervisorActions = new SupervisorActions();
+//        supervisorActions.createSupervisor(supervisor);
+//
+//        Student student = new Student();
+//        student.setFirstName("John");
+//        student.setLastName("Doe");
+//        student.setPassword("3");
+//        student.setIdNumber(3);
+//        StudentActions studentActions = new StudentActions();
+//        studentActions.createStudent(student);
 
         try{
             serverSocket = new ServerSocket(8888);
