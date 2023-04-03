@@ -4,7 +4,7 @@ import models.Advisor;
 import models.Person;
 import models.Student;
 import models.Supervisor;
-import views.DashboardView;
+import views.Dashboard;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -16,7 +16,7 @@ public class Client {
     private  ObjectInputStream objIs;
     private  ObjectOutputStream objOs;
     private Socket connectionSocket;
-    private DashboardView dashboardView;
+    private Dashboard dashboardView;
     private Person person;
     private Student student;
     private Advisor advisor;
