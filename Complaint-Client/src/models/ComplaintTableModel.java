@@ -6,7 +6,7 @@ import java.util.List;
 public class ComplaintTableModel extends AbstractTableModel {
 
     private List<Complaint> complaints;
-    private String [] columns = {"Category", "Details", "Date", "Status"};
+    private String [] columns = {"Category", "Details", "Date", "Status","ComplaintId"};
 
     public ComplaintTableModel(List<Complaint> complaints) {
         this.complaints = complaints;
@@ -37,6 +37,8 @@ public class ComplaintTableModel extends AbstractTableModel {
                 return complaint.getComplaintDate();
             case 3:
                 return complaint.getStatus();
+            case 4:
+                return complaint.getComplaintId();
             default:
                 return null;
         }

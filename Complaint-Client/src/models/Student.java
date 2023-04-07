@@ -10,8 +10,6 @@ public class Student extends Person implements Serializable {
     @Serial
     private static  final long serialVersionUID = 443756519803593097L;
     private List<Query> queries = new ArrayList<Query>();
-
-
     private List<Complaint> complaints = new ArrayList<Complaint>();
 
     public Student() {
@@ -56,5 +54,7 @@ public class Student extends Person implements Serializable {
         this.complaints.remove( compplaint );
         compplaint.setStudent( null );
     }
+
+
 
 }

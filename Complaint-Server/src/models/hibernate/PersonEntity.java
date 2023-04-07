@@ -1,4 +1,4 @@
-package models;
+package models.hibernate;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 
 @MappedSuperclass
-public class  Person implements Serializable {
+public class PersonEntity implements Serializable {
     @Serial
     private static  final long serialVersionUID = 333148454057186020L;
     @Id
@@ -24,7 +24,7 @@ public class  Person implements Serializable {
     @Column(name = "password")
     private  String password;
 
-    public Person(String firstName, String lastName, long phoneNumber, String email) {
+    public PersonEntity(String firstName, String lastName, long phoneNumber, String email) {
         this.idNumber = 0;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -32,7 +32,7 @@ public class  Person implements Serializable {
         this.email = email;
     }
 
-    public Person(String firstName, String lastName, long phoneNumber, String email, String password) {
+    public PersonEntity(String firstName, String lastName, long phoneNumber, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
@@ -40,7 +40,7 @@ public class  Person implements Serializable {
         this.password = password;
     }
 
-    public Person() {
+    public PersonEntity() {
 
     }
 
@@ -93,20 +93,17 @@ public class  Person implements Serializable {
     public void setPassword(String password) {
         String hashedPassword ="";
         hashedPassword = BCrypt.withDefaults().hashToString(12,password.toCharArray());
-
         this.password = hashedPassword;
     }
 
 
     @Override
     public String toString() {
-        return "Person{" +
-                "idNumber=" + idNumber +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return  "\n idNumber: " + idNumber +
+                "\n firstName: " + firstName + ' ' +
+                "\n lastName: " + lastName + ' ' +
+                "\n phoneNumber: " + phoneNumber +
+                "\n email: " + email + ' ' +
+                "\n password: " + password;
     }
 }

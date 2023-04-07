@@ -1,5 +1,8 @@
-package models;
+package models.hibernate;
 
+
+import models.Category;
+import models.Status;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -10,15 +13,14 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "complaints")
-public class Complaint implements Serializable {
+public class ComplaintEntity implements Serializable {
     @Serial
     private static  final long serialVersionUID = 5639873163017606842L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long complaintId;
-
     @ManyToOne
-    private Student student;
+    private StudentEntity studentEntity;
     @Column(name = "category")
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -31,16 +33,16 @@ public class Complaint implements Serializable {
     @Column(name = "status")
     private Status status;
 
-    public Complaint(long complaintId, Student student, Category category, String complaintDetail, Date complaintDate, Status status) {
+    public ComplaintEntity(long complaintId, StudentEntity studentEntity, Category category, String complaintDetail, Date complaintDate, Status status) {
         this.complaintId = complaintId;
-        this.student = student;
+        this.studentEntity = studentEntity;
         this.category = category;
         this.complaintDetail = complaintDetail;
         this.complaintDate = complaintDate;
         this.status = status;
     }
 
-    public Complaint() {
+    public ComplaintEntity() {
     }
     public long getComplaintId() {
         return complaintId;
@@ -50,12 +52,12 @@ public class Complaint implements Serializable {
         this.complaintId = complaintId;
     }
 
-    public Student getStudent() {
-        return student;
+    public StudentEntity getStudent() {
+        return studentEntity;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public void setStudent(StudentEntity studentEntity) {
+        this.studentEntity = studentEntity;
     }
 
     public String getCategory() {
@@ -100,8 +102,8 @@ public class Complaint implements Serializable {
         if ( o == null || getClass() != o.getClass() ) {
             return false;
         }
-        Complaint complaint = (Complaint ) o;
-        return Objects.equals( complaintId, complaint.complaintId );
+        ComplaintEntity complaintEntity = (ComplaintEntity) o;
+        return Objects.equals( complaintId, complaintEntity.complaintId );
     }
 
     @Override
@@ -114,7 +116,7 @@ public class Complaint implements Serializable {
     public String toString() {
         return "Complaint{" +
                 "complaintId=" + complaintId +
-                ", student=" + student +
+                ", student=" + studentEntity +
                 ", category=" + category +
                 ", complaintDetail='" + complaintDetail + '\'' +
                 ", complaintDate=" + complaintDate +

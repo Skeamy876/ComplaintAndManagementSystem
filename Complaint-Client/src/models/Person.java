@@ -1,9 +1,11 @@
 package models;
 
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class  Person implements Serializable {
+    @Serial
     private static  final long serialVersionUID = 333148454057186020L;
     private long idNumber;
 
@@ -80,13 +82,11 @@ public class  Person implements Serializable {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "idNumber=" + idNumber +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
+        return  "\n idNumber: " + idNumber +
+                "\n firstName: " + firstName + ' ' +
+                "\n lastName: " + lastName + ' ' +
+                "\n phoneNumber: " + phoneNumber +
+                "\n email: " + email + ' ' +
+                "\n password: " + password;
     }
 }

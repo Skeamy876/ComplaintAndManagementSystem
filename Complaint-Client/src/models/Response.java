@@ -62,4 +62,11 @@ public class Response implements Serializable {
     public void setQuery(Query query) {
         this.query = query;
     }
+
+    @Override
+    public String toString() {
+        return  "\n responseId :" + responseId +
+                "\nresponseDetail :" + responseDetail +
+                "\n responseDate :" + responseDate;
+    }
 }

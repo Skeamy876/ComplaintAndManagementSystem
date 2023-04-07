@@ -104,7 +104,7 @@ public class AddQueryComplaintView extends JInternalFrame {
                 String queryOrComplaintDetails = queryOrComplaintDetailsTextArea.getText();
                 ObjectInputStream objIs = client.getObjIs();
                 ObjectOutputStream objOs = client.getObjOs();
-                Student student = (Student) client.getPerson();
+                Student student = client.getStudent();
 
                 if(queryOrComplaint.equals("Query")){
                     Query query = new Query();
@@ -115,8 +115,13 @@ public class AddQueryComplaintView extends JInternalFrame {
 
                     try {
                         client.sendRequest("Add Query");
-                        objOs.writeObject(query);
+                        student.removeQuery(query);
+                        student.addQuery(query);
                         objOs.writeObject(student);
+
+                        for (Query q: student.getQueries()){
+                            System.out.println(q.getCategory());
+                        }
                         String response = (String) objIs.readObject();
                         if (response.equals("successful")){
                             JOptionPane.showMessageDialog(this, "Query Submitted Successfully","Query Submit Status",JOptionPane.INFORMATION_MESSAGE);
@@ -137,7 +142,8 @@ public class AddQueryComplaintView extends JInternalFrame {
 
                     try {
                         client.sendRequest("Add Complaint");
-                        objOs.writeObject(complaint);
+                        student.removeComplaint(complaint);
+                        student.addComplaint(complaint);
                         objOs.writeObject(student);
                         String response = (String) objIs.readObject();
                         if (response.equals("successful")){

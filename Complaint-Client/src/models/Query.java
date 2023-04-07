@@ -5,19 +5,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Query implements Serializable {
-    private static  final long serialVersionUID = 760771714612821918L;
+    private static final long serialVersionUID = 760771714612821918L;
     private long queryId;
     private Category category;
     private String queryDetail;
-    private Student student;
     private Date queryDate;
     private Status status;
+    private Student student;
 
-    public Query( Category category, String queryDetail, Student student, Date queryDate, Status status) {
+    public Query(Category category, String queryDetail, Date queryDate, Status status) {
         this.queryId = 0;
         this.category = category;
         this.queryDetail = queryDetail;
-        this.student = student;
         this.queryDate = queryDate;
         this.status = status;
     }
@@ -72,16 +71,16 @@ public class Query implements Serializable {
     public void setStatus(String status) {
         this.status = Status.valueOf(status);
     }
+
+
     @Override
     public String toString() {
         return "Query{" +
                 "queryId=" + queryId +
                 ", category=" + category +
                 ", queryDetail='" + queryDetail + '\'' +
-                ", student=" + student +
                 ", queryDate=" + queryDate +
                 ", status=" + status +
                 '}';
     }
-
 }

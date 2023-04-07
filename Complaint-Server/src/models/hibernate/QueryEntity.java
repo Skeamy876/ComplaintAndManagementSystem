@@ -1,17 +1,17 @@
-package models;
+package models.hibernate;
+
+import models.Category;
+import models.Status;
 
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Objects;
 
 
 @Entity(name = "Query")
 @Table(name = "queries")
-public class Query implements Serializable {
+public class QueryEntity implements Serializable {
     @Serial
     private static  final long serialVersionUID = 760771714612821918L;
     @Id
@@ -28,12 +28,10 @@ public class Query implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name="status")
     private Status status;
-    @OneToMany(fetch = FetchType.LAZY,cascade=CascadeType.PERSIST)
-    private List<Response> responses = new ArrayList<Response>();
-    @ManyToOne(fetch = FetchType.LAZY,cascade=CascadeType.PERSIST)
-    private Student student;
+    @ManyToOne
+    private StudentEntity studentEntity;
 
-    public Query( Category category, String queryDetail, Date queryDate, Status status) {
+    public QueryEntity(Category category, String queryDetail, Date queryDate, Status status) {
         this.queryId = 0;
         this.category = category;
         this.queryDetail = queryDetail;
@@ -41,8 +39,16 @@ public class Query implements Serializable {
         this.status = status;
     }
 
+    public QueryEntity(long queryId, Category category, String queryDetail, Date queryDate, Status status, StudentEntity studentEntity) {
+        this.queryId = queryId;
+        this.category = category;
+        this.queryDetail = queryDetail;
+        this.queryDate = queryDate;
+        this.status = status;
+        this.studentEntity = studentEntity;
+    }
 
-    public Query() {
+    public QueryEntity() {
     }
 
     public long getQueryId() {
@@ -84,32 +90,13 @@ public class Query implements Serializable {
     public void setStatus(String status) {
         this.status = Status.valueOf(status);
     }
-    public Student getStudent() {
+    public StudentEntity getStudent() {
 
-        return student;
+        return studentEntity;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
-
-
-    @Override
-    public boolean equals(Object o) {
-        if ( this == o ) {
-            return true;
-        }
-        if ( o == null || getClass() != o.getClass() ) {
-            return false;
-        }
-        Query query = (Query) o;
-        return Objects.equals( queryId, query.queryId );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash( queryId );
+    public void setStudent(StudentEntity studentEntity) {
+        this.studentEntity = studentEntity;
     }
 
     @Override
@@ -118,7 +105,6 @@ public class Query implements Serializable {
                 "queryId=" + queryId +
                 ", category=" + category +
                 ", queryDetail='" + queryDetail + '\'' +
-
                 ", queryDate=" + queryDate +
                 ", status=" + status +
                 '}';

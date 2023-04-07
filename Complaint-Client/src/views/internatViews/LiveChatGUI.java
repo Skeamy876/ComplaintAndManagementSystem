@@ -1,4 +1,4 @@
-package guirun;
+package views.internatViews;
 
 import controller.Client;
 

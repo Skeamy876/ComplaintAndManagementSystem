@@ -5,7 +5,7 @@ import java.util.List;
 
 public class QueryTableModel extends AbstractTableModel {
     private List<Query> queries;
-    private String [] columns = {"Category", "Details", "Date", "Status"};
+    private String [] columns = {"Category", "Details", "Date", "Status","QueryId"};
 
     public QueryTableModel(List<Query> queries) {
         this.queries = queries;
@@ -33,6 +33,8 @@ public class QueryTableModel extends AbstractTableModel {
                 return query.getQueryDate();
             case 3:
                 return query.getStatus();
+            case 4:
+                    return query.getQueryId();
             default:
                 return null;
         }

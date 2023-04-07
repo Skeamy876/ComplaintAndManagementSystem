@@ -1,7 +1,10 @@
 package views;
 
 import controller.Client;
-import models.*;
+import models.Advisor;
+import models.Person;
+import models.Student;
+import models.Supervisor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,18 +83,27 @@ public class LoginView extends JFrame implements ActionListener {
  
     @Override
     public void actionPerformed(ActionEvent e) {
-        //Coding Part of LOGIN button
+        if (e.getSource() == showPassword) {
+            if (showPassword.isSelected()) {
+                passwordField.setEchoChar((char) 0);
+            } else {
+                passwordField.setEchoChar('*');
+            }
+
+
+        }
+
         if (e.getSource() == signinButton) {
-            boolean flag;
             String userText;
             String pwdText;
             String userTypeText;
-            userText = userTextField.getText();
-            pwdText = passwordField.getText();
-            userTypeText = (String) userType.getSelectedItem();
+            userText = userTextField.getText().trim();
+            pwdText = passwordField.getText().trim();
+            userTypeText = userType.getSelectedItem().toString();
             Student student;
             Advisor advisor;
             Supervisor supervisor;
+            Person person;
             Client client = new Client(new Person());
             ObjectOutputStream objOs = client.getObjOs();
             ObjectInputStream objIs = client.getObjIs();
@@ -106,10 +118,8 @@ public class LoginView extends JFrame implements ActionListener {
                     objOs.writeObject("Authenticate");
                     objOs.writeObject(client.getStudent());
                     student = (Student) objIs.readObject();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+                } catch (IOException | ClassNotFoundException ex) {
+                    ex.printStackTrace();
                 }
                 client = new Client(student);
                 if (student != null) {
@@ -131,10 +141,10 @@ public class LoginView extends JFrame implements ActionListener {
                     objOs.writeObject("Authenticate");
                     objOs.writeObject(client.getSupervisor());
                     supervisor = (Supervisor) objIs.readObject();
-                } catch (IOException ex) {
-                    throw new RuntimeException(ex);
-                } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+                } catch (IOException | ClassNotFoundException ex) {
+                    System.out.println("Classpath: " + System.getProperty("java.class.path"));
+                    System.out.println("Context classloader: " + Thread.currentThread().getContextClassLoader());
+                    new RuntimeException(ex);
                 }
                 client = new Client(supervisor);
                 if (supervisor != null) {
@@ -146,19 +156,19 @@ public class LoginView extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
                 }
 
-            } else {
+            } else if (userTypeText.equals("Advisor")){
                 advisor = new Advisor();
                 advisor.setIdNumber(Long.parseLong(userText));
                 advisor.setPassword(pwdText);
                 client = new Client(advisor);
                 try {
                     objOs.writeObject("Authenticate");
-                    objOs.writeObject(client.getSupervisor());
+                    objOs.writeObject(client.getAdvisor());
                     advisor = (Advisor) objIs.readObject();
                 } catch (IOException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
                 } catch (ClassNotFoundException ex) {
-                    throw new RuntimeException(ex);
+                    ex.printStackTrace();
                 }
                 client = new Client(advisor);
                 if (advisor != null) {
@@ -171,15 +181,7 @@ public class LoginView extends JFrame implements ActionListener {
                 }
             }
 
-            if (e.getSource() == showPassword) {
-                if (showPassword.isSelected()) {
-                    passwordField.setEchoChar((char) 0);
-                } else {
-                    passwordField.setEchoChar('*');
-                }
 
-
-            }
 
         }
 
