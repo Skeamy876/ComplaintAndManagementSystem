@@ -2,12 +2,30 @@ package server.actions;
 
 import factories.SessionBuilderFactory;
 import models.Query;
+import models.Student;
+import models.hibernate.QueryEntity;
+import models.hibernate.StudentEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.modelmapper.ModelMapper;
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class QueryActions {
+    ModelMapper modelMapper = new ModelMapper();
+
+    public void createQuery(QueryEntity queryEntity){
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        session.save(queryEntity);
+        transaction.commit();
+        session.close();
+    }
     public void createQuery(Query query){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
@@ -24,28 +42,60 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        Query query1 = (Query) session.get(Query.class, id);
+        Transaction transaction = session.beginTransaction();
+        QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
+        StudentEntity studentEntity = queryEntity1.getStudent();
+        Student student1 = modelMapper.map(studentEntity, Student.class);
+        Query query = modelMapper.map(queryEntity1, Query.class);
+        query.setStudent(student1);
         transaction.commit();
         session.close();
 
-        return query1;
+        return query;
     }
 
     public List<Query> findAllQueries(){
-        List<Query> queries = new ArrayList<>();
+        List<QueryEntity> queries = new ArrayList<>();
+        List<Query> queryList = new ArrayList<>();
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        queries = (List<Query>) session.createNativeQuery("SELECT * FROM query")
+        Transaction transaction = session.beginTransaction();
+        queries = session.createNativeQuery("SELECT * FROM queries", QueryEntity.class)
+                .list();
+
+        for (QueryEntity queryEntity : queries) {
+            StudentEntity studentEntity = queryEntity.getStudent();
+            Student student1 = modelMapper.map(studentEntity, Student.class);
+            Query query = modelMapper.map(queryEntity, Query.class);
+            query.setStudent(student1);
+            queryList.add(query);
+        }
+        transaction.commit();
+        session.close();
+        return queryList;
+    }
+
+    public List<Query> findAllQuerysByUser(long userId) {
+        List<QueryEntity> queries = new ArrayList<>();
+        List<Query> queryList = new ArrayList<>();
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        queries = session.createNativeQuery("SELECT * FROM queries WHERE studentEntity_idNumber = :userId", QueryEntity.class)
+                .setParameter("userId", userId)
                 .list();
         transaction.commit();
         session.close();
 
-
-        return queries;
+        for (QueryEntity queryEntity : queries) {
+            Query query = modelMapper.map(queryEntity, Query.class);
+            queryList.add(query);
+        }
+        return queryList;
     }
 
     public void UpdateQueryCategory(Query query){
@@ -53,10 +103,11 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        Query query1 = (Query) session.get(Query.class, query.getQueryId());
-        query1.setCategory(query.getCategory());
-        session.update(query1);
+        Transaction transaction = session.beginTransaction();
+        QueryEntity queryEntity = modelMapper.map(query, QueryEntity.class);
+        QueryEntity queryEntity1 = session.get(QueryEntity.class, queryEntity.getQueryId());
+        queryEntity1.setCategory(queryEntity.getCategory());
+        session.update(queryEntity1);
         transaction.commit();
         session.close();
     }
@@ -65,23 +116,52 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        Query query1 = (Query) session.get(Query.class,query.getQueryId());
-        query1.setQueryDetail(query.getQueryDetail());
-        session.update(query1);
+        Transaction transaction = session.beginTransaction();
+        QueryEntity queryEntity = modelMapper.map(query, QueryEntity.class);
+        QueryEntity queryEntity1 = session.get(QueryEntity.class, queryEntity.getQueryId());
+        queryEntity1.setQueryDetail(queryEntity.getQueryDetail());
+        session.update(queryEntity1);
         transaction.commit();
         session.close();
     }
 
-    public void deleteQuery(long id){
+    public void deleteQuery(long id) {
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
+        session.delete(queryEntity1);
+        transaction.commit();
+        session.close();
+    }
+
+    public List<Query> findAllQueriesByCategory(String category) {
+        List<QueryEntity> queries = new ArrayList<>();
+        List<Query> queryList = new ArrayList<>();
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        Query query1 = (Query) session.get(Query.class,id);
-        session.delete(query1);
+        Transaction transaction = session.beginTransaction();
+        queries = (List<QueryEntity>) session.createNativeQuery("SELECT * FROM queries WHERE category = :category", QueryEntity.class)
+                .setParameter("category", category)
+                .list();
+        for (QueryEntity queryEntity : queries){
+            StudentEntity studentEntity = queryEntity.getStudent();
+            Student student1 = modelMapper.map(studentEntity, Student.class);
+            Query query = modelMapper.map(queryEntity, Query.class);
+            query.setStudent(student1);
+            queryList.add(query);
+        }
         transaction.commit();
         session.close();
+
+
+        return queryList;
     }
+
+
+
 }

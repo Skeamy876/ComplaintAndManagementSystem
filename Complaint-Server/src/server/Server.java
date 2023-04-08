@@ -4,6 +4,9 @@ package server;
 import models.Advisor;
 import models.Student;
 import models.Supervisor;
+import models.hibernate.AdvisorEntity;
+import models.hibernate.StudentEntity;
+import models.hibernate.SupervisorEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import server.actions.AdvisorActions;
@@ -24,7 +27,7 @@ public class Server {
 
     public Server(){
 
-//        Advisor advisor = new Advisor();
+//        AdvisorEntity advisor = new AdvisorEntity();
 //        advisor.setFirstName("Sam");
 //        advisor.setLastName("Denver");
 //        advisor.setPassword("3");
@@ -32,7 +35,7 @@ public class Server {
 //        AdvisorActions advisorActions = new AdvisorActions();
 //        advisorActions.createAdvisor(advisor);
 //
-//        Supervisor supervisor = new Supervisor();
+//        SupervisorEntity supervisor = new SupervisorEntity();
 //        supervisor.setFirstName("Max");
 //        supervisor.setLastName("Reacher");
 //        supervisor.setPassword("3");
@@ -40,7 +43,7 @@ public class Server {
 //        SupervisorActions supervisorActions = new SupervisorActions();
 //        supervisorActions.createSupervisor(supervisor);
 //
-//        Student student = new Student();
+//        StudentEntity student = new StudentEntity();
 //        student.setFirstName("John");
 //        student.setLastName("Doe");
 //        student.setPassword("3");

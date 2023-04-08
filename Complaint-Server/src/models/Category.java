@@ -1,5 +1,7 @@
 package models;
 
+import java.io.Serializable;
+
 public enum Category {
     MISSING_GRADES,
     NO_FINANCIAL_STATUS_UPDATE,

@@ -1,61 +1,62 @@
 package server.actions;
 
 import factories.SessionBuilderFactory;
-import models.Advisor;
-import models.Supervisor;
+import models.hibernate.SupervisorEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 
 
 public class SupervisorActions {
-    public void createSupervisor(Supervisor supervisor){
+    public void createSupervisor(SupervisorEntity supervisorEntity){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        session.save(supervisor);
+        session.save(supervisorEntity);
         transaction.commit();
         session.close();
     }
 
-    public Supervisor findSupervisor(long id){
+    public SupervisorEntity findSupervisor(long id){
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        Supervisor supervisor = (Supervisor) session.get(Supervisor.class, id);
+        Transaction transaction = session.beginTransaction();
+        SupervisorEntity supervisorEntity = (SupervisorEntity) session.get(SupervisorEntity.class, id);
         transaction.commit();
         session.close();
 
-        return supervisor;
+        return supervisorEntity;
     }
 
-    public void updateSupervisor(Supervisor supervisor){
+    public void updateSupervisor(SupervisorEntity supervisorEntity){
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
-        Supervisor supervisorDTO = (Supervisor) session.get(Supervisor.class,supervisor.getIdNumber());
-        supervisor.setFirstName(supervisor.getFirstName());
-        supervisor.setLastName(supervisor.getLastName());
-        supervisor.setEmail(supervisor.getEmail());
-        session.update(supervisorDTO);
+        Transaction transaction = session.beginTransaction();
+        SupervisorEntity supervisorEntityDTO = (SupervisorEntity) session.get(SupervisorEntity.class, supervisorEntity.getIdNumber());
+        supervisorEntity.setFirstName(supervisorEntity.getFirstName());
+        supervisorEntity.setLastName(supervisorEntity.getLastName());
+        supervisorEntity.setEmail(supervisorEntity.getEmail());
+        session.update(supervisorEntityDTO);
         transaction.commit();
         session.close();
 
     }
 
-    public void deleteSupervisor(Supervisor supervisor){
+
+
+    public void deleteSupervisor(SupervisorEntity supervisorEntity){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
         Transaction transaction = session.beginTransaction();
-        Supervisor supervisorDTO = (Supervisor) session.get(Supervisor.class,supervisor.getIdNumber());
-        session.delete(supervisorDTO);
+        SupervisorEntity supervisorEntityDTO = (SupervisorEntity) session.get(SupervisorEntity.class, supervisorEntity.getIdNumber());
+        session.delete(supervisorEntityDTO);
         transaction.commit();
         session.close();
     }

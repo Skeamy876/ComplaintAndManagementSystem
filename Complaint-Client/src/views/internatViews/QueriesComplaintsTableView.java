@@ -12,14 +12,14 @@ import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class StudentQueriesComplaintsTableView extends JInternalFrame  {
+public class QueriesComplaintsTableView extends JInternalFrame  {
     private JTable tableQuery, tableComplaint;
     private JScrollPane scrollPaneQuery, scrollPaneComplaint;
     private List<Query> queries;
     private List<Complaint> complaints;
     private Client client;
 
-    public StudentQueriesComplaintsTableView(List<Query> queries , List<Complaint> complaints) {
+    public QueriesComplaintsTableView(List<Query> queries , List<Complaint> complaints) {
         super("Queries and Complaints",true,true,true,true);
         this.queries = queries;
         QueryTableModel queryTableModel = new QueryTableModel(queries);
@@ -78,9 +78,6 @@ public class StudentQueriesComplaintsTableView extends JInternalFrame  {
             }
             this.dispose();
         });
-
-
-
     }
     public Client getClient() {
         return client;

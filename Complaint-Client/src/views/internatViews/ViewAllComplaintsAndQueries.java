@@ -7,9 +7,12 @@ import models.Query;
 import models.QueryTableModel;
 
 import javax.swing.*;
+import javax.swing.table.TableModel;
+import java.awt.*;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Arrays;
 import java.util.List;
 
 public class ViewAllComplaintsAndQueries extends JInternalFrame{
@@ -40,23 +43,59 @@ public class ViewAllComplaintsAndQueries extends JInternalFrame{
             System.err.println(e.getMessage());
         }
 
+
         this.queries = queries;
         QueryTableModel queryTableModel = new QueryTableModel(queries);
         this.tableQuery = new JTable(queryTableModel);
         tableQuery.setCellSelectionEnabled(true);
+        scrollPaneQuery = new JScrollPane(tableQuery);
 
         this.complaints = complaints;
         ComplaintTableModel complaintTableModel = new ComplaintTableModel(complaints);
         this.tableComplaint = new JTable(complaintTableModel);
         tableComplaint.setCellSelectionEnabled(true);
+        scrollPaneComplaint = new JScrollPane(tableComplaint);
 
-        tableQuery.setBounds(0,30,450,50);
-        tableComplaint.setBounds(0,100,450,50);
-
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,scrollPaneQuery,scrollPaneComplaint);
+        splitPane.setResizeWeight(0.5);
+        this.add(splitPane);
         this.setSize(500,700);
         this.setVisible(true);
-        this.add(tableQuery);
-        this.add(tableComplaint);
+
+
+        ListSelectionModel listSelectionModel = tableQuery.getSelectionModel();
+        listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        ListSelectionModel listSelectionModel2 = tableComplaint.getSelectionModel();
+        listSelectionModel2.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+        listSelectionModel.addListSelectionListener(e -> {
+            int selectedRow = tableQuery.getSelectedRow();
+            TableModel tableModel = tableQuery.getModel();
+            Object[] selectedData = new Object[tableModel.getColumnCount()];
+            for (int i = 0; i < tableModel.getColumnCount(); i++) {
+                selectedData[i] = tableModel.getValueAt(selectedRow, i);
+            }
+            System.out.println("Selected: " + Arrays.toString(selectedData));
+            if (this.getDesktopPane() != null) {
+                this.getDesktopPane().add(new QueryComplaintView(selectedData,client));
+            }
+            this.dispose();
+        });
+
+        listSelectionModel2.addListSelectionListener(e -> {
+            int selectedRow = tableComplaint.getSelectedRow();
+            TableModel tableModel = tableComplaint.getModel();
+            Object[] selectedData = new Object[tableModel.getColumnCount()];
+            for (int i = 0; i < tableModel.getColumnCount(); i++) {
+                selectedData[i] = tableModel.getValueAt(selectedRow, i);
+            }
+            System.out.println("Selected: " + Arrays.toString(selectedData));
+            if (this.getDesktopPane() != null) {
+                this.getDesktopPane().add(new QueryComplaintView(selectedData,client));
+            }
+            this.dispose();
+        });
 
     }
 }

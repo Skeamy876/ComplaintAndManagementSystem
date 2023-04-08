@@ -29,8 +29,10 @@ public class Dashboard extends JFrame {
 	private JButton createButton;
 	private JButton viewButton;
 	private JButton chatButton;
-	private JButton notificationButton;
-	private JLabel profilePictureLabel;
+	private JButton notificationButton,searchButton;
+	private JLabel profilePictureLabel,searchLabel;
+	private String[] searchCategories = {"MISSING_GRADES", "NO_FINANCIAL_STATUS_UPDATE", "BARRED_FROM_EXAMS", "INCORRECT_ACADEMIC_RECORD", "NO_TIMETABLE", "STAFF_MISCONDUCT"};
+	private JComboBox<String> searchBox;
 	private final Client client;
 
 	public Dashboard(Client client) {
@@ -157,9 +159,9 @@ public class Dashboard extends JFrame {
 			} catch (ClassNotFoundException ex) {
 				System.err.println("Unexpected error : "+ ex.getMessage());
 			}
-			StudentQueriesComplaintsTableView studentQueriesComplaintsTableView = new StudentQueriesComplaintsTableView(queries, complaints);
-			studentQueriesComplaintsTableView.setClient(client);
-			desktop.add(studentQueriesComplaintsTableView);
+			QueriesComplaintsTableView queriesComplaintsTableView = new QueriesComplaintsTableView(queries, complaints);
+			queriesComplaintsTableView.setClient(client);
+			desktop.add(queriesComplaintsTableView);
 		});
 	}
 
@@ -184,34 +186,40 @@ public class Dashboard extends JFrame {
 		nameLabel.setBounds(600, 80, 200, 20);
 		nameLabel.setHorizontalAlignment(JLabel.RIGHT);
 
-		// Create the buttons
-		createButton = new JButton("View Outstanding Complaints/Queries");
-		desktop.add(createButton);
-		createButton.setBounds(20, 120, 200, 30);
-		createButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
+		//Search area
+		searchLabel = new JLabel("Search by Category: ");
+		searchBox = new JComboBox<String>(searchCategories);
+		searchButton = new JButton("Search");
+		desktop.add(searchLabel);
+		desktop.add(searchBox);
+		desktop.add(searchButton);
+		searchLabel.setBounds(300, 80, 200, 30);
+		searchBox.setBounds(300, 120, 200, 30);
+		searchButton.setBounds(300, 150, 200, 30);
+			searchButton.addActionListener(e -> {
+			desktop.add(new SearchView(client, searchBox.getSelectedItem().toString()));
 		});
 
 		viewButton = new JButton("View Resolved Complaints/Queries");
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 160, 200, 30);
 		viewButton.addActionListener(e -> {
-			new ViewUnresolvedAndUnresolvedQC(client);
+			desktop.add(new ViewUnresolvedAndUnresolvedQC(client));
+
 		});
 
 		viewButton = new JButton("Assign Complaints/Queries");
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 200, 200, 30);
 		viewButton.addActionListener(e -> {
-			new AssignStudentAdvisor(client);
+			desktop.add(new ViewUnresolvedAndUnresolvedQC(client));
 		});
 
 		viewButton = new JButton("View All Complaints/Queries");
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 240, 200, 30);
 		viewButton.addActionListener(e ->  {
-			new ViewAllComplaintsAndQueries(client);
+			desktop.add(new ViewAllComplaintsAndQueries(client));
 		});
 
 	}

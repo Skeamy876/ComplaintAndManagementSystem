@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class LiveChatGUI extends JInternalFrame implements ActionListener {
+public class  LiveChatGUI extends JInternalFrame implements ActionListener {
     private JTextField textField;
     private JTextArea chatArea;
     private JLabel statusLabel;

@@ -1,29 +1,36 @@
 package server.actions;
 
 import factories.SessionBuilderFactory;
-import models.Complaint;
-import models.Query;
 import models.Student;
+import models.hibernate.ComplaintEntity;
+import models.hibernate.QueryEntity;
+import models.hibernate.StudentEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import server.ClientHandler;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class StudentActions {
     private static Connection dbConn= null;
     private Statement statement= null;
     private ResultSet result = null;
+    ModelMapper modelMapper = new ModelMapper();
     private static final Logger logger = LogManager.getLogger(ClientHandler.class);
 
 
     public StudentActions() {
         dbConn = getDatabaseConnection();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
+
     }
 
     private Connection getDatabaseConnection(){
@@ -41,46 +48,33 @@ public class StudentActions {
         return dbConn;
     }
 
-    public void createStudent(Student student) {
+    public void createStudent(StudentEntity studentEntity) {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
         Transaction transaction = session.beginTransaction();
-        session.save(student);
+        session.save(studentEntity);
         transaction.commit();
         session.close();
     }
 
 
-    public Student findStudent(long idNumber){
-        String selectSql ="SELECT * FROM students WHERE idNumber ="+ idNumber;
-        Student student = new Student();
+    public StudentEntity findStudent(long idNumber){
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        StudentEntity studentEntity = session.get(StudentEntity.class, idNumber);
+        transaction.commit();
+        session.close();
 
-        try{
-            statement = dbConn.createStatement();
-            result = statement.executeQuery(selectSql);
-            if (result.next()){
-                student.setIdNumber(result.getLong("idNumber"));
-                student.setFirstName(result.getString("first_name"));
-                student.setLastName(result.getString("last_name"));
-                student.setPassword(result.getString("password"));
-                student.setPassword(result.getString("phone_number"));
 
-                return student;
-            }else {
-                logger.error("No Product found");
-            }
-        } catch (SQLException e) {
-            logger.error("Sql Error"+ e.getMessage());
-        }catch (Exception ex){
-            logger.error("Unexpected  Error"+ ex.getMessage());
-        }
-        return student;
+        return studentEntity;
     }
 
-    public List<Student> getAllStudents(){
+    public List<StudentEntity> getAllStudents(){
         String getAll ="SELECT idNumber,first_name,last_name,email_address,password,phone_number from utechcompalintdb.students";
-        List<Student> students = new ArrayList<>();
+        List<StudentEntity> studentEntities = new ArrayList<>();
 
         try{
             statement = dbConn.createStatement();
@@ -94,7 +88,7 @@ public class StudentActions {
                 String password= result.getString("password");
                 long phoneNumber= result.getLong("phone_number");
 
-                students.add( new Student(firstname,lastname,phoneNumber,email,password));
+                studentEntities.add( new StudentEntity(firstname,lastname,phoneNumber,email,password));
             }
 
         }catch (SQLException e){
@@ -102,12 +96,12 @@ public class StudentActions {
         }catch (Exception e){
             logger.error("Unexpected error in student"+ e.getMessage());
         }
-        return students;
+        return studentEntities;
     }
 
 
     public int deleteStudent(long idNumber){
-        String deleteStudent = "DELETE FROM person WHERE student_ID ="+idNumber;
+        String deleteStudent = "DELETE FROM person WHERE StudentEntity_idNumber ="+idNumber;
         int numberOfAffectedRecords =0;
         try {
             statement = dbConn.createStatement();
@@ -122,21 +116,21 @@ public class StudentActions {
         return numberOfAffectedRecords;
     }
 
-    public List <Query> getAllStudentQueries(long studentId) {
-        String getAll = "SELECT * FROM utechcomplaintdb.queries WHERE student_idNumber ="+ studentId;
-        List<Query> queries = new ArrayList<>();
+    public List <QueryEntity> getAllStudentQueries(long studentId) {
+        String getAll = "SELECT * FROM utechcomplaintdb.queries WHERE studentEntity_idNumber ="+ studentId;
+        List<QueryEntity> queries = new ArrayList<>();
 
         try {
             statement = dbConn.createStatement();
             result = statement.executeQuery(getAll);
             while (result.next()) {
-                Query query = new Query();
-                query.setQueryId(result.getLong("queryId"));
-                query.setQueryDetail(result.getString("query_detail"));
-                query.setQueryDate(result.getDate("query_date"));
-                query.setStatus(result.getString("status"));
-                query.setCategory(result.getString("category"));
-                queries.add(query);
+                QueryEntity queryEntity = new QueryEntity();
+                queryEntity.setQueryId(result.getLong("queryId"));
+                queryEntity.setQueryDetail(result.getString("query_detail"));
+                queryEntity.setQueryDate(result.getDate("query_date"));
+                queryEntity.setStatus(result.getString("status"));
+                queryEntity.setCategory(result.getString("category"));
+                queries.add(queryEntity);
             }
 
             if (queries.size() == 0) {
@@ -154,53 +148,21 @@ public class StudentActions {
         return queries;
     }
 
-    public void saveQuery(Student student){
-        Session session = SessionBuilderFactory.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
-        Student studentDTO = (Student) session.get(Student.class, student.getIdNumber());
-        if (studentDTO != null && studentDTO.getIdNumber() == student.getIdNumber()){
-            for (Query query : student.getQueries()) {
-                studentDTO.addQuery(query);
-                query.setStudent(studentDTO);
-            }
-
-            session.merge(studentDTO);
-            transaction.commit();
-            session.close();
-        }
-    }
-
-    public void saveComplaint(Student student){
-        Session session = SessionBuilderFactory.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
-
-        Student studentDTO = (Student) session.get(Student.class, student.getIdNumber());
-        if (studentDTO.getIdNumber() == student.getIdNumber()){
-            for (Complaint complaint : student.getComplaints()) {
-                studentDTO.addComplaint(complaint);
-                complaint.setStudent(studentDTO);
-            }
-            session.save(studentDTO);
-            transaction.commit();
-            session.close();
-        }
-    }
-
-    public List<Complaint> getAllStudentComplaints(long idNumber) {
-        String getAll = "SELECT * FROM utechcomplaintdb.complaints WHERE student_idNumber ="+ idNumber + "";
-        List<Complaint> complaints = new ArrayList<>();
+    public List<ComplaintEntity> getAllStudentComplaints(long idNumber) {
+        String getAll = "SELECT * FROM utechcomplaintdb.complaints WHERE studentEntity_idNumber ="+ idNumber + "";
+        List<ComplaintEntity> complaintEntities = new ArrayList<>();
 
         try {
             statement = dbConn.createStatement();
             result = statement.executeQuery(getAll);
             while (result.next()) {
-                Complaint complaint = new Complaint();
-                complaint.setComplaintId(result.getLong("complaintId"));
-                complaint.setComplaintDetail(result.getString("category"));
-                complaint.setComplaintDate(result.getDate("complaint_date"));
-                complaint.setStatus(result.getString("status"));
-                complaints.add(complaint);
+                ComplaintEntity complaintEntity = new ComplaintEntity();
+                complaintEntity.setComplaintId(result.getLong("complaintId"));
+                complaintEntity.setComplaintDetail(result.getString("complaint_detail"));
+                complaintEntity.setComplaintDate(result.getDate("complaint_date"));
+                complaintEntity.setStatus(result.getString("status"));
+                complaintEntity.setCategory(result.getString("category"));
+                complaintEntities.add(complaintEntity);
             }
 
         } catch (SQLException e) {
@@ -209,8 +171,51 @@ public class StudentActions {
         } catch (Exception e) {
             logger.error("Unexpected error in student" + e.getMessage());
         }
-        return complaints;
+        return complaintEntities;
 
 
     }
+
+    public void saveQuery(Student student){
+        Session session = SessionBuilderFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        StudentEntity studentEntityDTO =  session.get(StudentEntity.class, student.getIdNumber());
+
+        if (studentEntityDTO != null && studentEntityDTO.getIdNumber() == student.getIdNumber()){
+            List<QueryEntity> queries = student.getQueries().stream()
+                    .map(query -> modelMapper.map(query, QueryEntity.class))
+                    .collect(Collectors.toList());
+            StudentEntity studentConverted = modelMapper.map(student, StudentEntity.class);
+            studentConverted.setQueries(queries);
+            for (QueryEntity queryEntity : studentConverted.getQueries()){
+                studentEntityDTO.addQuery(queryEntity);
+                queryEntity.setStudent(studentConverted);
+            }
+            session.merge(studentEntityDTO);
+            transaction.commit();
+            session.close();
+        }
+    }
+
+    public void saveComplaint(Student student){
+        Session session = SessionBuilderFactory.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        StudentEntity studentEntityDTO =  session.get(StudentEntity.class, student.getIdNumber());
+
+        if (studentEntityDTO != null && studentEntityDTO.getIdNumber() == student.getIdNumber()){
+            List<ComplaintEntity> complaints = student.getComplaints().stream()
+                    .map(query -> modelMapper.map(query, ComplaintEntity.class))
+                    .collect(Collectors.toList());
+            StudentEntity studentConverted = modelMapper.map(student, StudentEntity.class);
+            studentConverted.setComplaints(complaints);
+            for (ComplaintEntity complaintEntity : studentConverted.getComplaints()){
+                studentEntityDTO.addComplaint(complaintEntity);
+                complaintEntity.setStudent(studentConverted);
+            }
+            session.merge(studentEntityDTO);
+            transaction.commit();
+            session.close();
+        }
+    }
+
 }

@@ -1,6 +1,7 @@
 package factories;
 
 import models.*;
+import models.hibernate.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -12,13 +13,12 @@ public class SessionBuilderFactory {
         if (sessionFactory == null){
             sessionFactory = new Configuration()
                     .configure("factories/hibernate.cfg.xml")
-                    .addAnnotatedClass(Student.class)
-                    .addAnnotatedClass(Supervisor.class)
-                    .addAnnotatedClass(Advisor.class)
-                    .addAnnotatedClass(Query.class)
-                    .addAnnotatedClass(Complaint.class)
-                    .addAnnotatedClass(Category.class)
-                    .addAnnotatedClass(Response.class)
+                    .addAnnotatedClass(StudentEntity.class)
+                    .addAnnotatedClass(SupervisorEntity.class)
+                    .addAnnotatedClass(AdvisorEntity.class)
+                    .addAnnotatedClass(QueryEntity.class)
+                    .addAnnotatedClass(ComplaintEntity.class)
+                    .addAnnotatedClass(ResponseEntity.class)
                     .buildSessionFactory();
         }
         return sessionFactory;

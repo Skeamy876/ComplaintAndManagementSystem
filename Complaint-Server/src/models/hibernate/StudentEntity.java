@@ -2,6 +2,9 @@ package models.hibernate;
 
 
 
+import models.Student;
+import org.modelmapper.TypeToken;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -62,6 +65,10 @@ public class StudentEntity extends PersonEntity implements Serializable {
     public void removeComplaint(ComplaintEntity compplaint) {
         complaintEntities.remove( compplaint );
         compplaint.setStudent( null );
+    }
+
+    public static TypeToken<Student> typeToken() {
+        return new TypeToken<>() {};
     }
 
 

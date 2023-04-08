@@ -2,19 +2,26 @@ package server.actions;
 
 import factories.SessionBuilderFactory;
 import models.Complaint;
+import models.Query;
+import models.Student;
+import models.hibernate.ComplaintEntity;
+import models.hibernate.StudentEntity;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.modelmapper.ModelMapper;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ComplaintActions {
-    public void createComplaint(Complaint complaint){
+    ModelMapper modelMapper = new ModelMapper();
+    public void createComplaint(ComplaintEntity complaintEntity){
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
         Transaction transaction = session.beginTransaction();
-        session.save(complaint);
+        session.save(complaintEntity);
         transaction.commit();
         session.close();
     }
@@ -25,50 +32,39 @@ public class ComplaintActions {
                 .getCurrentSession();
 
         Transaction transaction = session.getTransaction();
-        Complaint complaint = (Complaint) session.get(Complaint.class,  id);
+        ComplaintEntity complaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class,  id);
+        StudentEntity studentEntity = complaintEntity.getStudent();
+        Student student = modelMapper.map(studentEntity, Student.class);
+        Complaint complaint = modelMapper.map(complaintEntity, Complaint.class);
+        complaint.setStudent(student);
         transaction.commit();
         session.close();
-
         return complaint;
     }
 
-    public List<Complaint> findAllQueries(){
-        List<Complaint> complaints = new ArrayList<>();
+
+
+    public void UpdateComplaintCategory(Complaint complaint){
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
         Transaction transaction = session.getTransaction();
-        complaints = (List<Complaint>) session.createNativeQuery("SELECT * FROM complaints")
-                .list();
-        transaction.commit();
-        session.close();
-
-
-        return complaints;
-    }
-
-    public void UpdateComplaintCategory(Complaint complaint1){
-        Session session  = SessionBuilderFactory
-                .getSessionFactory()
-                .getCurrentSession();
-
-        Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class, complaint1.getComplaintId());
-        Complaint.setCategory(complaint1.getCategory());
-        session.update(Complaint);
+        ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, complaint.getComplaintId());
+        ComplaintEntity.setCategory(complaint.getCategory());
+        session.update(ComplaintEntity);
         transaction.commit();
         session.close();
     }
-    public void UpdateComplaintDetails(Complaint complaint1){
+    public void UpdateComplaintDetails(Complaint complaint){
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
 
         Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class, complaint1.getComplaintId());
-        Complaint.setComplaintDetail(complaint1.getComplaintDetail());
-        session.update(Complaint);
+        ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, complaint.getComplaintId());
+        ComplaintEntity.setComplaintDetail(complaint.getComplaintDetail());
+        session.update(ComplaintEntity);
         transaction.commit();
         session.close();
     }
@@ -79,9 +75,80 @@ public class ComplaintActions {
                 .getCurrentSession();
 
         Transaction transaction = session.getTransaction();
-        Complaint Complaint = (Complaint) session.get(Complaint.class,id);
-        session.delete(Complaint);
+        ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class,id);
+        session.delete(ComplaintEntity);
         transaction.commit();
         session.close();
+    }
+
+    public List<Complaint> findAllComplaints() {
+        List<ComplaintEntity> complaintEntities = new ArrayList<>();
+        List<Complaint> complaintList = new ArrayList<>();
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        complaintEntities = (List<ComplaintEntity>) session.createNativeQuery("SELECT * FROM complaints", ComplaintEntity.class)
+                .list();
+
+        for (ComplaintEntity complaintEntity : complaintEntities) {
+            StudentEntity studentEntity = complaintEntity.getStudent();
+            Student student = modelMapper.map(studentEntity, Student.class);
+            Complaint complaint = modelMapper.map(complaintEntity, Complaint.class);
+            complaint.setStudent(student);
+            complaintList.add(complaint);
+        }
+        transaction.commit();
+        session.close();
+
+        return complaintList;
+    }
+
+    public List<Complaint> findAllComplaintsByCategory(String category) {
+        List<ComplaintEntity> complaintEntities = new ArrayList<>();
+        List<Complaint> complaintList = new ArrayList<>();
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        complaintEntities = (List<ComplaintEntity>) session.createNativeQuery("SELECT * FROM complaints WHERE category = :category", ComplaintEntity.class)
+                .setParameter("category", category)
+                .list();
+
+        for (ComplaintEntity complaintEntity : complaintEntities) {
+            StudentEntity studentEntity = complaintEntity.getStudent();
+            Student student = modelMapper.map(studentEntity, Student.class);
+            Complaint complaint = modelMapper.map(complaintEntity, Complaint.class);
+            complaint.setStudent(student);
+            complaintList.add(complaint);
+        }
+        transaction.commit();
+        session.close();
+        return complaintList;
+    }
+
+    public List<Complaint> findAllComplaintsByUser(long userId) {
+        List<ComplaintEntity> complaintEntities = new ArrayList<>();
+        List<Complaint> complaintList = new ArrayList<>();
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        complaintEntities = (List<ComplaintEntity>) session.createNativeQuery("SELECT * FROM complaints WHERE StudentEntity_idNumber = :userId", ComplaintEntity.class)
+                .setParameter("userId", userId)
+                .list();
+
+        for (ComplaintEntity complaintEntity : complaintEntities) {
+            StudentEntity studentEntity = complaintEntity.getStudent();
+            Student student = modelMapper.map(studentEntity, Student.class);
+            Complaint complaint = modelMapper.map(complaintEntity, Complaint.class);
+            complaint.setStudent(student);
+            complaintList.add(complaint);
+        }
+        transaction.commit();
+        session.close();
+        return complaintList;
     }
 }

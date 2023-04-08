@@ -2,6 +2,8 @@ package models.hibernate;
 
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import models.Student;
+
 import javax.persistence.*;
 import java.io.Serial;
 import java.io.Serializable;
@@ -30,6 +32,15 @@ public class PersonEntity implements Serializable {
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.email = email;
+    }
+
+    public PersonEntity(long idNumber, String firstName, String lastName, long phoneNumber, String email, String password) {
+        this.idNumber = idNumber;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.password = password;
     }
 
     public PersonEntity(String firstName, String lastName, long phoneNumber, String email, String password) {
@@ -94,6 +105,10 @@ public class PersonEntity implements Serializable {
         String hashedPassword ="";
         hashedPassword = BCrypt.withDefaults().hashToString(12,password.toCharArray());
         this.password = hashedPassword;
+    }
+
+    public void setNormalPassword(String password) {
+        this.password = password;
     }
 
 
