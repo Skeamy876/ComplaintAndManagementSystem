@@ -38,7 +38,7 @@ public class LoginView extends JFrame implements ActionListener {
         this.setBounds(10, 10, 370, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.getContentPane().setBackground(Color.LIGHT_GRAY);
+        this.getContentPane().setBackground(Color.WHITE);
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();

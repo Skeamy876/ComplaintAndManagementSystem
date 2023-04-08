@@ -17,12 +17,16 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Server {
     private ServerSocket serverSocket;
     private Socket conectionSocket;
     private int clientCount;
+    private static final List<ClientHandler> advisorClients = new ArrayList<>();
+    private static final List<ClientHandler> studentClients = new ArrayList<>();
     private static final Logger logger = LogManager.getLogger(Server.class);
 
     public Server(){
@@ -56,8 +60,13 @@ public class Server {
             logger.info("Server Started, Time: "+ LocalDate.now());
             while (true){
                 conectionSocket = serverSocket.accept();
-                ClientHandler client = new ClientHandler(conectionSocket);
+                ClientHandler client = new ClientHandler(conectionSocket, advisorClients, studentClients);
                 Thread thread = new Thread(client);
+                if (client.isAdvisor==true){
+                    advisorClients.add(client);
+                }else if (client.isAdvisor==false){
+                    studentClients.add(client);
+                }
                 thread.start();
                 clientCount++;
                 logger.info("Starting a thread for new client, Timme: "+LocalDate.now());
@@ -67,9 +76,5 @@ public class Server {
            e.printStackTrace();
            logger.warn("IO Exception occurred within this try catch block for server");
         }
-
-
-
     }
-
 }

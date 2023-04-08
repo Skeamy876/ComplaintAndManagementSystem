@@ -11,6 +11,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import controller.Client;
+import models.Advisor;
 import models.Complaint;
 import models.Query;
 import models.Student;
@@ -33,6 +34,9 @@ public class Dashboard extends JFrame {
 	private JLabel profilePictureLabel,searchLabel;
 	private String[] searchCategories = {"MISSING_GRADES", "NO_FINANCIAL_STATUS_UPDATE", "BARRED_FROM_EXAMS", "INCORRECT_ACADEMIC_RECORD", "NO_TIMETABLE", "STAFF_MISCONDUCT"};
 	private JComboBox<String> searchBox;
+	private JList<String> activeUsersList;
+	private ObjectInputStream objIs;
+	private ObjectOutputStream objOs;
 	private final Client client;
 
 	public Dashboard(Client client) {
@@ -76,6 +80,31 @@ public class Dashboard extends JFrame {
 		JLabel backgroundLabel = new JLabel(backgroundImage);
 		backgroundLabel.setBounds(0, 0, 900, 600);
 //		desktop.add(backgroundLabel);
+
+
+		//active users list
+		if (client.getStudent() != null || client.getAdvisor() != null) {
+			activeUsersList = new JList<>();
+			objIs = client.getObjIs();
+			objOs = client.getObjOs();
+			try {
+				objOs.writeObject("onlineUsersStudentToAdvisor");
+				objOs.flush();
+				List<Student> activeStudents = (List<Student>) objIs.readObject();
+				List<Advisor> activeAdvisors = (List<Advisor>) objIs.readObject();
+				String response = (String) objIs.readObject();
+				if (response.equals("successful")){
+					activeStudents.stream().forEach(student-> System.out.println(student.getFirstName()));
+					activeAdvisors.stream().forEach(advisor-> System.out.println(advisor.getFirstName()));
+					activeUsersList.setListData(activeStudents.stream().map(student-> student.getFirstName()).toArray(String[]::new));
+				}
+			} catch (IOException | ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+
+			activeUsersList.setBounds(600, 120, 200, 400);
+			desktop.add(activeUsersList);
+		}
 
 		//notifications button
 		notificationButton = new JButton();
@@ -249,7 +278,7 @@ public class Dashboard extends JFrame {
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 120, 200, 30);
 		viewButton.addActionListener(e -> {
-			new ViewAssignedComplaintsAndQueries(client);
+			desktop.add(new ViewAssignedComplaintsAndQueries(client));
 		});
 	}
 

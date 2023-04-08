@@ -10,6 +10,7 @@ public class Response implements Serializable {
     private Timestamp responseDate;
     private Complaint complaint;
     private Query query;
+    private Advisor responder;
 
 
     public Response(long responseId, String responseDetail, Timestamp responseDate, Complaint complaint, Query query) {
@@ -63,10 +64,21 @@ public class Response implements Serializable {
         this.query = query;
     }
 
+    public Advisor getResponder() {
+        return responder;
+    }
+
+    public void setResponder(Advisor responder) {
+        this.responder = responder;
+    }
+
     @Override
     public String toString() {
         return  "\n responseId :" + responseId +
                 "\nresponseDetail :" + responseDetail +
-                "\n responseDate :" + responseDate;
+                "\n responseDate :" + responseDate +
+                "\n by :" + responder;
+
+
     }
 }

@@ -1,6 +1,8 @@
 package server.actions;
 
 import factories.SessionBuilderFactory;
+import models.Complaint;
+import models.Query;
 import models.Student;
 import models.hibernate.ComplaintEntity;
 import models.hibernate.QueryEntity;
@@ -71,6 +73,33 @@ public class StudentActions {
 
         return studentEntity;
     }
+
+    public Student findStudentReurnStudent(long idNumber){
+        Student student= new Student();
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        StudentEntity studentEntity = session.get(StudentEntity.class, idNumber);
+        if (studentEntity == null) {
+            return null;
+        }
+        List<Query> queries = studentEntity.getQueries().stream()
+                .map(queryEntity -> modelMapper.map(queryEntity, Query.class))
+                .collect(Collectors.toList());
+        List<Complaint> complaints = studentEntity.getQueries().stream()
+                .map(complaintEntity -> modelMapper.map(complaintEntity, Complaint.class))
+                .collect(Collectors.toList());
+        student.setQueries(queries);
+        student.setComplaints(complaints);
+        student = modelMapper.map(studentEntity, Student.class);
+        transaction.commit();
+        session.close();
+
+
+        return student;
+    }
+
 
     public List<StudentEntity> getAllStudents(){
         String getAll ="SELECT idNumber,first_name,last_name,email_address,password,phone_number from utechcompalintdb.students";
@@ -217,5 +246,6 @@ public class StudentActions {
             session.close();
         }
     }
+
 
 }

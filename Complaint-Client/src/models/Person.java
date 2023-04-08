@@ -86,7 +86,6 @@ public class  Person implements Serializable {
                 "\n firstName: " + firstName + ' ' +
                 "\n lastName: " + lastName + ' ' +
                 "\n phoneNumber: " + phoneNumber +
-                "\n email: " + email + ' ' +
-                "\n password: " + password;
+                "\n email: " + email;
     }
 }

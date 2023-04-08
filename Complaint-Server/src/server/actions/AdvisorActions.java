@@ -47,9 +47,17 @@ public class AdvisorActions {
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
+        Transaction transaction;
 
-        Transaction transaction = session.beginTransaction();
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+        }
         AdvisorEntity advisorEntity = (AdvisorEntity) session.get(AdvisorEntity.class, id);
+        if (advisorEntity == null) {
+            return null;
+        }
         Advisor advisor = modelMapper.map(advisorEntity, Advisor.class);
         transaction.commit();
         session.close();
@@ -148,5 +156,39 @@ public class AdvisorActions {
         session.update(advisorEntity);
         transaction.commit();
         session.close();
+    }
+
+    public List<Query> findAllQueriesByAdvisor(long id) {
+        List<Query> queryList = new ArrayList<>();
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        AdvisorEntity advisorEntity = session.get(AdvisorEntity.class, id);
+        List<QueryEntity> queryEntities = advisorEntity.getQueryEntity();
+        for (QueryEntity queryEntity : queryEntities) {
+            queryList.add(modelMapper.map(queryEntity, Query.class));
+        }
+        transaction.commit();
+        session.close();
+        return queryList;
+
+    }
+
+    public List<Complaint> findAllComplaintsByAdvisor(long id) {
+        List<Complaint> complaintList = new ArrayList<>();
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+        Transaction transaction = session.beginTransaction();
+        AdvisorEntity advisorEntity = session.get(AdvisorEntity.class, id);
+        List<ComplaintEntity> complaintEntities = advisorEntity.getComplaintEntity();
+        for (ComplaintEntity complaintEntity : complaintEntities) {
+            complaintList.add(modelMapper.map(complaintEntity, Complaint.class));
+        }
+        transaction.commit();
+        session.close();
+        return complaintList;
+
     }
 }

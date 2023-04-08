@@ -9,10 +9,7 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.NonUniqueResultException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
-import org.modelmapper.TypeToken;
 import org.modelmapper.convention.MatchingStrategies;
 import server.actions.*;
 
@@ -20,7 +17,6 @@ import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Type;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +26,23 @@ public class ClientHandler implements Runnable{
     private ObjectOutputStream objOs;
     private ObjectInputStream objIs;
     private Socket conectionSocket;
+    private List<ClientHandler> advisorClients;
+    private List<ClientHandler> studentClients;
+    boolean isAdvisor;
+    boolean isOnline;
+    private long id;
+    private String name;
     ModelMapper modelMapper = new ModelMapper();
     private static final Logger logger = LogManager.getLogger(ClientHandler.class);
 
 
-    public ClientHandler(Socket conectionSocket) {
+    public ClientHandler(Socket conectionSocket, List<ClientHandler> advisorClients, List<ClientHandler> studentClients) {
         this.conectionSocket = conectionSocket;
+        this.advisorClients = advisorClients;
+        this.studentClients = studentClients;
         this.configureStreams();
+        this.isAdvisor = false;
+        this.isOnline = true;
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
     }
     private void configureStreams(){
@@ -60,14 +66,19 @@ public class ClientHandler implements Runnable{
         StudentEntity studentEntity;
         SupervisorEntity supervisorEntity;
         AdvisorEntity advisorEntity;
+        List<Student> studentList;
         Student student;
         Supervisor supervisor;
         Advisor advisor;
         Person person;
-        boolean flag = false;
         try {
             while (true){
                 try {
+                    //read details of client for system chat
+                    id = (long) objIs.readObject();
+                    name = (String) objIs.readObject();
+
+                    //read action from client
                     action = (String) objIs.readObject();
                     switch (action){
                         case "Authenticate":
@@ -125,8 +136,8 @@ public class ClientHandler implements Runnable{
                             objOs.writeObject("successful");
                             logger.info("All student queries sent back to client");
                             break;
-                        case "loadStudentDetailsForAdvisor":
-                            long id = (long) objIs.readObject();
+                        case "viewStudentDetails":
+                            id = (long) objIs.readObject();
                             QueryActions queryActionsAdvisor = new QueryActions();
                             ComplaintActions complaintActionsAdvisor = new ComplaintActions();
                             queryActionsAdvisor.findQuery(id);
@@ -152,11 +163,10 @@ public class ClientHandler implements Runnable{
                             logger.info("All queries and complaints sent back to client");
                             break;
                         case "viewAssignQueries/Complaints":
-                            id = (int) objIs.readObject();
-                            QueryActions queryActions1 = new QueryActions();
-                            ComplaintActions complaintActions1 = new ComplaintActions();
-                            List<models.Query> allQueries1 = queryActions1.findAllQuerysByUser(id);
-                            List<Complaint> allComplaints1 = complaintActions1.findAllComplaintsByUser(id);
+                            id = (long) objIs.readObject();
+                            AdvisorActions advisorActions = new AdvisorActions();
+                            List<models.Query> allQueries1 = advisorActions.findAllQueriesByAdvisor(id);
+                            List<Complaint> allComplaints1 = advisorActions.findAllComplaintsByAdvisor(id);
                             objOs.writeObject(allQueries1);
                             objOs.writeObject(allComplaints1);
                             objOs.writeObject("successful");
@@ -172,15 +182,68 @@ public class ClientHandler implements Runnable{
                             break;
                         case "getResponsesForQuery/Complaint":
                             id = (long) objIs.readObject();
+                            queryActions = new QueryActions();
+                            complaintActions = new ComplaintActions();
                             ResponseActions responseActions = new ResponseActions();
-                            List<Response> responses = responseActions.findAllResponsesByQueryOrComplaint(id);
-                            objOs.writeObject(responses);
-                            objOs.writeObject("successful");
-                            logger.info("All responses sent back to client");
+
+                            if (queryActions.findQuery(id) != null) {
+                                objOs.writeObject(responseActions.findAllResponsesByQuery(id));
+                                objOs.writeObject("successful");
+                                logger.info("Responses sent back to client");
+                            } else if (complaintActions.findComplaint(id) != null){
+                                objOs.writeObject(responseActions.findAllResponsesByComplaint(id));
+                                objOs.writeObject("successful");
+                                logger.info("Responses sent back to client");
+                            }
+                            objOs.writeObject("failed");
+                            logger.info("Responses not sent back to client");
+                            break;
+                        case "closeQuery/Complaint":
+                            id = (long) objIs.readObject();
+                            queryActions = new QueryActions();
+                            complaintActions = new ComplaintActions();
+                            if (queryActions.findQuery(id) != null) {
+                                queryActions.closeQuery(id);
+                                objOs.writeObject("successful");
+                                logger.info("Query closed successfully");
+                            } else {
+                                complaintActions.closeComplaint(id);
+                                objOs.writeObject("successful");
+                                logger.info("Complaint closed successfully");
+                            }
+                            objOs.writeObject("failed");
+                            logger.info("Query/Complaint not closed");
+                            break;
+                        case "addResponsesForQuery/Complaint":
+                            id = (long) objIs.readObject();
+                            long queryComplaintId = (long) objIs.readObject();
+                            String responseForQueryComplaint = (String) objIs.readObject();
+                            responseActions = new ResponseActions();
+                            advisorActions = new AdvisorActions();
+                            complaintActions = new ComplaintActions();
+                            queryActions = new QueryActions();
+                            advisor = advisorActions.findAdvisorReturnAdvisor(id);
+                            Query query = queryActions.findQuery(queryComplaintId);
+                            Complaint complaint = complaintActions.findComplaint(queryComplaintId);
+
+                            Response response = new Response();
+                            response.setResponseDetail(responseForQueryComplaint);
+                            response.setResponder(advisor);
+                            if (query != null) {
+                                response.setQuery(query);
+                                objOs.writeObject("successful");
+                                logger.info("Response added successfully");
+                            } else if (complaint != null){
+                                response.setComplaint(complaint);
+                                objOs.writeObject("successful");
+                                logger.info("Response added successfully");
+                            }
+                            objOs.writeObject("failed");
+                            logger.info("Response not added");
                             break;
                         case "fetchAdvisors":
                             objOs.writeObject("successful");
-                            AdvisorActions advisorActions = new AdvisorActions();
+                            advisorActions = new AdvisorActions();
                             List<Advisor> advisorList = advisorActions.findAllAdvisors();
                             objOs.writeObject(advisorList);
                             logger.info("All advisors sent back to client");
@@ -191,20 +254,22 @@ public class ClientHandler implements Runnable{
                             QueryActions queryActions2 = new QueryActions();
                             ComplaintActions complaintActions2 = new ComplaintActions();
                             advisorActions = new AdvisorActions();
-                            Query query = queryActions2.findQuery(id);
+                            query = queryActions2.findQuery(id);
                             if ( query!= null) {
                                 advisorActions.assignQueryToAdvisor(query, advisorId);
                                 objOs.writeObject("successful");
                                 logger.info("Query assigned to advisor");
                             } else {
-                                Complaint complaint = complaintActions2.findComplaint(id);
+                                complaint = complaintActions2.findComplaint(id);
                                 advisorActions.assignComplaintToAdvisor(complaint, advisorId);
                                 objOs.writeObject("successful");
                                 logger.info("Complaint assigned to advisor");
                             }
                             break;
                         case "logout":
-
+                            objOs.writeObject("successful");
+                            logger.info("Logout successful");
+                            this.closeConnection();
                             break;
                         case "getComplaints/QueriesByCategory":
                             String category = (String) objIs.readObject();
@@ -217,6 +282,45 @@ public class ClientHandler implements Runnable{
                             objOs.writeObject("successful");
                             logger.info("All queries and complaints sent back to client");
                             break;
+                        case "onlineUsersStudentToAdvisor":
+                            advisorActions = new AdvisorActions();
+                            studentActions = new StudentActions();
+                            student = studentActions.findStudentReurnStudent(id);
+                            advisor = advisorActions.findAdvisorReturnAdvisor(id);
+
+                            advisorList = new ArrayList<>();
+                            studentList = new ArrayList<>();
+                            queryList = new ArrayList<>();
+                            complaintList = new ArrayList<>();
+
+                            if(advisor!=null){
+                                advisor.getQuery().stream().forEach(query1->queryList.add(query1));
+                                advisor.getComplaint().stream().forEach(complaint1->complaintList.add(complaint1));
+                                for (Query query1 : queryList) {
+                                    if(student!=null){
+                                        if(query1.getStudent().getIdNumber()==student.getIdNumber()){
+                                            advisorList.add(advisor);
+                                            studentList.add(student);
+                                        }
+                                    }
+                                }
+                                for (Complaint complaint1 : complaintList) {
+                                    if(complaint1.getStudent().getIdNumber()==student.getIdNumber()){
+                                        advisorList.add(advisor);
+                                        studentList.add(student);
+                                    }
+                                }
+                            }
+                            objOs.writeObject(advisorList);
+                            objOs.writeObject(studentList);
+                            objOs.writeObject("successful");
+                            logger.info("Online users sent back to client");
+                            break;
+                        case "chat":
+                            break;
+                        case "videoChat":
+                            break;
+
                     }
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -266,7 +370,7 @@ public class ClientHandler implements Runnable{
         if (advisorEntity != null){
             BCrypt.Result result = BCrypt.verifyer().verify(advisor.getPassword().toCharArray(),hashedPassword);
             if(result.verified){
-                advisor = modelMapper.map(advisorEntity,Advisor.class);
+                advisor= advisorActions.findAdvisorReturnAdvisor(advisor.getIdNumber());
                 return advisor;
             }
         }

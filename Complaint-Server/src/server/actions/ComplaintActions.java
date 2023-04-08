@@ -3,6 +3,7 @@ package server.actions;
 import factories.SessionBuilderFactory;
 import models.Complaint;
 import models.Query;
+import models.Status;
 import models.Student;
 import models.hibernate.ComplaintEntity;
 import models.hibernate.StudentEntity;
@@ -31,8 +32,11 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = session.beginTransaction();
         ComplaintEntity complaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class,  id);
+        if (complaintEntity == null) {
+            return null;
+        }
         StudentEntity studentEntity = complaintEntity.getStudent();
         Student student = modelMapper.map(studentEntity, Student.class);
         Complaint complaint = modelMapper.map(complaintEntity, Complaint.class);
@@ -49,7 +53,7 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = session.beginTransaction();
         ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, complaint.getComplaintId());
         ComplaintEntity.setCategory(complaint.getCategory());
         session.update(ComplaintEntity);
@@ -61,7 +65,7 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = session.beginTransaction();
         ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, complaint.getComplaintId());
         ComplaintEntity.setComplaintDetail(complaint.getComplaintDetail());
         session.update(ComplaintEntity);
@@ -74,7 +78,7 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.getTransaction();
+        Transaction transaction = session.beginTransaction();
         ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class,id);
         session.delete(ComplaintEntity);
         transaction.commit();
@@ -150,5 +154,18 @@ public class ComplaintActions {
         transaction.commit();
         session.close();
         return complaintList;
+    }
+
+    public void closeComplaint(long id) {
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
+
+        Transaction transaction = session.beginTransaction();
+        ComplaintEntity complaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, id);
+        complaintEntity.setStatus(Status.CLOSED.name());
+        session.update(complaintEntity);
+        transaction.commit();
+        session.close();
     }
 }

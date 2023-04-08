@@ -23,11 +23,22 @@ public class ResponseActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
+        Transaction transaction = session.getTransaction();
+        QueryEntity queryEntity = null;
+        ComplaintEntity complaintEntity = null;
+        Complaint Complaint = response.getComplaint();
+        Query query = response.getQuery();
 
-        Transaction transaction = session.beginTransaction();
         ResponseEntity responseEntity = modelMapper.map(response, ResponseEntity.class);
-        ComplaintEntity complaintEntity = modelMapper.map(response.getComplaint(), ComplaintEntity.class);
-        QueryEntity queryEntity = modelMapper.map(response.getQuery(), QueryEntity.class);
+
+        if (Complaint != null) {
+            complaintEntity = modelMapper.map(Complaint, ComplaintEntity.class);
+            responseEntity.setComplaint(complaintEntity);
+        }
+        if (query != null) {
+            queryEntity = modelMapper.map(query, QueryEntity.class);
+            responseEntity.setQuery(queryEntity);
+        }
         AdvisorEntity advisorEntity = modelMapper.map(response.getResponder(), AdvisorEntity.class);
         responseEntity.setComplaint(complaintEntity);
         responseEntity.setQuery(queryEntity);
@@ -151,7 +162,71 @@ public class ResponseActions {
     }
 
 
+    public List<Response> findAllResponsesByQuery(long id) {
+        List<ResponseEntity> responseEntity = new ArrayList<>();
+        List<Response> responses = new ArrayList<>();
+        ComplaintEntity complaintEntity;
+        QueryEntity queryEntity;
+        Complaint complaint;
+        Query query ;
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
 
+        Transaction transaction = session.beginTransaction();
+        responseEntity = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses WHERE query_id = :id", ResponseEntity.class)
+                .setParameter("id", id)
+                .list();
+        for (ResponseEntity responseEntity1 : responseEntity) {
+            Response response1 = modelMapper.map(responseEntity1, Response.class);
+            if (responseEntity1.getComplaint() != null) {
+                complaint = modelMapper.map(responseEntity1.getComplaint(), Complaint.class);
+                response1.setComplaint(complaint);
+            }
+            if (responseEntity1.getQuery() != null) {
+                query = modelMapper.map(responseEntity1.getQuery(), Query.class);
+                response1.setQuery(query);
+            }
+            Advisor advisor = modelMapper.map(responseEntity1.getResponder(), Advisor.class);
+            response1.setResponder(advisor);
+            responses.add(response1);
+        }
+        transaction.commit();
+        session.close();
+        return responses;
+    }
 
+    public List<Response> findAllResponsesByComplaint(long id) {
+        List<ResponseEntity> responseEntity = new ArrayList<>();
+        List<Response> responses = new ArrayList<>();
+        ComplaintEntity complaintEntity;
+        QueryEntity queryEntity;
+        Complaint complaint;
+        Query query ;
+        Session session  = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
 
+        Transaction transaction = session.beginTransaction();
+        responseEntity = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses WHERE complaint_id = :id", ResponseEntity.class)
+                .setParameter("id", id)
+                .list();
+        for (ResponseEntity responseEntity1 : responseEntity) {
+            Response response1 = modelMapper.map(responseEntity1, Response.class);
+            if (responseEntity1.getComplaint() != null) {
+                complaint = modelMapper.map(responseEntity1.getComplaint(), Complaint.class);
+                response1.setComplaint(complaint);
+            }
+            if (responseEntity1.getQuery() != null) {
+                query = modelMapper.map(responseEntity1.getQuery(), Query.class);
+                response1.setQuery(query);
+            }
+            Advisor advisor = modelMapper.map(responseEntity1.getResponder(), Advisor.class);
+            response1.setResponder(advisor);
+            responses.add(response1);
+        }
+        transaction.commit();
+        session.close();
+        return responses;
+    }
 }

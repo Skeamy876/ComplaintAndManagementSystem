@@ -28,6 +28,7 @@ public class QueryComplaintView extends JInternalFrame {
         this.setLayoutForPanel();
         this.addPanelsToWindow();
         this.setWindowProperties();
+        this.requestActions();
     }
 
     public Client getClient() {
@@ -59,7 +60,7 @@ public class QueryComplaintView extends JInternalFrame {
 
     private void setLayoutForPanel() {
         titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        mainInnerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        mainInnerPanel.setLayout(new GridLayout(2,1));
         statusPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
     }
 
@@ -81,7 +82,7 @@ public class QueryComplaintView extends JInternalFrame {
 
         try{
             objOs.writeObject("getResponsesForQuery/Complaint");
-            objOs.writeObject(id.getText().trim());
+            objOs.writeObject(Long.parseLong(id.getText().trim()));
             responses = (List<Response>) objIs.readObject();
             String response = (String) objIs.readObject();
 

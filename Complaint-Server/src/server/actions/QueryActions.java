@@ -2,6 +2,7 @@ package server.actions;
 
 import factories.SessionBuilderFactory;
 import models.Query;
+import models.Status;
 import models.Student;
 import models.hibernate.QueryEntity;
 import models.hibernate.StudentEntity;
@@ -44,6 +45,9 @@ public class QueryActions {
 
         Transaction transaction = session.beginTransaction();
         QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
+        if (queryEntity1 == null) {
+            return null;
+        }
         StudentEntity studentEntity = queryEntity1.getStudent();
         Student student1 = modelMapper.map(studentEntity, Student.class);
         Query query = modelMapper.map(queryEntity1, Query.class);
@@ -163,5 +167,16 @@ public class QueryActions {
     }
 
 
+    public void closeQuery(long id) {
+        Session session = SessionBuilderFactory
+                .getSessionFactory()
+                .getCurrentSession();
 
+        Transaction transaction = session.beginTransaction();
+        QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
+        queryEntity1.setStatus(Status.CLOSED.name());
+        session.update(queryEntity1);
+        transaction.commit();
+        session.close();
+    }
 }

@@ -2300,3 +2300,452 @@ The last packet sent successfully to the server was 0 milliseconds ago. The driv
 [INFO ] 2023-04-07 23:56:13 {main} c%{1} -Client count: 16
 [INFO ] 2023-04-07 23:56:13 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-07
 [INFO ] 2023-04-07 23:56:13 {main} c%{1} -Client count: 17
+[INFO ] 2023-04-08 00:50:07 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 00:50:24 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:50:24 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 00:50:24 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:50:24 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 00:50:25 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 00:50:25 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 00:50:31 {Thread-0} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 00:50:31 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:50:31 {main} c%{1} -Client count: 3
+[INFO ] 2023-04-08 00:50:38 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:50:38 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 00:50:38 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:50:38 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 00:53:43 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 00:53:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:53:53 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 00:53:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:53:53 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 00:53:54 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 00:53:54 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 00:54:01 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 00:54:01 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 00:54:01 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 00:54:04 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 00:54:06 {Thread-3} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 07:29:21 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 07:29:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:29:44 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 07:29:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:29:44 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 07:29:45 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 07:29:45 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 07:29:52 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:29:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:29:52 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 07:29:55 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:30:49 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 07:31:02 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:31:02 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 07:31:02 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:31:02 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 07:31:03 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 07:31:03 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 07:31:10 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:31:10 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:31:10 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 07:31:11 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:31:13 {Thread-3} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:31:51 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:31:51 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:32:14 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:32:14 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 07:32:14 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:32:14 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 07:32:16 {Thread-4} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:32:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:32:16 {main} c%{1} -Client count: 6
+[WARN ] 2023-04-08 07:32:17 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:32:18 {Thread-6} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:32:31 {Thread-6} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:32:31 {Thread-4} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:33:26 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 07:34:48 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:34:48 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 07:34:48 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:34:48 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 07:34:48 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 07:34:48 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 07:34:53 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:34:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:34:53 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 07:34:55 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:34:57 {Thread-3} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:36:03 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:36:03 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:37:51 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:37:51 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 07:37:51 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:37:51 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 07:37:52 {Thread-4} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:37:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:37:52 {main} c%{1} -Client count: 6
+[WARN ] 2023-04-08 07:37:54 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:37:55 {Thread-6} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:38:06 {Thread-6} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:38:06 {Thread-4} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:38:56 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:38:56 {main} c%{1} -Client count: 7
+[INFO ] 2023-04-08 07:38:56 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:38:56 {main} c%{1} -Client count: 8
+[INFO ] 2023-04-08 07:38:57 {Thread-7} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:38:57 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:38:57 {main} c%{1} -Client count: 9
+[WARN ] 2023-04-08 07:39:00 {Thread-8} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:39:02 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 07:39:08 {Thread-9} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:45:52 {Thread-9} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:45:52 {Thread-7} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:50:04 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 07:50:20 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:50:20 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 07:50:20 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:50:20 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 07:50:20 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 07:50:20 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 07:50:28 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:50:28 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:50:28 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 07:50:31 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:50:34 {Thread-3} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:50:58 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:50:58 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:51:07 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:51:07 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 07:51:07 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:51:07 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 07:51:09 {Thread-4} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:51:09 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:51:09 {main} c%{1} -Client count: 6
+[WARN ] 2023-04-08 07:51:11 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:51:12 {Thread-6} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:51:20 {Thread-4} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:51:20 {Thread-6} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:52:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:52:06 {main} c%{1} -Client count: 7
+[INFO ] 2023-04-08 07:52:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:52:06 {main} c%{1} -Client count: 8
+[INFO ] 2023-04-08 07:52:08 {Thread-7} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:52:08 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:52:08 {main} c%{1} -Client count: 9
+[WARN ] 2023-04-08 07:52:09 {Thread-8} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:52:11 {Thread-9} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:52:18 {Thread-9} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:52:18 {Thread-7} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:55:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:55:16 {main} c%{1} -Client count: 10
+[INFO ] 2023-04-08 07:55:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:55:16 {main} c%{1} -Client count: 11
+[INFO ] 2023-04-08 07:55:17 {Thread-10} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:55:17 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:55:17 {main} c%{1} -Client count: 12
+[WARN ] 2023-04-08 07:55:19 {Thread-11} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:55:20 {Thread-12} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:55:32 {Thread-12} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:55:32 {Thread-10} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:56:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:56:44 {main} c%{1} -Client count: 13
+[INFO ] 2023-04-08 07:56:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:56:44 {main} c%{1} -Client count: 14
+[INFO ] 2023-04-08 07:56:45 {Thread-13} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:56:45 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:56:45 {main} c%{1} -Client count: 15
+[WARN ] 2023-04-08 07:56:47 {Thread-14} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:56:48 {Thread-15} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:56:57 {Thread-15} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:56:57 {Thread-13} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:58:17 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:58:17 {main} c%{1} -Client count: 16
+[INFO ] 2023-04-08 07:58:17 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:58:17 {main} c%{1} -Client count: 17
+[INFO ] 2023-04-08 07:58:18 {Thread-16} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:58:18 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:58:18 {main} c%{1} -Client count: 18
+[WARN ] 2023-04-08 07:58:19 {Thread-17} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:58:21 {Thread-18} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 07:58:34 {Thread-16} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 07:58:34 {Thread-18} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:59:15 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:59:15 {main} c%{1} -Client count: 19
+[INFO ] 2023-04-08 07:59:15 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:59:15 {main} c%{1} -Client count: 20
+[INFO ] 2023-04-08 07:59:16 {Thread-19} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 07:59:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 07:59:16 {main} c%{1} -Client count: 21
+[WARN ] 2023-04-08 07:59:17 {Thread-20} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 07:59:19 {Thread-21} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 08:00:48 {Thread-19} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 08:00:48 {Thread-21} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:01:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:01:53 {main} c%{1} -Client count: 22
+[INFO ] 2023-04-08 08:01:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:01:53 {main} c%{1} -Client count: 23
+[INFO ] 2023-04-08 08:01:54 {Thread-22} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 08:01:54 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:01:54 {main} c%{1} -Client count: 24
+[WARN ] 2023-04-08 08:01:56 {Thread-23} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:01:57 {Thread-24} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 08:02:02 {Thread-24} c%{1} -Student details sent back to client
+[WARN ] 2023-04-08 08:02:40 {Thread-24} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 08:02:40 {Thread-22} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:05:51 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:05:51 {main} c%{1} -Client count: 25
+[INFO ] 2023-04-08 08:05:51 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:05:51 {main} c%{1} -Client count: 26
+[INFO ] 2023-04-08 08:05:52 {Thread-25} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 08:05:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:05:52 {main} c%{1} -Client count: 27
+[WARN ] 2023-04-08 08:05:53 {Thread-26} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:05:54 {Thread-27} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 08:05:56 {Thread-27} c%{1} -Student details sent back to client
+[WARN ] 2023-04-08 08:06:09 {Thread-25} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 08:06:09 {Thread-27} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:53:03 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 08:53:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:53:16 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 08:53:16 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:53:16 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 08:53:16 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 08:53:16 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 08:53:20 {Thread-0} c%{1} -Supervisor successfully Authenticated
+[INFO ] 2023-04-08 08:53:20 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:53:20 {main} c%{1} -Client count: 3
+[INFO ] 2023-04-08 08:53:26 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:53:26 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 08:53:26 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:53:26 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 08:53:27 {Thread-4} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 08:53:27 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:53:27 {main} c%{1} -Client count: 6
+[WARN ] 2023-04-08 08:53:29 {Thread-0} c%{1} -EOF Exception occurred within this try catch block
+[WARN ] 2023-04-08 08:53:29 {Thread-3} c%{1} -EOF Exception occurred within this try catch block
+[WARN ] 2023-04-08 08:53:29 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[WARN ] 2023-04-08 08:53:29 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:53:32 {Thread-6} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 08:53:33 {Thread-6} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 08:54:33 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 08:54:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:54:44 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 08:54:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:54:44 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 08:54:44 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 08:54:44 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 08:54:52 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 08:54:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:54:52 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 08:54:53 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:54:55 {Thread-3} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 08:54:57 {Thread-3} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 08:56:19 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 08:56:31 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:56:31 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 08:56:31 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:56:31 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 08:56:32 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 08:56:32 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 08:56:35 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 08:56:35 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:56:35 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 08:56:39 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:56:40 {Thread-3} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 08:56:42 {Thread-3} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 08:57:22 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 08:57:34 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:57:34 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 08:57:34 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:57:34 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 08:57:35 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 08:57:35 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 08:57:42 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 08:57:42 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 08:57:42 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 08:57:44 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 08:57:45 {Thread-3} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 08:57:46 {Thread-3} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 08:59:58 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 09:00:08 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:00:08 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 09:00:08 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:00:08 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 09:00:08 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 09:00:08 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 09:00:15 {Thread-0} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 09:00:15 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:00:15 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 09:00:16 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:00:17 {Thread-3} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 09:00:19 {Thread-3} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 09:00:40 {Thread-3} c%{1} -All responses sent back to client
+[WARN ] 2023-04-08 09:01:28 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 09:01:28 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:10:44 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 09:11:00 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:11:00 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 09:11:00 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:11:00 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 09:11:01 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 09:11:01 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 09:11:08 {Thread-0} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 09:11:08 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:11:08 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 09:11:10 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:11:12 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 09:11:12 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:12:59 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 09:13:07 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:13:07 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 09:13:07 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:13:07 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 09:13:07 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 09:13:07 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 09:13:11 {Thread-0} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 09:13:11 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:13:11 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 09:13:13 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:13:15 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 09:13:15 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:13:56 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 09:14:04 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:14:04 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 09:14:04 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:14:04 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 09:14:04 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 09:14:04 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 09:14:08 {Thread-0} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 09:14:08 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:14:08 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 09:14:09 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:14:10 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 09:14:10 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:14:11 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 09:14:11 {Thread-3} c%{1} -Responses not sent back to client
+[WARN ] 2023-04-08 09:14:25 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 09:14:25 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:15:39 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:15:39 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 09:15:39 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:15:39 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 09:15:40 {Thread-4} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 09:15:40 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:15:40 {main} c%{1} -Client count: 6
+[WARN ] 2023-04-08 09:15:41 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:15:42 {Thread-6} c%{1} -Queries found
+[INFO ] 2023-04-08 09:15:42 {Thread-6} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:15:43 {Thread-6} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 09:15:43 {Thread-6} c%{1} -Responses not sent back to client
+[INFO ] 2023-04-08 09:15:49 {Thread-6} c%{1} -Queries found
+[INFO ] 2023-04-08 09:15:49 {Thread-6} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:15:51 {Thread-6} c%{1} -Queries found
+[INFO ] 2023-04-08 09:15:51 {Thread-6} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:21:12 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 09:21:19 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:21:19 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 09:21:19 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:21:19 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 09:21:20 {Thread-1} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 09:21:20 {Thread-0} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 09:21:25 {Thread-0} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 09:21:25 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 09:21:25 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 09:21:27 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 09:21:28 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 09:21:28 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 09:21:30 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 09:21:30 {Thread-3} c%{1} -Responses not sent back to client
+[WARN ] 2023-04-08 09:21:43 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 09:21:43 {Thread-3} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:34:18 {main} c%{1} -Server Started, Time: 2023-04-08
+[INFO ] 2023-04-08 11:34:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:34:44 {main} c%{1} -Client count: 1
+[INFO ] 2023-04-08 11:34:44 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:34:44 {main} c%{1} -Client count: 2
+[ERROR] 2023-04-08 11:34:45 {Thread-0} c%{1} -Native Database Connection Established
+[ERROR] 2023-04-08 11:34:45 {Thread-1} c%{1} -Native Database Connection Established
+[INFO ] 2023-04-08 11:34:55 {Thread-0} c%{1} -Student successfully Authenticated
+[INFO ] 2023-04-08 11:34:55 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:34:55 {main} c%{1} -Client count: 3
+[WARN ] 2023-04-08 11:35:03 {Thread-1} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:35:54 {Thread-3} c%{1} -Query Added successfully and confirmation sent back to client
+[INFO ] 2023-04-08 11:37:00 {Thread-3} c%{1} -Query Added successfully and confirmation sent back to client
+[INFO ] 2023-04-08 11:37:17 {Thread-3} c%{1} -Query Added successfully and confirmation sent back to client
+[INFO ] 2023-04-08 11:37:26 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:37:26 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:37:40 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 11:37:40 {Thread-3} c%{1} -Responses not sent back to client
+[INFO ] 2023-04-08 11:38:05 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:05 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:09 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:09 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:09 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:09 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:13 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 11:38:13 {Thread-3} c%{1} -Responses not sent back to client
+[INFO ] 2023-04-08 11:38:14 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 11:38:14 {Thread-3} c%{1} -Responses not sent back to client
+[INFO ] 2023-04-08 11:38:24 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:24 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -Queries found
+[INFO ] 2023-04-08 11:38:37 {Thread-3} c%{1} -All student queries sent back to client
+[INFO ] 2023-04-08 11:38:42 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 11:38:42 {Thread-3} c%{1} -Responses not sent back to client
+[INFO ] 2023-04-08 11:38:43 {Thread-3} c%{1} -Responses sent back to client
+[INFO ] 2023-04-08 11:38:43 {Thread-3} c%{1} -Responses not sent back to client
+[WARN ] 2023-04-08 11:39:21 {Thread-0} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:39:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:39:52 {main} c%{1} -Client count: 4
+[INFO ] 2023-04-08 11:39:52 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:39:52 {main} c%{1} -Client count: 5
+[INFO ] 2023-04-08 11:39:53 {Thread-4} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 11:39:53 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:39:53 {main} c%{1} -Client count: 6
+[WARN ] 2023-04-08 11:39:55 {Thread-5} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:40:06 {Thread-6} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 11:40:16 {Thread-6} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 11:40:16 {Thread-4} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:40:29 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:40:29 {main} c%{1} -Client count: 7
+[INFO ] 2023-04-08 11:40:29 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:40:29 {main} c%{1} -Client count: 8
+[INFO ] 2023-04-08 11:40:30 {Thread-7} c%{1} -Supervisor successfully Authenticated
+[INFO ] 2023-04-08 11:40:30 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:40:30 {main} c%{1} -Client count: 9
+[WARN ] 2023-04-08 11:40:32 {Thread-8} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:40:41 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:41:15 {Thread-9} c%{1} -All advisors sent back to client
+[INFO ] 2023-04-08 11:41:32 {Thread-9} c%{1} -Query assigned to advisor
+[INFO ] 2023-04-08 11:41:48 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:01 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:16 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:22 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:28 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:33 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:34 {Thread-9} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:42:41 {Thread-9} c%{1} -All queries and complaints sent back to client
+[WARN ] 2023-04-08 11:42:50 {Thread-9} c%{1} -IO Exception occurred within this try catch block
+[WARN ] 2023-04-08 11:42:50 {Thread-7} c%{1} -IO Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:43:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:43:06 {main} c%{1} -Client count: 10
+[INFO ] 2023-04-08 11:43:06 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:43:06 {main} c%{1} -Client count: 11
+[INFO ] 2023-04-08 11:43:07 {Thread-10} c%{1} -Advisor successfully Authenticated
+[INFO ] 2023-04-08 11:43:07 {main} c%{1} -Starting a thread for new client, Timme: 2023-04-08
+[INFO ] 2023-04-08 11:43:07 {main} c%{1} -Client count: 12
+[WARN ] 2023-04-08 11:43:09 {Thread-11} c%{1} -EOF Exception occurred within this try catch block
+[INFO ] 2023-04-08 11:43:17 {Thread-12} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:43:27 {Thread-12} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 11:43:39 {Thread-12} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:43:39 {Thread-12} c%{1} -All queries and complaints sent back to client
+[INFO ] 2023-04-08 11:43:43 {Thread-12} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 11:43:43 {Thread-12} c%{1} -Student details sent back to client
+[INFO ] 2023-04-08 11:43:58 {Thread-12} c%{1} -Response added successfully
+[INFO ] 2023-04-08 11:43:58 {Thread-12} c%{1} -Response not added
+[WARN ] 2023-04-08 11:45:39 {Thread-10} c%{1} -IO Exception occurred within this try catch block

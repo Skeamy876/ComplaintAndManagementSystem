@@ -62,11 +62,32 @@ public class Client {
             try {
                 objIs = new ObjectInputStream(connectionSocket.getInputStream());
                 objOs = new ObjectOutputStream(connectionSocket.getOutputStream());
+                this.sendRequestStartRequest();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
 
+
+    private void sendRequestStartRequest(){
+        try {
+            if (this.person != null) {
+                objOs.writeObject(person.getIdNumber());
+                objOs.writeObject(person.getFirstName());
+            } else if (this.student != null) {
+                objOs.writeObject(student.getIdNumber());
+                objOs.writeObject(student.getFirstName());
+            } else if (this.advisor != null) {
+                objOs.writeObject(advisor.getIdNumber());
+                objOs.writeObject(advisor.getFirstName());
+            } else if (this.supervisor != null) {
+                objOs.writeObject(supervisor.getIdNumber());
+                objOs.writeObject(supervisor.getFirstName());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
         public void sendRequest(String action){
             try {
                 objOs.writeObject(action);
