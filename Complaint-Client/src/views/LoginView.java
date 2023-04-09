@@ -6,17 +6,20 @@ import models.Person;
 import models.Student;
 import models.Supervisor;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class LoginView extends JFrame implements ActionListener {
  
-    Container container = getContentPane();
+    JPanel container = new JPanel();
     JComboBox userType = new JComboBox<>(new String[]{"Student", "Supervisor", "Advisor"});
     JLabel userLabel = new JLabel("ID NUMBER");
     JLabel passwordLabel = new JLabel("PASSWORD");
@@ -25,48 +28,61 @@ public class LoginView extends JFrame implements ActionListener {
     JButton signinButton = new JButton("SIGN IN");
     JButton changePasswordButton = new JButton("Change Password");
     JCheckBox showPassword = new JCheckBox("Show Password");
+    JPanel systemDetailsPanel = new JPanel();
+    JLabel systemDetailsLabel = new JLabel("Complaint and Query Management System");
+    JLabel systemDetailsLabel2 = new JLabel("Version 1.0");
+    JLabel systemDetailsLabel3 = new JLabel("© 2021");
+    JLabel systemDetailsLabel4 = new JLabel("All Rights Reserved");
 
-    
-    
-    private static final String USERNAME = "admin";
-    private static String PASSWORD = "password123";
 
-    
     public LoginView() {
-        this.setTitle("views.Login Form");
+        this.setTitle("Complaint and Query Management System");
+
+
+        try {
+            BufferedImage logo = ImageIO.read(new File("src/views/utech-logo.png"));
+            Image logoPic = logo.getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+
+
+            JLabel logoLabel = new JLabel(new ImageIcon(logoPic));
+            logoLabel.setBounds(150, 50, 80, 80);
+            container.add(logoLabel);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         this.setVisible(true);
-        this.setBounds(10, 10, 370, 600);
+        this.setBackground(Color.WHITE);
+        this.setBounds(10, 10, 400, 620);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-     // set the background color to a mix of sky blue and green
-        this.getContentPane().setBackground(new Color(166, 216, 208));
-
-        
         setLayoutManager();
         setLocationAndSize();
-        addComponentsToContainer();
+        addComponentsToPanel();
         addActionEvent();
  
     }
-
     public void setLayoutManager() {
+        this.setLayout(null);
         container.setLayout(null);
     }
  
     public void setLocationAndSize() {
-        userType.setBounds(50, 50, 250, 30);
-        userLabel.setBounds(50, 150, 100, 30);
-        passwordLabel.setBounds(50, 220, 100, 30);
-        userTextField.setBounds(150, 150, 150, 30);
-        passwordField.setBounds(150, 220, 150, 30);
-        showPassword.setBounds(150, 250, 150, 30);
-		signinButton.setBounds(50, 300, 100, 30);
-        changePasswordButton.setBounds(200, 300, 100, 30);
- 
- 
+        userType.setBounds(50, 150, 250, 30);
+        userLabel.setBounds(50, 220, 100, 30);
+        passwordLabel.setBounds(50, 250, 100, 30);
+        userTextField.setBounds(150, 220, 150, 30);
+        passwordField.setBounds(150, 250, 150, 30);
+        showPassword.setBounds(150, 300, 150, 30);
+		signinButton.setBounds(50, 350, 100, 30);
+        changePasswordButton.setBounds(200, 350, 100, 30);
+        systemDetailsLabel2.setBounds(50,445,100,30);
+        systemDetailsLabel3.setBounds(50,455,100,30);
+        systemDetailsLabel4.setBounds(50,465,100,30);
+
     }
  
-    public void addComponentsToContainer() {
+    public void addComponentsToPanel() {
         container.add(userType);
         container.add(userLabel);
         container.add(passwordLabel);
@@ -75,6 +91,12 @@ public class LoginView extends JFrame implements ActionListener {
         container.add(showPassword);
         container.add(signinButton);
         container.add(changePasswordButton);
+        container.add(systemDetailsLabel2);
+        container.add(systemDetailsLabel3);
+        container.add(systemDetailsLabel4);
+        container.setSize(500, 600);
+        systemDetailsPanel.setSize(500, 400);
+        this.add(container);
     }
  
     public void addActionEvent() {
@@ -82,8 +104,7 @@ public class LoginView extends JFrame implements ActionListener {
         changePasswordButton.addActionListener(this);
         showPassword.addActionListener(this);
     }
- 
- 
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == showPassword) {
@@ -92,8 +113,6 @@ public class LoginView extends JFrame implements ActionListener {
             } else {
                 passwordField.setEchoChar('*');
             }
-
-
         }
 
         if (e.getSource() == signinButton) {
@@ -183,16 +202,6 @@ public class LoginView extends JFrame implements ActionListener {
                     JOptionPane.showMessageDialog(this, "Invalid ID Number or Password");
                 }
             }
-
-
-
         }
-
     }
-
-
-
-
-
-
 }

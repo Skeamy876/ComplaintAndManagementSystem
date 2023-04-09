@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.Image;
+
 import javax.swing.ImageIcon;
 
 import controller.Client;
@@ -74,11 +74,11 @@ public class Dashboard extends JFrame {
 		desktop.add(profilePictureLabel);
 		profilePictureLabel.setBounds(750, 20, 50, 40);
 
-
-		desktop.setBackground(new Color(245, 245, 245));
+		desktop.setBackground(new Color(255, 255, 255));
+		/*desktop.setBackground(new Color(245, 245, 245));
 		ImageIcon backgroundImage = new ImageIcon("src/views/background.png");
 		JLabel backgroundLabel = new JLabel(backgroundImage);
-		backgroundLabel.setBounds(0, 0, 900, 600);
+		backgroundLabel.setBounds(0, 0, 900, 600);*/
 //		desktop.add(backgroundLabel);
 
 
@@ -156,6 +156,7 @@ public class Dashboard extends JFrame {
 
 		// Create the buttons
 		createButton = new JButton("Create Query/Complaint");
+		createButton.setBackground(new Color(0,255,127)); //green
 		desktop.add(createButton);
 		createButton.setBounds(20, 120, 200, 30);
 		createButton.addActionListener(e -> {
@@ -163,6 +164,7 @@ public class Dashboard extends JFrame {
 		});
 
 		viewButton = new JButton("View Query/Complaint");
+		createButton.setBackground(new Color(0,191,255)); //blue
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 160, 200, 30);
 		viewButton.addActionListener(e -> {
@@ -230,6 +232,7 @@ public class Dashboard extends JFrame {
 		});
 
 		viewButton = new JButton("View Resolved Complaints/Queries");
+		viewButton.setBackground(new Color(0,255,127)); //green
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 160, 200, 30);
 		viewButton.addActionListener(e -> {
@@ -238,6 +241,7 @@ public class Dashboard extends JFrame {
 		});
 
 		viewButton = new JButton("Assign Complaints/Queries");
+		viewButton.setBackground(new Color(0,191,255)); //blue
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 200, 200, 30);
 		viewButton.addActionListener(e -> {
@@ -275,6 +279,7 @@ public class Dashboard extends JFrame {
 
 		// Create the buttons
 		viewButton = new JButton("View Assigned Query/Complaint");
+		viewButton.setBackground(new Color(0,255,127)); //green
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 120, 200, 30);
 		viewButton.addActionListener(e -> {

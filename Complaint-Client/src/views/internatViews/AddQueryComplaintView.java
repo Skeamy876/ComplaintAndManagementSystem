@@ -118,6 +118,8 @@ public class AddQueryComplaintView extends JInternalFrame {
                         student.removeQuery(query);
                         student.addQuery(query);
                         objOs.writeObject(student);
+                        objOs.flush();
+
 
                         for (Query q: student.getQueries()){
                             System.out.println(q.getCategory());
@@ -145,6 +147,7 @@ public class AddQueryComplaintView extends JInternalFrame {
                         student.removeComplaint(complaint);
                         student.addComplaint(complaint);
                         objOs.writeObject(student);
+                        objOs.flush();
                         String response = (String) objIs.readObject();
                         if (response.equals("successful")){
                             JOptionPane.showMessageDialog(this, "Complaint Submitted Successfully","Query Submit Status",JOptionPane.INFORMATION_MESSAGE);

@@ -29,6 +29,7 @@ public class QueryComplaintAndStudent extends JInternalFrame {
         this.setWindowProperties();
         this.loadStudentDetails();
         this.addResponse();
+        this.closeQueryComplaint();
     }
     private void initializeComponents() {
         title = new JLabel(selectedData[0].toString());
