@@ -25,8 +25,7 @@ public class Server {
     private ServerSocket serverSocket;
     private Socket conectionSocket;
     private int clientCount;
-    private static final List<ClientHandler> advisorClients = new ArrayList<>();
-    private static final List<ClientHandler> studentClients = new ArrayList<>();
+    private static final List<ClientHandler> clients = new ArrayList<>();
     private static final Logger logger = LogManager.getLogger(Server.class);
 
     public Server(){
@@ -60,13 +59,9 @@ public class Server {
             logger.info("Server Started, Time: "+ LocalDate.now());
             while (true){
                 conectionSocket = serverSocket.accept();
-                ClientHandler client = new ClientHandler(conectionSocket, advisorClients, studentClients);
+                ClientHandler client = new ClientHandler(conectionSocket, clients);
                 Thread thread = new Thread(client);
-                if (client.isAdvisor==true){
-                    advisorClients.add(client);
-                }else if (client.isAdvisor==false){
-                    studentClients.add(client);
-                }
+                clients.add(client);
                 thread.start();
                 clientCount++;
                 logger.info("Starting a thread for new client, Timme: "+LocalDate.now());
