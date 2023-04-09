@@ -127,7 +127,7 @@ public class Dashboard extends JFrame {
 			desktop.add(chatButton);
 			chatButton.setBounds(640, 20, 50, 40);
 			chatButton.addActionListener(e -> {
-				desktop.add(new LiveChatGUI(client));
+				desktop.add(new advisor.LiveChatGUI(client));
 			});
 		}
 

@@ -38,7 +38,10 @@ public class LoginView extends JFrame implements ActionListener {
         this.setBounds(10, 10, 370, 600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.getContentPane().setBackground(Color.WHITE);
+     // set the background color to a mix of sky blue and green
+        this.getContentPane().setBackground(new Color(166, 216, 208));
+
+        
         setLayoutManager();
         setLocationAndSize();
         addComponentsToContainer();
@@ -117,7 +120,6 @@ public class LoginView extends JFrame implements ActionListener {
                 try {
                     objOs.writeObject("Authenticate");
                     objOs.writeObject(client.getStudent());
-                    objOs.flush();
                     student = (Student) objIs.readObject();
                 } catch (IOException | ClassNotFoundException ex) {
                     ex.printStackTrace();
@@ -141,7 +143,6 @@ public class LoginView extends JFrame implements ActionListener {
                 try {
                     objOs.writeObject("Authenticate");
                     objOs.writeObject(client.getSupervisor());
-                    objOs.flush();
                     supervisor = (Supervisor) objIs.readObject();
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("Classpath: " + System.getProperty("java.class.path"));
@@ -165,8 +166,7 @@ public class LoginView extends JFrame implements ActionListener {
                 client = new Client(advisor);
                 try {
                     objOs.writeObject("Authenticate");
-                    objOs.flush();objOs.writeObject(client.getAdvisor())
-                    ;objOs.flush();
+                    objOs.writeObject(client.getAdvisor());
                     advisor = (Advisor) objIs.readObject();
                 } catch (IOException ex) {
                     ex.printStackTrace();
@@ -196,4 +196,3 @@ public class LoginView extends JFrame implements ActionListener {
 
 
 }
- 

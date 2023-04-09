@@ -1,4 +1,4 @@
-package views.internatViews;
+package advisor;
 
 import controller.Client;
 
@@ -45,9 +45,8 @@ public class  LiveChatGUI extends JInternalFrame implements ActionListener {
         add(statusLabel, BorderLayout.NORTH);
         
      /*// Get the current time and format it
-        LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-        String timestamp = now.format(formatter);
+         String timestamp = LocalDateTime.now().format(formatter);
 
         // Create the message components
         JPanel messagePanel = new JPanel(new BorderLayout());
@@ -57,13 +56,11 @@ public class  LiveChatGUI extends JInternalFrame implements ActionListener {
         String message = null;
 		JLabel messageLabel = new JLabel(message);
         JLabel timestampLabel = new JLabel(timestamp);
-
         // Add the components to the message panel
         messagePanel.add(iconLabel, BorderLayout.WEST);
         messagePanel.add(nameLabel, BorderLayout.CENTER);
         messagePanel.add(messageLabel, BorderLayout.SOUTH);
         messagePanel.add(timestampLabel, BorderLayout.NORTH);
-
         // Add the message panel to the chat area
         chatArea.add(messagePanel);*/
 
