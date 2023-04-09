@@ -117,6 +117,7 @@ public class LoginView extends JFrame implements ActionListener {
                 try {
                     objOs.writeObject("Authenticate");
                     objOs.writeObject(client.getStudent());
+                    objOs.flush();
                     student = (Student) objIs.readObject();
                 } catch (IOException | ClassNotFoundException ex) {
                     ex.printStackTrace();
@@ -140,6 +141,7 @@ public class LoginView extends JFrame implements ActionListener {
                 try {
                     objOs.writeObject("Authenticate");
                     objOs.writeObject(client.getSupervisor());
+                    objOs.flush();
                     supervisor = (Supervisor) objIs.readObject();
                 } catch (IOException | ClassNotFoundException ex) {
                     System.out.println("Classpath: " + System.getProperty("java.class.path"));
@@ -163,7 +165,8 @@ public class LoginView extends JFrame implements ActionListener {
                 client = new Client(advisor);
                 try {
                     objOs.writeObject("Authenticate");
-                    objOs.writeObject(client.getAdvisor());
+                    objOs.flush();objOs.writeObject(client.getAdvisor())
+                    ;objOs.flush();
                     advisor = (Advisor) objIs.readObject();
                 } catch (IOException ex) {
                     ex.printStackTrace();

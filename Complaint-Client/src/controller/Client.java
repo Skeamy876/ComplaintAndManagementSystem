@@ -62,7 +62,6 @@ public class Client {
             try {
                 objIs = new ObjectInputStream(connectionSocket.getInputStream());
                 objOs = new ObjectOutputStream(connectionSocket.getOutputStream());
-                this.sendRequestStartRequest();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -71,18 +70,15 @@ public class Client {
 
     private void sendRequestStartRequest(){
         try {
-            if (this.person != null) {
-                objOs.writeObject(person.getIdNumber());
-                objOs.writeObject(person.getFirstName());
-            } else if (this.student != null) {
-                objOs.writeObject(student.getIdNumber());
-                objOs.writeObject(student.getFirstName());
-            } else if (this.advisor != null) {
-                objOs.writeObject(advisor.getIdNumber());
-                objOs.writeObject(advisor.getFirstName());
-            } else if (this.supervisor != null) {
-                objOs.writeObject(supervisor.getIdNumber());
-                objOs.writeObject(supervisor.getFirstName());
+            if (this.getStudent() != null) {
+                objOs.writeObject(getStudent().getIdNumber());
+                objOs.writeObject(getStudent().getFirstName());
+            } else if (this.getAdvisor() != null) {
+                objOs.writeObject(getAdvisor().getIdNumber());
+                objOs.writeObject(getAdvisor().getFirstName());
+            } else if (this.getSupervisor() != null) {
+                objOs.writeObject(getSupervisor().getIdNumber());
+                objOs.writeObject(getSupervisor().getFirstName());
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
