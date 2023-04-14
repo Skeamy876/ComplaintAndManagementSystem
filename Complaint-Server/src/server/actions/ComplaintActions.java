@@ -21,7 +21,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         session.save(complaintEntity);
         transaction.commit();
         session.close();
@@ -32,7 +38,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ComplaintEntity complaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class,  id);
         if (complaintEntity == null) {
             return null;
@@ -53,7 +65,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, complaint.getComplaintId());
         ComplaintEntity.setCategory(complaint.getCategory());
         session.update(ComplaintEntity);
@@ -65,7 +83,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, complaint.getComplaintId());
         ComplaintEntity.setComplaintDetail(complaint.getComplaintDetail());
         session.update(ComplaintEntity);
@@ -78,7 +102,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ComplaintEntity ComplaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class,id);
         session.delete(ComplaintEntity);
         transaction.commit();
@@ -92,7 +122,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         complaintEntities = (List<ComplaintEntity>) session.createNativeQuery("SELECT * FROM complaints", ComplaintEntity.class)
                 .list();
 
@@ -116,7 +152,13 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         complaintEntities = (List<ComplaintEntity>) session.createNativeQuery("SELECT * FROM complaints WHERE category = :category", ComplaintEntity.class)
                 .setParameter("category", category)
                 .list();
@@ -139,7 +181,13 @@ public class ComplaintActions {
         Session session  = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         complaintEntities = (List<ComplaintEntity>) session.createNativeQuery("SELECT * FROM complaints WHERE StudentEntity_idNumber = :userId", ComplaintEntity.class)
                 .setParameter("userId", userId)
                 .list();
@@ -161,9 +209,15 @@ public class ComplaintActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ComplaintEntity complaintEntity = (ComplaintEntity) session.get(ComplaintEntity.class, id);
-        complaintEntity.setStatus(Status.CLOSED.name());
+        complaintEntity.setStatus(Status.CLOSE.name());
         session.update(complaintEntity);
         transaction.commit();
         session.close();

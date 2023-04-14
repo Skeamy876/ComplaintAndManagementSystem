@@ -25,7 +25,13 @@ public class AdvisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         session.save(modelMapper.map(advisor, AdvisorEntity.class));
         transaction.commit();
         session.close();
@@ -36,7 +42,13 @@ public class AdvisorActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntity = (AdvisorEntity) session.get(AdvisorEntity.class, id);
         transaction.commit();
         session.close();
@@ -70,7 +82,13 @@ public class AdvisorActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntityDTO = (AdvisorEntity) session.get(AdvisorEntity.class, advisor.getIdNumber());
         advisorEntityDTO.setFirstName(advisor.getFirstName());
         advisorEntityDTO.setLastName(advisor.getLastName());
@@ -86,7 +104,13 @@ public class AdvisorActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntityDTO = session.get(AdvisorEntity.class, advisor.getIdNumber());
         session.delete(advisorEntityDTO);
         transaction.commit();
@@ -97,7 +121,13 @@ public class AdvisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         List<AdvisorEntity> advisorEntities = session.createQuery("from Advisor").list();
 
         Advisor advisor = new Advisor();
@@ -138,7 +168,13 @@ public class AdvisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntity = session.get(AdvisorEntity.class, advisorId);
         advisorEntity.getQueryEntity().add(modelMapper.map(query, QueryEntity.class));
         session.update(advisorEntity);
@@ -150,7 +186,13 @@ public class AdvisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntity = session.get(AdvisorEntity.class, advisorId);
         advisorEntity.getComplaintEntity().add(modelMapper.map(complaint, ComplaintEntity.class));
         session.update(advisorEntity);
@@ -163,7 +205,13 @@ public class AdvisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntity = session.get(AdvisorEntity.class, id);
         List<QueryEntity> queryEntities = advisorEntity.getQueryEntity();
         for (QueryEntity queryEntity : queryEntities) {
@@ -180,7 +228,13 @@ public class AdvisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         AdvisorEntity advisorEntity = session.get(AdvisorEntity.class, id);
         List<ComplaintEntity> complaintEntities = advisorEntity.getComplaintEntity();
         for (ComplaintEntity complaintEntity : complaintEntities) {

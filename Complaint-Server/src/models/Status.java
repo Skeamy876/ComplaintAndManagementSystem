@@ -2,5 +2,5 @@ package models;
 
 public enum Status {
     OPEN,
-    CLOSED
+    CLOSE
 }

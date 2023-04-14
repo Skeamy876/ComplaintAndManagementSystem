@@ -54,7 +54,13 @@ public class StudentActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         session.save(studentEntity);
         transaction.commit();
         session.close();
@@ -65,7 +71,13 @@ public class StudentActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         StudentEntity studentEntity = session.get(StudentEntity.class, idNumber);
         transaction.commit();
         session.close();
@@ -79,7 +91,13 @@ public class StudentActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         StudentEntity studentEntity = session.get(StudentEntity.class, idNumber);
         if (studentEntity == null) {
             return null;
@@ -207,7 +225,13 @@ public class StudentActions {
 
     public void saveQuery(Student student){
         Session session = SessionBuilderFactory.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         StudentEntity studentEntityDTO =  session.get(StudentEntity.class, student.getIdNumber());
 
         if (studentEntityDTO != null && studentEntityDTO.getIdNumber() == student.getIdNumber()){
@@ -228,7 +252,13 @@ public class StudentActions {
 
     public void saveComplaint(Student student){
         Session session = SessionBuilderFactory.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         StudentEntity studentEntityDTO =  session.get(StudentEntity.class, student.getIdNumber());
 
         if (studentEntityDTO != null && studentEntityDTO.getIdNumber() == student.getIdNumber()){

@@ -17,6 +17,8 @@ import models.Query;
 import models.Student;
 import views.internatViews.*;
 import javax.swing.*;
+import javax.swing.event.InternalFrameAdapter;
+import javax.swing.event.InternalFrameEvent;
 
 
 public class Dashboard extends JFrame {
@@ -127,7 +129,7 @@ public class Dashboard extends JFrame {
 			desktop.add(chatButton);
 			chatButton.setBounds(640, 20, 50, 40);
 			chatButton.addActionListener(e -> {
-				desktop.add(new advisor.LiveChatGUI(client));
+				desktop.add(new LiveChatGUI(client));
 			});
 		}
 
@@ -160,7 +162,15 @@ public class Dashboard extends JFrame {
 		desktop.add(createButton);
 		createButton.setBounds(20, 120, 200, 30);
 		createButton.addActionListener(e -> {
-			desktop.add(new AddQueryComplaintView(client));
+			AddQueryComplaintView addQueryComplaintView = new AddQueryComplaintView(client);
+			desktop.add(addQueryComplaintView);
+
+			addQueryComplaintView.addInternalFrameListener(new InternalFrameAdapter() {
+				public void internalFrameClosed(InternalFrameEvent e) {
+					desktop.remove(addQueryComplaintView);
+					desktop.repaint(); // refresh the desktop
+				}
+			});
 		});
 
 		viewButton = new JButton("View Query/Complaint");
@@ -193,6 +203,13 @@ public class Dashboard extends JFrame {
 			QueriesComplaintsTableView queriesComplaintsTableView = new QueriesComplaintsTableView(queries, complaints);
 			queriesComplaintsTableView.setClient(client);
 			desktop.add(queriesComplaintsTableView);
+
+			queriesComplaintsTableView.addInternalFrameListener(new InternalFrameAdapter() {
+				public void internalFrameClosed(InternalFrameEvent e) {
+					desktop.remove(queriesComplaintsTableView);
+					desktop.repaint(); // refresh the desktop
+				}
+			});
 		});
 	}
 
@@ -228,7 +245,14 @@ public class Dashboard extends JFrame {
 		searchBox.setBounds(300, 120, 200, 30);
 		searchButton.setBounds(300, 150, 200, 30);
 			searchButton.addActionListener(e -> {
-			desktop.add(new SearchView(client, searchBox.getSelectedItem().toString()));
+				SearchView searchView = new SearchView(client, searchBox.getSelectedItem().toString());
+			desktop.add(searchView);
+			searchView.addInternalFrameListener(new InternalFrameAdapter() {
+				public void internalFrameClosed(InternalFrameEvent e) {
+					desktop.remove(searchView);
+					desktop.repaint(); // refresh the desktop
+				}
+			});
 		});
 
 		viewButton = new JButton("View Resolved Complaints/Queries");
@@ -236,7 +260,14 @@ public class Dashboard extends JFrame {
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 160, 200, 30);
 		viewButton.addActionListener(e -> {
-			desktop.add(new ViewUnresolvedAndUnresolvedQC(client));
+			ViewUnresolvedAndUnresolvedQC viewUnresolvedAndUnresolvedQC = new ViewUnresolvedAndUnresolvedQC(client);
+			desktop.add(viewUnresolvedAndUnresolvedQC);
+			viewUnresolvedAndUnresolvedQC.addInternalFrameListener(new InternalFrameAdapter() {
+				public void internalFrameClosed(InternalFrameEvent e) {
+					desktop.remove(viewUnresolvedAndUnresolvedQC);
+					desktop.repaint(); // refresh the desktop
+				}
+			});
 
 		});
 
@@ -252,7 +283,14 @@ public class Dashboard extends JFrame {
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 240, 200, 30);
 		viewButton.addActionListener(e ->  {
-			desktop.add(new ViewAllComplaintsAndQueries(client));
+			ViewUnresolvedAndUnresolvedQC viewUnresolvedAndUnresolvedQC = new ViewUnresolvedAndUnresolvedQC(client);
+			desktop.add(viewUnresolvedAndUnresolvedQC);
+			viewUnresolvedAndUnresolvedQC.addInternalFrameListener(new InternalFrameAdapter() {
+				public void internalFrameClosed(InternalFrameEvent e) {
+					desktop.remove(viewUnresolvedAndUnresolvedQC);
+					desktop.repaint(); // refresh the desktop
+				}
+			});
 		});
 
 	}
@@ -283,7 +321,14 @@ public class Dashboard extends JFrame {
 		desktop.add(viewButton);
 		viewButton.setBounds(20, 120, 200, 30);
 		viewButton.addActionListener(e -> {
-			desktop.add(new ViewAssignedComplaintsAndQueries(client));
+			ViewAssignedComplaintsAndQueries viewAssignedComplaintsAndQueries = new ViewAssignedComplaintsAndQueries(client);
+			desktop.add(viewAssignedComplaintsAndQueries);
+			viewAssignedComplaintsAndQueries.addInternalFrameListener(new InternalFrameAdapter() {
+				public void internalFrameClosed(InternalFrameEvent e) {
+					desktop.remove(viewAssignedComplaintsAndQueries);
+					desktop.repaint(); // refresh the desktop
+				}
+			});
 		});
 	}
 
@@ -294,6 +339,8 @@ public class Dashboard extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 	}
+
+
 
 }  
 

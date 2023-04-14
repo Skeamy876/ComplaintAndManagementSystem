@@ -23,7 +23,13 @@ public class ResponseActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.getTransaction();
+        Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         QueryEntity queryEntity = null;
         ComplaintEntity complaintEntity = null;
         Complaint Complaint = response.getComplaint();
@@ -54,7 +60,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ResponseEntity responseEntity1 = (ResponseEntity) session.get(ResponseEntity.class, id);
         Response response = modelMapper.map(responseEntity1, Response.class);
         Complaint complaint = modelMapper.map(responseEntity1.getComplaint(), Complaint.class);
@@ -76,7 +88,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         responseEntities = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses")
                 .list();
         for (ResponseEntity responseEntity : responseEntities) {
@@ -100,7 +118,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         ResponseEntity responseEntity1 = (ResponseEntity) session.get(ResponseEntity.class, id);
         session.delete(responseEntity1);
         transaction.commit();
@@ -115,7 +139,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         responseEntity = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses WHERE advisor_id = :userId")
                 .setParameter("userId", userId)
                 .list();
@@ -142,7 +172,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         responseEntity = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses WHERE query_id = :queryComplainId OR complaint_id = :queryComplainId")
                 .setParameter("queryComplainId", queryComplainId)
                 .list();
@@ -173,7 +209,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         responseEntity = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses WHERE query_id = :id", ResponseEntity.class)
                 .setParameter("id", id)
                 .list();
@@ -207,7 +249,13 @@ public class ResponseActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         responseEntity = (List<ResponseEntity>) session.createNativeQuery("SELECT * FROM responses WHERE complaint_id = :id", ResponseEntity.class)
                 .setParameter("id", id)
                 .list();

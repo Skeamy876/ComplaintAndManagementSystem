@@ -1,4 +1,4 @@
-package advisor;
+package views.internatViews;
 
 import controller.Client;
 

@@ -12,7 +12,13 @@ public class SupervisorActions {
         Session session = SessionBuilderFactory
                 .getSessionFactory()
                 .getCurrentSession();
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         session.save(supervisorEntity);
         transaction.commit();
         session.close();
@@ -23,7 +29,13 @@ public class SupervisorActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         SupervisorEntity supervisorEntity = (SupervisorEntity) session.get(SupervisorEntity.class, id);
         transaction.commit();
         session.close();
@@ -36,7 +48,13 @@ public class SupervisorActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         SupervisorEntity supervisorEntityDTO = (SupervisorEntity) session.get(SupervisorEntity.class, supervisorEntity.getIdNumber());
         supervisorEntity.setFirstName(supervisorEntity.getFirstName());
         supervisorEntity.setLastName(supervisorEntity.getLastName());
@@ -54,7 +72,13 @@ public class SupervisorActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+            Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         SupervisorEntity supervisorEntityDTO = (SupervisorEntity) session.get(SupervisorEntity.class, supervisorEntity.getIdNumber());
         session.delete(supervisorEntityDTO);
         transaction.commit();

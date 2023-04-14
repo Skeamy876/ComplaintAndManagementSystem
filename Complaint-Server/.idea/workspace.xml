@@ -5,17 +5,38 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="602c6f96-a62e-4dee-a7ba-daf80f9d9361" name="Changes" comment="new updates">
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/advisor/LiveChatGUI.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/Client.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/controller/DriverTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/Dashboard$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/Dashboard$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/Dashboard.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/Dashboard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/LoginView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/LoginView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/AddQueryComplaintView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/AddQueryComplaintView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/QueryComplaintAndStudent.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/out/production/Complaint-Client/views/internatViews/QueryComplaintAndStudent.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/Dashboard.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/Dashboard.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/LoginView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Complaint-Client/src/views/internatViews/LiveChatGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Complaint-Client/src/views/internatViews/LiveChatGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/models/Status.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/models/Status.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/ClientHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/ClientHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/ClientHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/ClientHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/AdvisorActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/AdvisorActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/ComplaintActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/ComplaintActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/QueryActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/QueryActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/ResponseActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/ResponseActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/StudentActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/StudentActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/SupervisorActions.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Complaint-Server/server/actions/SupervisorActions.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Status.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Status.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/actions/AdvisorActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/AdvisorActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/actions/ComplaintActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/ComplaintActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/actions/QueryActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/QueryActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/actions/ResponseActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/ResponseActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/actions/StudentActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/StudentActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/server/actions/SupervisorActions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/server/actions/SupervisorActions.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Dashboard.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../LiveChatGUI.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../LoginView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../ViewComListGUI.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../ViewQueryGUI.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../ViewSpecificComGUI.java" beforeDir="false" />
@@ -153,6 +174,10 @@
       <workItem from="1680923389206" duration="6440000" />
       <workItem from="1680955582783" duration="11165000" />
       <workItem from="1680974911706" duration="19338000" />
+      <workItem from="1681014616587" duration="594000" />
+      <workItem from="1681494056355" duration="6000" />
+      <workItem from="1681494090198" duration="2000" />
+      <workItem from="1681494728657" duration="31000" />
     </task>
     <task id="LOCAL-00001" summary="server created">
       <created>1678323799076</created>

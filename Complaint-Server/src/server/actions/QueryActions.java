@@ -22,7 +22,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         session.save(queryEntity);
         transaction.commit();
         session.close();
@@ -32,7 +38,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         session.save(query);
         transaction.commit();
         session.close();
@@ -43,7 +55,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
         if (queryEntity1 == null) {
             return null;
@@ -65,7 +83,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         queries = session.createNativeQuery("SELECT * FROM queries", QueryEntity.class)
                 .list();
 
@@ -88,7 +112,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         queries = session.createNativeQuery("SELECT * FROM queries WHERE studentEntity_idNumber = :userId", QueryEntity.class)
                 .setParameter("userId", userId)
                 .list();
@@ -107,7 +137,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         QueryEntity queryEntity = modelMapper.map(query, QueryEntity.class);
         QueryEntity queryEntity1 = session.get(QueryEntity.class, queryEntity.getQueryId());
         queryEntity1.setCategory(queryEntity.getCategory());
@@ -120,7 +156,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         QueryEntity queryEntity = modelMapper.map(query, QueryEntity.class);
         QueryEntity queryEntity1 = session.get(QueryEntity.class, queryEntity.getQueryId());
         queryEntity1.setQueryDetail(queryEntity.getQueryDetail());
@@ -134,7 +176,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
         session.delete(queryEntity1);
         transaction.commit();
@@ -148,7 +196,13 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         queries = (List<QueryEntity>) session.createNativeQuery("SELECT * FROM queries WHERE category = :category", QueryEntity.class)
                 .setParameter("category", category)
                 .list();
@@ -172,9 +226,15 @@ public class QueryActions {
                 .getSessionFactory()
                 .getCurrentSession();
 
-        Transaction transaction = session.beginTransaction();
+             Transaction transaction;
+        if (session.getTransaction().isActive()){
+            transaction = session.getTransaction();
+        }else {
+            transaction = session.beginTransaction();
+
+        }
         QueryEntity queryEntity1 = (QueryEntity) session.get(QueryEntity.class, id);
-        queryEntity1.setStatus(Status.CLOSED.name());
+        queryEntity1.setStatus(Status.CLOSE.name());
         session.update(queryEntity1);
         transaction.commit();
         session.close();
